@@ -5,13 +5,12 @@ import union from "@turf/union";
 import fs from "fs";
 import { BBox } from "geojson";
 import path from "path";
-
-const UKRAINE_BBOX: GeoJSON.BBox = [22.1372, 44.3865, 40.2276, 52.3791];
+import { expandBbox, UKRAINE_BBOX } from "./helpers";
 
 // Load and process Ukraine GeoJSON with 20% buffer
 function loadUkrainePolygonWithBuffer(): GeoJSON.Feature {
   try {
-    const ukraineGeoJSON: GeoJSON.FeatureCollection = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/ukraine.geojson'), 'utf8'));
+    const ukraineGeoJSON: GeoJSON.FeatureCollection = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'public/assets/geojson/ukraine.geojson'), 'utf8'));
 
     // Calculate buffer distance (20% expansion)
     // For rough estimation, use ~50km buffer which is approximately 20% expansion for Ukraine
@@ -44,20 +43,6 @@ function loadUkrainePolygonWithBuffer(): GeoJSON.Feature {
     const expandedBbox = expandBbox(UKRAINE_BBOX, 0.2);
     return bboxPolygon(expandedBbox);
   }
-}
-
-// Expand bbox by 20%
-function expandBbox(bbox: BBox, percent: number): BBox {
-  const [minLon, minLat, maxLon, maxLat] = bbox;
-  const lonDelta = ((maxLon - minLon) * percent) / 2;
-  const latDelta = ((maxLat - minLat) * percent) / 2;
-
-  return [
-    minLon - lonDelta,
-    minLat - latDelta,
-    maxLon + lonDelta,
-    maxLat + latDelta,
-  ];
 }
 
 // Load the Ukraine polygon with buffer
@@ -93,8 +78,8 @@ function main(): void {
   const args = process.argv.slice(2);
   
   if (args.length === 0) {
-    console.error("Usage: ts-node filter.ts <geojson-file>");
-    console.error("Example: ts-node filter.ts input.geojson");
+    console.error("Usage: tsx filterByUABorders.ts <geojson-file>");
+    console.error("Example: tsx filterByUABorders.ts input.geojson");
     process.exit(1);
   }
 
