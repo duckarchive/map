@@ -1,13 +1,32 @@
 {
-	"type": "module",
-	"dependencies": {
-		"@turf/bbox-polygon": "^7.2.0",
-		"@turf/boolean-intersects": "^7.2.0",
-		"@turf/buffer": "^7.2.0",
-		"@turf/intersect": "^7.2.0",
-		"@turf/union": "^7.2.0",
-		"csv-parse": "^6.1.0",
-		"node-fetch": "^3.3.2",
-		"proj4": "^2.19.10"
-	}
+  "type": "module",
+  "scripts": {
+    "filter-by-borders": "ts-node src/filterByBorders.ts",
+    "fix": "ts-node src/fix.ts",
+    "gisloader": "ts-node src/gisloader.ts",
+    "merge": "ts-node src/merge.ts",
+    "rename": "ts-node src/rename.ts",
+    "translator": "ts-node src/translator.ts",
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@turf/bbox-polygon": "^7.2.0",
+    "@turf/boolean-intersects": "^7.2.0",
+    "@turf/buffer": "^7.2.0",
+    "@turf/helpers": "^7.2.0",
+    "@turf/intersect": "^7.2.0",
+    "@turf/union": "^7.2.0",
+    "csv-parse": "^6.1.0",
+    "node-fetch": "^3.3.2",
+    "proj4": "^2.19.10"
+  },
+  "devDependencies": {
+    "@types/csv-parse": "^1.2.5",
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^24.3.0",
+    "@types/proj4": "^2.19.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
 }

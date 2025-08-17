@@ -3,47 +3,51 @@ import booleanIntersects from "@turf/boolean-intersects";
 import buffer from "@turf/buffer";
 import union from "@turf/union";
 import fs from "fs";
+import { BBox } from "geojson";
 import path from "path";
 
+const UKRAINE_BBOX: GeoJSON.BBox = [22.1372, 44.3865, 40.2276, 52.3791];
+
 // Load and process Ukraine GeoJSON with 20% buffer
-function loadUkrainePolygonWithBuffer() {
+function loadUkrainePolygonWithBuffer(): GeoJSON.Feature {
   try {
-    const ukraineGeoJSON = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/ukraine.geojson'), 'utf8'));
-    
+    const ukraineGeoJSON: GeoJSON.FeatureCollection = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'src/ukraine.geojson'), 'utf8'));
+
     // Calculate buffer distance (20% expansion)
     // For rough estimation, use ~50km buffer which is approximately 20% expansion for Ukraine
     const bufferDistance = 50; // kilometers
-    
-    let bufferedUkraine;
+
+    let bufferedUkraine: GeoJSON.Feature;
     
     if (ukraineGeoJSON.features.length === 1) {
       // Single feature
-      bufferedUkraine = buffer(ukraineGeoJSON.features[0], bufferDistance, { units: 'kilometers' });
+      const feature = ukraineGeoJSON.features[0];
+      if (!feature) {
+        throw new Error("Ukraine GeoJSON does not contain any features.");
+      }
+      bufferedUkraine = buffer(feature, bufferDistance, { units: 'kilometers' }) as GeoJSON.Feature;
     } else {
       // Multiple features - union them first, then buffer
       let combinedUkraine = ukraineGeoJSON.features[0];
       for (let i = 1; i < ukraineGeoJSON.features.length; i++) {
-        combinedUkraine = union(combinedUkraine, ukraineGeoJSON.features[i]);
+        combinedUkraine = union(combinedUkraine as any, ukraineGeoJSON.features[i]) as GeoJSON.Feature;
       }
-      bufferedUkraine = buffer(combinedUkraine, bufferDistance, { units: 'kilometers' });
+      bufferedUkraine = buffer(combinedUkraine, bufferDistance, { units: 'kilometers' }) as GeoJSON.Feature;
     }
     
     return bufferedUkraine;
   } catch (error) {
-    console.error(`Error loading ukraine.geojson: ${error.message}`);
+    console.error(`Error loading ukraine.geojson: ${error instanceof Error ? error.message : error}`);
     console.error('Falling back to bounding box method...');
     
     // Fallback to original bbox method
-    const UKRAINE_BBOX = [22.1372, 44.3865, 40.2276, 52.3791];
     const expandedBbox = expandBbox(UKRAINE_BBOX, 0.2);
     return bboxPolygon(expandedBbox);
   }
 }
 
-const UKRAINE_BBOX = [22.1372, 44.3865, 40.2276, 52.3791]; // [minLon, minLat, maxLon, maxLat]
-
 // Expand bbox by 20%
-function expandBbox(bbox, percent) {
+function expandBbox(bbox: BBox, percent: number): BBox {
   const [minLon, minLat, maxLon, maxLat] = bbox;
   const lonDelta = ((maxLon - minLon) * percent) / 2;
   const latDelta = ((maxLat - minLat) * percent) / 2;
@@ -60,7 +64,7 @@ function expandBbox(bbox, percent) {
 const ukrainePoly = loadUkrainePolygonWithBuffer();
 
 // Function to filter GeoJSON features within Ukraine polygon
-function filterFeaturesInUkraine(geojsonData) {
+function filterFeaturesInUkraine(geojsonData: GeoJSON.FeatureCollection): GeoJSON.FeatureCollection {
   if (!geojsonData.features || !Array.isArray(geojsonData.features)) {
     throw new Error("Invalid GeoJSON: missing or invalid features array");
   }
@@ -73,7 +77,7 @@ function filterFeaturesInUkraine(geojsonData) {
     try {
       return booleanIntersects(feature, ukrainePoly);
     } catch (error) {
-      console.warn(`Skipping feature due to geometry error:`, error.message);
+      console.warn(`Skipping feature due to geometry error:`, error instanceof Error ? error.message : error);
       return false;
     }
   });
@@ -85,12 +89,12 @@ function filterFeaturesInUkraine(geojsonData) {
 }
 
 // Main function to process CLI arguments
-function main() {
+function main(): void {
   const args = process.argv.slice(2);
   
   if (args.length === 0) {
-    console.error("Usage: node filter.mjs <geojson-file>");
-    console.error("Example: node filter.mjs input.geojson");
+    console.error("Usage: ts-node filter.ts <geojson-file>");
+    console.error("Example: ts-node filter.ts input.geojson");
     process.exit(1);
   }
 
@@ -102,8 +106,6 @@ function main() {
   }
 
   try {
-    console.log(`Reading GeoJSON file: ${inputFile}`);
-    console.log(`Using Ukraine polygon from src/ukraine.geojson with 20% buffer (50km)`);
     const geojsonContent = fs.readFileSync(inputFile, 'utf8');
     const geojsonData = JSON.parse(geojsonContent);
     
@@ -113,23 +115,15 @@ function main() {
     
     console.log(`Filtered features count: ${filteredGeoJSON.features.length}`);
     
-    // Generate output filename
-    const inputPath = path.parse(inputFile);
-    const outputFile = path.join(inputPath.dir, `${inputPath.name}_ukraine_filtered${inputPath.ext}`);
-    
-    // Write filtered GeoJSON to output file
-    fs.writeFileSync(outputFile, JSON.stringify(filteredGeoJSON, null, 2), 'utf8');
-    
-    console.log(`Filtered GeoJSON saved to: ${outputFile}`);
+    fs.writeFileSync(inputFile, JSON.stringify(filteredGeoJSON));
+    console.log(`Filtered GeoJSON saved to: ${inputFile}`);
     
   } catch (error) {
-    console.error(`Error processing file: ${error.message}`);
+    console.error(`Error processing file: ${error instanceof Error ? error.message : error}`);
     process.exit(1);
   }
 }
 
-// Run main function if this file is executed directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   main();
 }
-
