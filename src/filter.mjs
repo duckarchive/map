@@ -19,7 +19,7 @@ function expandBbox(bbox, percent) {
   ];
 }
 
-const expandedBbox = expandBbox(UKRAINE_BBOX, 0.2);
+const expandedBbox = expandBbox(UKRAINE_BBOX, 0.1);
 const ukrainePoly = bboxPolygon(expandedBbox);
 
 // Function to filter GeoJSON features within Ukraine polygon
@@ -80,7 +80,7 @@ function main() {
     const outputFile = path.join(inputPath.dir, `${inputPath.name}_ukraine_filtered${inputPath.ext}`);
     
     // Write filtered GeoJSON to output file
-    fs.writeFileSync(outputFile, JSON.stringify(filteredGeoJSON));
+    fs.writeFileSync(outputFile, JSON.stringify(filteredGeoJSON, null, 2), 'utf8');
     
     console.log(`Filtered GeoJSON saved to: ${outputFile}`);
     

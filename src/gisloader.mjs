@@ -2,8 +2,8 @@ import fetch from 'node-fetch';
 import fs from 'fs';
 
 // Configuration
-const SERVICE_URL = "https://services8.arcgis.com/UN2BoTelitQIJWcd/ArcGIS/rest/services/Austro_Hungarian_Empire_1910_v_1_0/FeatureServer/53";
-const OUTPUT_FILE = "austro_hungarian_empire_1910_filtered.geojson";
+const SERVICE_URL = "https://services8.arcgis.com/UN2BoTelitQIJWcd/ArcGIS/rest/services/Austro_Hungarian_Empire_1910_v10_Land/FeatureServer/58";
+const OUTPUT_FILE = "austro_hungarian_empire_1910.geojson";
 
 // Define Ukraine's bounding box (minX, minY, maxX, maxY)
 const UKRAINE_BBOX = [22.085, 44.361, 40.081, 52.335];
