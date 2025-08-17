@@ -19,8 +19,8 @@ function expandBbox(bbox, percent) {
   ];
 }
 
-const expandedBbox = expandBbox(UKRAINE_BBOX, 0.1);
-const ukrainePoly = bboxPolygon(expandedBbox);
+const expandedBbox = expandBbox(UKRAINE_BBOX, 0.01);
+const ukrainePoly = bboxPolygon([21.6, 46.73, 30.5, 48.4]);
 
 // Function to filter GeoJSON features within Ukraine polygon
 function filterFeaturesInUkraine(geojsonData) {
