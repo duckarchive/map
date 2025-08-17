@@ -60,6 +60,12 @@ importers:
       '@types/proj4':
         specifier: ^2.19.0
         version: 2.19.0
+      '@types/topojson-client':
+        specifier: ^3.1.5
+        version: 3.1.5
+      topojson-client:
+        specifier: ^3.1.0
+        version: 3.1.0
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
@@ -290,8 +296,17 @@ packages:
     resolution: {integrity: sha512-mirdnXu5sW9+IphQ4r+ZVii2JVLDbXgMp1lxqbiCppdgL22EwMwL4Dy/cyHVaJ2y/mi7LUQHghpILd3w3j2bnA==}
     deprecated: This is a stub types definition. proj4 provides its own type definitions, so you do not need this installed.
 
+  '@types/topojson-client@3.1.5':
+    resolution: {integrity: sha512-C79rySTyPxnQNNguTZNI1Ct4D7IXgvyAs3p9HPecnl6mNrJ5+UhvGNYcZfpROYV2lMHI48kJPxwR+F9C6c7nmw==}
+
+  '@types/topojson-specification@1.0.5':
+    resolution: {integrity: sha512-C7KvcQh+C2nr6Y2Ub4YfgvWvWCgP2nOQMtfhlnwsRL4pYmmwzBS7HclGiS87eQfDOU/DLQpX6GEscviaz4yLIQ==}
+
   bignumber.js@9.3.1:
     resolution: {integrity: sha512-Ko0uX15oIUS7wJ3Rb30Fs6SkVbLmPBAKdlm7q9+ak9bbIeFf0MwuBsQV6z7+X768/cHsfg+WlysDWJcmthjsjQ==}
+
+  commander@2.20.3:
+    resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
 
   csv-parse@6.1.0:
     resolution: {integrity: sha512-CEE+jwpgLn+MmtCpVcPtiCZpVtB6Z2OKPTr34pycYYoL7sxdOkXDdQ4lRiw6ioC0q6BLqhc6cKweCVvral8yhw==}
@@ -372,6 +387,10 @@ packages:
 
   tinyqueue@2.0.3:
     resolution: {integrity: sha512-ppJZNDuKGgxzkHihX8v9v9G5f+18gzaTfrukGrq6ueg0lmH4nqVnA2IPG0AEH3jKEk2GRJCUhDoqpoiw3PHLBA==}
+
+  topojson-client@3.1.0:
+    resolution: {integrity: sha512-605uxS6bcYxGXw9qi62XyrV6Q3xwbndjachmNxu8HWTtVPxZfEJN9fd/SZS1Q54Sn2y0TMyMxFj/cJINqGHrKw==}
+    hasBin: true
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -613,7 +632,18 @@ snapshots:
     dependencies:
       proj4: 2.19.10
 
+  '@types/topojson-client@3.1.5':
+    dependencies:
+      '@types/geojson': 7946.0.16
+      '@types/topojson-specification': 1.0.5
+
+  '@types/topojson-specification@1.0.5':
+    dependencies:
+      '@types/geojson': 7946.0.16
+
   bignumber.js@9.3.1: {}
+
+  commander@2.20.3: {}
 
   csv-parse@6.1.0: {}
 
@@ -711,6 +741,10 @@ snapshots:
       tinyqueue: 2.0.3
 
   tinyqueue@2.0.3: {}
+
+  topojson-client@3.1.0:
+    dependencies:
+      commander: 2.20.3
 
   tslib@2.8.1: {}
 
