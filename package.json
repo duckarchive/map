@@ -1,18 +1,18 @@
 {
   "scripts": {
-    "fetch-ohm-borders": "tsx src/fetchAllOHMBorders.ts",
-    "filter-by-ua-borders": "tsx src/filterByUABorders.ts",
-    "rename-feature-props": "tsx src/renameFeatureProps.ts",
-    "extract-translations": "tsx src/extractForTranslations.ts",
-    "apply-translations": "tsx src/applyTranslations.ts",
-    "topo-to-geo": "tsx src/convertTopoToGeo.ts",
-    "fix": "tsx src/fix.ts",
-    "gisloader": "tsx src/gisloader.ts",
-    "merge": "tsx src/merge.ts",
-    "minify": "tsx src/minify.ts",
-    "translator": "tsx src/translator.ts",
+    "fetch-ohm-borders": "tsx scripts/fetchAllOHMBorders.ts",
+    "filter-by-ua-borders": "tsx scripts/filterByUABorders.ts",
+    "rename-feature-props": "tsx scripts/renameFeatureProps.ts",
+    "extract-translations": "tsx scripts/extractForTranslations.ts",
+    "apply-translations": "tsx scripts/applyTranslations.ts",
+    "topo-to-geo": "tsx scripts/convertTopoToGeo.ts",
+    "fix": "tsx scripts/fix.ts",
+    "gisloader": "tsx scripts/gisloader.ts",
+    "merge": "tsx scripts/merge.ts",
+    "minify": "tsx scripts/minify.ts",
+    "translator": "tsx scripts/translator.ts",
     "build": "tsc",
-    "start": "tsx src/index.ts"
+    "start": "tsx scripts/index.ts"
   },
   "dependencies": {
     "@turf/bbox-polygon": "^7.2.0",
