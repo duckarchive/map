@@ -1,7 +1,47 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, memo, useEffect } from "react";
 import { useMap } from "react-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+
+import useStopPropagation from "./useStopPropagation";
+
+const SearchSVG = () => (
+  <svg
+    className="w-4 h-4 text-gray-400"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+    />
+  </svg>
+);
+
+const PinSVG = () => (
+  <svg
+    className="w-4 h-4 text-gray-400 flex-shrink-0"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+    />
+    <path
+      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+    />
+  </svg>
+);
 
 interface SearchResult {
   x: number; // longitude
@@ -11,10 +51,10 @@ interface SearchResult {
   raw: any;
 }
 
-const MapLocationSearch = () => {
+const MapLocationSearch = memo(() => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
-
+  const autocompleteRef = useStopPropagation();
   const map = useMap();
 
   const provider = new OpenStreetMapProvider({
@@ -52,7 +92,7 @@ const MapLocationSearch = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [query, searchLocations]);
+  }, [query]);
 
   const handleLocationSelect = (result: SearchResult) => {
     setQuery(result.label);
@@ -71,64 +111,42 @@ const MapLocationSearch = () => {
     setQuery(value);
   };
 
+  const handleSelect = (key: number | string | null) => {
+    if (key) {
+      const result = results[key as number];
+
+      if (result) {
+        handleLocationSelect(result);
+      }
+    }
+  };
+
   return (
-    <div className="relative z-[1000] w-64">
+    <div
+      ref={autocompleteRef} // Prevents click events from propagating to the map
+      className="absolute z-[1000] top-1 left-1 right-1 w-auto"
+    >
       <Autocomplete
+        aria-label="Пошук міста або адреси..."
+        className="w-full"
         defaultItems={results}
         inputValue={query}
+        listboxProps={{
+          emptyContent: "Нічого не знайдено. Уточніть свій запит.",
+        }}
         placeholder="Пошук міста або адреси..."
         size="sm"
-        startContent={
-          <svg
-            className="w-4 h-4 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-            />
-          </svg>
-        }
-        variant="bordered"
+        startContent={<SearchSVG />}
+        variant="flat"
+        onClick={(e) => e.stopPropagation()}
         onInputChange={handleInputChange}
-        onSelectionChange={(key) => {
-          if (key) {
-            const result = results.find((_, index) => index.toString() === key);
-
-            if (result) {
-              handleLocationSelect(result);
-            }
-          }
-        }}
+        onMouseDown={(e) => e.stopPropagation()}
+        onSelectionChange={handleSelect}
       >
         {(result) => (
           <AutocompleteItem
             key={results.indexOf(result)}
-            startContent={
-              <svg
-                className="w-4 h-4 text-gray-400 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                />
-                <path
-                  d="M15 11a3 3 0 11-6 0 3 3 0 616 0z"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                />
-              </svg>
-            }
+            startContent={<PinSVG />}
             textValue={result.label}
           >
             {result.label}
@@ -137,6 +155,8 @@ const MapLocationSearch = () => {
       </Autocomplete>
     </div>
   );
-};
+});
+
+MapLocationSearch.displayName = "MapLocationSearch";
 
 export default MapLocationSearch;

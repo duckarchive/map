@@ -15,9 +15,9 @@ import { Button } from "@heroui/button";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point as turfPoint } from "@turf/helpers";
 
-import { useMapData } from "./useMapData";
+import useMapData from "./useMapData";
+import useStopPropagation from "./useStopPropagation";
 
-import useStopPropagation from "@/components/MapField/useStopPropagation";
 
 // Year presets
 const YEAR_PRESETS = [
