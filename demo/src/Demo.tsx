@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Card, CardBody } from "@heroui/card";
-// @ts-ignore
 import GeoDuckMap from "../../";
 
 const Demo: React.FC = () => {

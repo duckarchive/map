@@ -53,7 +53,7 @@
     "minify": "tsx scripts/minify.ts",
     "translator": "tsx scripts/translator.ts",
     "build": "cd demo && vite build",
-    "build:lib": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
+    "build:lib": "vite build && npx tsc --emitDeclarationOnly --declaration --outDir dist && cp dist/GeoDuckMap/* dist/ && rm -rf dist/GeoDuckMap",
     "dev": "cd demo && vite",
     "preview": "cd demo && vite preview"
   },
