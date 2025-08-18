@@ -1,16 +1,13 @@
-import { Layer, LeafletMouseEvent } from "leaflet";
+import { Layer } from "leaflet";
 import {
   forwardRef,
   memo,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { GeoJSON, GeoJSONProps, useMap } from "react-leaflet";
 import { Spinner } from "@heroui/spinner";
-import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
-import { point as turfPoint } from "@turf/helpers";
 
 import useMapData from "./useMapData";
 import useStopPropagation from "./useStopPropagation";
@@ -19,18 +16,18 @@ import YearSelect from "./YearSelect";
 import { Feature } from "geojson";
 
 const colorPalette = [
-  "red",
-  "orange",
-  "yellow",
   "green",
-  "blue",
+  "orange",
   "darkblue",
+  "yellow",
+  "blue",
+  "red",
   "purple",
 ];
 
 const getCountryFeatureColor = (feature: Feature) => {
   const colorIndex =
-    (feature.id || feature.properties?.admin_level_1_ID || 0) % colorPalette.length;
+    (feature.properties?.admin_level_1_ID || feature.id || 0) % colorPalette.length;
   return colorPalette[colorIndex];
 };
 
