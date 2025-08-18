@@ -22,7 +22,7 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({ position, onPositionChange }) =
     scrollWheelZoom
     worldCopyJump
     center={[49.0139, 31.2858]}
-    style={{ height: "100%", width: "50%" }}
+    style={{ height: "100%", width: "100%" }}
     zoom={6}
     zoomControl={false}
   >
