@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Card, CardBody } from "@heroui/card";
-import Map from "../../src/components/Map";
+import GeoDuckMap from "../../src/GeoDuckMap";
 
 const Demo: React.FC = () => {
   const [position, setPosition] = useState<[number, number]>([49.0139, 31.2858]);
   return (
     <Card className="w-full h-[calc(100vh-3rem)]">
       <CardBody className="p-0">
-        <Map
+        <GeoDuckMap
           position={position}
           onPositionChange={setPosition}
         />

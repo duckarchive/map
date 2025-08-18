@@ -10,12 +10,12 @@ import HistoricalLayers from "./HistoricalLayers";
 import UkraineLayer from "./UkraineLayer";
 
 
-interface MapProps {
+export interface GeoDuckMapProps {
   position: [number, number];
   onPositionChange: (pos: [number, number]) => void;
 }
 
-const Map: React.FC<MapProps> = ({ position, onPositionChange }) => (
+const GeoDuckMap: React.FC<GeoDuckMapProps> = ({ position, onPositionChange }) => (
   <MapContainer
     scrollWheelZoom
     worldCopyJump
@@ -36,4 +36,4 @@ const Map: React.FC<MapProps> = ({ position, onPositionChange }) => (
   </MapContainer>
 );
 
-export default Map;
+export default GeoDuckMap;

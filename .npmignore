@@ -1,0 +1,47 @@
+# Source files
+src/
+scripts/
+demo/
+
+# Config files
+vite.config.ts
+tsconfig.json
+tsconfig.scripts.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Development files
+.git
+.gitignore
+node_modules/
+*.log
+*.tsbuildinfo
+
+# Documentation (use README.package.md instead)
+README.md
+
+# Build artifacts that shouldn't be published
+dist/**/*.map
+!dist/**/*.d.ts.map
+
+# Test files
+**/*.test.*
+**/*.spec.*
+__tests__/
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Exclude original README in favor of package README
+!/README.package.md
+
+# Include .npmrc example for users
+!.npmrc.example
