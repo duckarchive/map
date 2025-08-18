@@ -320,13 +320,15 @@ function processGeoJSONFiles(countriesFolder: string, statesFolder: string) {
     
     let featuresUpdated = 0;
     let relationshipsFound = 0;
-    
+
+    let incrementalId = 1;
     for (const feature of geoJson.features) {
       // Remove properties.id if it exists
       if ('id' in feature.properties) {
         delete feature.properties.id;
         featuresUpdated++;
       }
+      feature.id = incrementalId++;
       
       // Try to find overlapping country for this state feature
       if (countryData) {

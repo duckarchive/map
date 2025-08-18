@@ -2,43 +2,6 @@ import useSWR from "swr";
 import { useMemo, useState } from "react";
 import { Feature, FeatureCollection } from "geojson";
 
-const colorPalette = [
-  "red",
-  "orange",
-  "yellow",
-  "green",
-  "blue",
-  "darkblue",
-  "purple",
-];
-
-const getCountryFeatureColor = (feature: Feature) => {
-  const colorIndex =
-    (feature.properties?.admin_level_1?.length || 0) % colorPalette.length;
-  return colorPalette[colorIndex];
-};
-
-const addColors = (featureCollection: FeatureCollection) => {
-  return {
-    ...featureCollection,
-    features: featureCollection.features.map((feature) => {
-      if (
-        feature.geometry.type === "Polygon" ||
-        feature.geometry.type === "MultiPolygon"
-      ) {
-        return {
-          ...feature,
-          properties: {
-            ...feature.properties,
-            color: getCountryFeatureColor(feature),
-          },
-        };
-      }
-      return feature;
-    }),
-  };
-};
-
 const BASE_URL =
   "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson";
 interface Collection {
@@ -77,8 +40,13 @@ export const stateCollections: Collection[] = [
 
 const getClosestCollectionUrl = (
   targetYear: number,
-  collections: Collection[]
+  collections: Collection[],
+  isStrict: boolean = false
 ): string | null => {
+  if (isStrict) {
+    const exactMatch = collections.find(({ year }) => year === targetYear);
+    return exactMatch ? exactMatch.url : null;
+  }
   const countryYears = collections
     .filter(({ year }) => year > 0 && year <= targetYear)
     .sort((a, b) => b.year - a.year);
@@ -111,7 +79,7 @@ const useMapData = (defaultYear: number): MapData => {
     refreshWhenOffline: false,
   });
 
-  const statesUrl = getClosestCollectionUrl(year, stateCollections);
+  const statesUrl = getClosestCollectionUrl(year, stateCollections, true);
   const {
     data: statesData,
     isLoading: isLoadingStates,
@@ -124,12 +92,12 @@ const useMapData = (defaultYear: number): MapData => {
   });
 
   const countries = useMemo(
-    () => (countriesData ? addColors(countriesData) : null),
+    () => (countriesData || null),
     [countriesData]
   );
 
   const states = useMemo(
-    () => (statesData ? addColors(statesData) : null),
+    () => (statesData || null),
     [statesData]
   );
 

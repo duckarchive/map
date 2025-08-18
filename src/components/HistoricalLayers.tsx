@@ -18,7 +18,6 @@ import MapTooltip from "./Tooltip";
 import YearSelect from "./YearSelect";
 import { Feature } from "geojson";
 
-// Color palette for countries (OHM data)
 const colorPalette = [
   "red",
   "orange",
@@ -29,38 +28,22 @@ const colorPalette = [
   "purple",
 ];
 
-// Function to get color for a country feature
-const getFeatureColor = (feature: any) => {
-  const colorIndex = (feature.id || 0) % colorPalette.length;
-
+const getCountryFeatureColor = (feature: Feature) => {
+  const colorIndex =
+    (feature.id || feature.properties?.admin_level_1_ID || 0) % colorPalette.length;
   return colorPalette[colorIndex];
 };
 
-const countryDefaultStyle = {
-  color: "purple",
-  weight: 1,
-  fillOpacity: 0,
-  fillColor: "purple",
-  interactive: true,
-};
-
-const countryHighlightStyle = {
-  ...countryDefaultStyle,
-  fillOpacity: 0.5,
-};
-
-const stateDefaultStyle = {
-  color: "gold",
-  weight: 1,
-  fillOpacity: 0,
-  fillColor: "gold",
-  interactive: true,
-};
-
-const stateHighlightStyle = {
-  ...stateDefaultStyle,
-  fillOpacity: 0.5,
-};
+const getStyle = (feature: Feature | undefined, isHighlight: boolean, weight = 1) => {
+  const countryColor = feature ? getCountryFeatureColor(feature) : "gray";
+  return {
+    color: countryColor,
+    fillColor: countryColor,
+    weight,
+    fillOpacity: isHighlight ? 0.5 : 0,
+    interactive: true,
+  };
+}
 
 const CountriesLayer = memo(
   forwardRef<L.GeoJSON, GeoJSONProps>(({ data, onEachFeature }, ref) =>
@@ -68,7 +51,7 @@ const CountriesLayer = memo(
       <GeoJSON
         ref={ref}
         data={data}
-        style={stateDefaultStyle}
+        style={(feature) => getStyle(feature, false, 2)}
         onEachFeature={onEachFeature}
       />
     ) : null
@@ -81,7 +64,7 @@ const StatesLayer = memo(({ data, onEachFeature }: GeoJSONProps) =>
   data ? (
     <GeoJSON
       data={data}
-      style={stateDefaultStyle}
+      style={(feature) => getStyle(feature, false, 1)}
       onEachFeature={onEachFeature}
     />
   ) : null
@@ -146,11 +129,11 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
       layer.on({
         mouseover: (e) => {
           setHoveredCountryFeature(feature);
-          e.target.setStyle(countryHighlightStyle);
+          e.target.setStyle(getStyle(feature, true, 2));
         },
         mouseout: (e) => {
           setHoveredCountryFeature(null);
-          e.target.setStyle(countryDefaultStyle);
+          e.target.setStyle(getStyle(feature, false, 2));
         },
       });
     },
@@ -162,12 +145,12 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
       layer.on({
         mouseover: (e) => {
           setHoveredStateFeature(feature);
-          e.target.setStyle(stateHighlightStyle);
+          e.target.setStyle(getStyle(feature, true, 1));
         },
         mouseout: (e) => {
           setHoveredStateFeature(null);
-          e.target.setStyle(stateDefaultStyle);
-        },
+          e.target.setStyle(getStyle(feature, false, 1));
+        }
       });
     },
     []
