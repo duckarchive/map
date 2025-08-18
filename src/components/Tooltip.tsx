@@ -7,13 +7,10 @@ interface MapTooltipProps {
   level3?: string;
 }
 
-const MapTooltip = forwardRef<HTMLDivElement, MapTooltipProps>(
-  ({ level1, level2, level3 }, ref) => {
-    return (
-      <Card
-        ref={ref}
-        className="max-w-sm absolute z-[500] bottom-1 left-1 pointer-events-none"
-      >
+const MapTooltip: React.FC<MapTooltipProps> = ({ level1, level2, level3 }) => {
+  return (
+    <div className="absolute leaflet-bottom leaflet-left">
+      <Card className="leaflet-control max-w-sm pointer-events-none">
         <CardBody>
           <div className="flex flex-col gap-0">
             {level3 && <p className="text-large">{level3}</p>}
@@ -22,8 +19,8 @@ const MapTooltip = forwardRef<HTMLDivElement, MapTooltipProps>(
           </div>
         </CardBody>
       </Card>
-    );
-  }
-);
+    </div>
+  );
+};
 
 export default MapTooltip;

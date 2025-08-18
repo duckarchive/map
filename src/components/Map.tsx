@@ -26,6 +26,7 @@ const Map: React.FC<MapProps> = ({ position, onPositionChange }) => (
   >
     <MapLocationSearch />
     <TileLayer
+      className="grayscale"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       // url="https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=YOUR_KEY&language=uk"
       url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
