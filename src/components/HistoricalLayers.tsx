@@ -16,17 +16,21 @@ import { Feature } from "geojson";
 
 const colorPalette = [
   "green",
-  "orange",
   "darkblue",
-  "yellow",
+  "purple",
+  "orange",
   "blue",
   "red",
-  "purple",
+  "yellow",
 ];
 
 const getCountryFeatureColor = (feature: Feature) => {
-  const colorIndex =
-    (feature.properties?.admin_level_1_ID || feature.id || 0) % colorPalette.length;
+  const id = (feature.properties?.admin_level_1_ID || feature.id || 0);
+  if (id === 22) {
+    // Special case for Ukraine
+    return "gold";
+  }
+  const colorIndex = id % colorPalette.length;
   return colorPalette[colorIndex];
 };
 
@@ -36,7 +40,8 @@ const getStyle = (feature: Feature | undefined, isHighlight: boolean, weight = 1
     color: countryColor,
     fillColor: countryColor,
     weight,
-    fillOpacity: isHighlight ? 0.5 : 0,
+    opacity: isHighlight ? 1 : 0.5,
+    fillOpacity: isHighlight ? 0.1 : 0,
     interactive: true,
   };
 }
@@ -47,7 +52,7 @@ const CountriesLayer = memo(
       <GeoJSON
         ref={ref}
         data={data}
-        style={(feature) => getStyle(feature, false, 2)}
+        style={(feature) => getStyle(feature, false, 0)}
         onEachFeature={onEachFeature}
       />
     ) : null
@@ -60,7 +65,7 @@ const StatesLayer = memo(({ data, onEachFeature }: GeoJSONProps) =>
   data ? (
     <GeoJSON
       data={data}
-      style={(feature) => getStyle(feature, false, 1)}
+      style={(feature) => getStyle(feature, false, 2)}
       onEachFeature={onEachFeature}
     />
   ) : null
@@ -89,11 +94,11 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
       layer.on({
         mouseover: (e) => {
           setHoveredCountryFeature(feature);
-          e.target.setStyle(getStyle(feature, true, 2));
+          e.target.setStyle(getStyle(feature, false, 1));
         },
         mouseout: (e) => {
           setHoveredCountryFeature(null);
-          e.target.setStyle(getStyle(feature, false, 2));
+          e.target.setStyle(getStyle(feature, false, 0));
         },
       });
     },
@@ -105,11 +110,17 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
       layer.on({
         mouseover: (e) => {
           setHoveredStateFeature(feature);
-          e.target.setStyle(getStyle(feature, true, 1));
+          const countryFeature = countries?.features.find(
+            (f) => f.id?.toString() === feature.properties?.admin_level_1_ID.toString()
+          );
+          if (countryFeature) {
+            setHoveredCountryFeature(countryFeature);
+          }
+          e.target.setStyle(getStyle(feature, true, 4));
         },
         mouseout: (e) => {
           setHoveredStateFeature(null);
-          e.target.setStyle(getStyle(feature, false, 1));
+          e.target.setStyle(getStyle(feature, false, 2));
         }
       });
     },

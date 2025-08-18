@@ -19,7 +19,7 @@ const Map: React.FC<MapProps> = ({ position, onPositionChange }) => (
   <MapContainer
     scrollWheelZoom
     worldCopyJump
-    center={[48.21, 31.1]}
+    center={[49.0139, 31.2858]}
     style={{ height: "100%", width: "100%" }}
     zoom={6}
     zoomControl={false}
