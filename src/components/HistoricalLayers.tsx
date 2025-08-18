@@ -17,6 +17,7 @@ import { point as turfPoint } from "@turf/helpers";
 
 import useMapData from "./useMapData";
 import useStopPropagation from "./useStopPropagation";
+import MapTooltip from "./Tooltip";
 
 
 // Year presets
@@ -232,28 +233,12 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
 
       {/* Fixed tooltip at bottom left corner */}
       {(hoveredCountryFeature || hoveredStateFeature) && (
-        <Card
+        <MapTooltip
           ref={tooltipRef}
-          className="max-w-sm absolute z-[500] bottom-1 left-1 pointer-events-none"
-        >
-          <CardBody>
-            <div className="flex flex-col gap-1">
-              {hoveredStateFeature?.properties?.admin_level_3 && (
-                <h4 className="font-semibold text-large">
-                  {hoveredStateFeature.properties.admin_level_3}
-                </h4>
-              )}
-              {hoveredStateFeature?.properties?.admin_level_2 && (
-                <p className="text-small text-default-500">
-                  {hoveredStateFeature.properties.admin_level_2}
-                </p>
-              )}
-              <p className="text-small text-default-500">
-                {hoveredCountryFeature?.properties?.admin_level_1}
-              </p>
-            </div>
-          </CardBody>
-        </Card>
+          level1={hoveredCountryFeature?.properties?.admin_level_1}
+          level2={hoveredStateFeature?.properties?.admin_level_2}
+          level3={hoveredStateFeature?.properties?.admin_level_3}
+        />
       )}
       <div
         ref={yearSelectRef}

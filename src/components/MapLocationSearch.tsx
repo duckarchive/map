@@ -127,15 +127,14 @@ const MapLocationSearch = memo(() => {
       className="absolute z-[1000] top-1 left-1 right-1 w-auto"
     >
       <Autocomplete
-        aria-label="Пошук міста або адреси..."
+        aria-label="Пошук за сучасною назвою"
         className="w-full"
         defaultItems={results}
         inputValue={query}
         listboxProps={{
           emptyContent: "Нічого не знайдено. Уточніть свій запит.",
         }}
-        placeholder="Пошук міста або адреси..."
-        size="sm"
+        placeholder="Пошук за сучасною назвою"
         startContent={<SearchSVG />}
         variant="flat"
         onClick={(e) => e.stopPropagation()}
