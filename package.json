@@ -55,7 +55,8 @@
     "build": "cd demo && vite build",
     "build:lib": "vite build && npx tsc --emitDeclarationOnly --declaration --outDir dist && cp dist/GeoDuckMap/* dist/ && rm -rf dist/GeoDuckMap",
     "dev": "cd demo && vite",
-    "preview": "cd demo && vite preview"
+    "preview": "cd demo && vite preview",
+    "preversion": "npm run build:lib && git add dist && git commit -m 'release: Build lib for new version'"
   },
   "peerDependencies": {
     "leaflet": "^1.9.0",
