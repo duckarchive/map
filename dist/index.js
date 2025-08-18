@@ -420,7 +420,7 @@ const me = ({ year: e = 1897 }) => {
     scrollWheelZoom: !0,
     worldCopyJump: !0,
     center: [49.0139, 31.2858],
-    style: { height: "100%", width: "50%" },
+    style: { height: "100%", width: "100%" },
     zoom: 6,
     zoomControl: !1,
     children: [
