@@ -45,7 +45,7 @@ interface MapData {
 const COUNTRIES_BASE_URL =
   "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson/countries/";
 const YEAR_TO_COUNTRIES_URL: Record<number, string> = {
-  1897: `${COUNTRIES_BASE_URL}1800.geojson`,
+  1897: `${COUNTRIES_BASE_URL}1900.geojson`,
   1914: `${COUNTRIES_BASE_URL}1914.geojson`,
   1937: `${COUNTRIES_BASE_URL}1937.geojson`,
   1945: `${COUNTRIES_BASE_URL}1945.geojson`,
@@ -53,7 +53,7 @@ const YEAR_TO_COUNTRIES_URL: Record<number, string> = {
 };
 
 const STATE_BASE_URL =
-  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson/";
+  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson/states/";
 const YEAR_TO_STATE_URL: Record<number, string> = {
   1897: `${STATE_BASE_URL}1897.geojson`,
   1914: `${STATE_BASE_URL}1914.geojson`,

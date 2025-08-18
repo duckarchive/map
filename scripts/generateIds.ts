@@ -26,20 +26,120 @@ interface MyFeatureCollection extends FeatureCollection<any, MyProperties> {}
 
 /**
  * Check if a state feature overlaps with a country feature using turf helpers
+ * Handles MultiPolygon geometries by checking individual polygons
  */
 const isOverlapping = (state: Feature, country: Feature): boolean => {
   try {
     if (!state.geometry || !country.geometry) return false;
     
-    // Try multiple overlap detection methods for better accuracy
-    return (
-      booleanOverlap(state, country) ||
-      booleanContains(country, state) ||
-      booleanContains(state, country) ||
-      booleanIntersects(state, country)
-    );
+    // First try booleanOverlap and booleanIntersects which support MultiPolygons
+    try {
+      if (booleanOverlap(state, country) || booleanIntersects(state, country)) {
+        return true;
+      }
+    } catch (overlapError) {
+      // If overlap/intersects fail, continue to containment checks
+    }
+    
+    // Handle booleanContains which doesn't support MultiPolygons
+    try {
+      // Try simple containment first
+      if (booleanContains(country, state) || booleanContains(state, country)) {
+        return true;
+      }
+    } catch (containsError) {
+      // If contains fails due to MultiPolygon, handle it manually
+      const errorMessage = containsError instanceof Error ? containsError.message : String(containsError);
+      if (errorMessage.includes('MultiPolygon geometry not supported')) {
+        return checkMultiPolygonContainment(state, country);
+      }
+    }
+    
+    return false;
   } catch (error) {
     console.warn(`Error checking overlap: ${error}`);
+    return false;
+  }
+};
+
+/**
+ * Handle MultiPolygon containment by checking individual polygons
+ * Mimics the fix from https://github.com/Turfjs/turf/pull/2357/files
+ */
+const checkMultiPolygonContainment = (state: Feature, country: Feature): boolean => {
+  try {
+    // If country is MultiPolygon and state is Polygon
+    if (country.geometry?.type === 'MultiPolygon' && state.geometry?.type === 'Polygon') {
+      // Check if any polygon in the MultiPolygon contains the state
+      const multiPolygonCoords = country.geometry.coordinates;
+      for (const polygonCoords of multiPolygonCoords) {
+        const singlePolygon: Feature = {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Polygon',
+            coordinates: polygonCoords
+          }
+        };
+        if (booleanContains(singlePolygon, state)) {
+          return true;
+        }
+      }
+    }
+    
+    // If state is MultiPolygon and country is Polygon
+    if (state.geometry?.type === 'MultiPolygon' && country.geometry?.type === 'Polygon') {
+      // Check if the country contains all polygons of the MultiPolygon
+      const multiPolygonCoords = state.geometry.coordinates;
+      return multiPolygonCoords.every(polygonCoords => {
+        const singlePolygon: Feature = {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Polygon',
+            coordinates: polygonCoords
+          }
+        };
+        return booleanContains(country, singlePolygon);
+      });
+    }
+    
+    // If both are MultiPolygons
+    if (state.geometry?.type === 'MultiPolygon' && country.geometry?.type === 'MultiPolygon') {
+      const stateCoords = state.geometry.coordinates;
+      const countryCoords = country.geometry.coordinates;
+      
+      // Check if any country polygon contains any state polygon
+      for (const statePolygonCoords of stateCoords) {
+        const statePolygon: Feature = {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Polygon',
+            coordinates: statePolygonCoords
+          }
+        };
+        
+        for (const countryPolygonCoords of countryCoords) {
+          const countryPolygon: Feature = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Polygon',
+              coordinates: countryPolygonCoords
+            }
+          };
+          
+          if (booleanContains(countryPolygon, statePolygon)) {
+            return true;
+          }
+        }
+      }
+    }
+    
+    return false;
+  } catch (error) {
+    console.warn(`Error in MultiPolygon containment check: ${error}`);
     return false;
   }
 };
