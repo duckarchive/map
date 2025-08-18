@@ -42,24 +42,25 @@ interface MapData {
   isLoading: boolean;
 }
 
+const BASE_URL = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson";
 const COUNTRIES_BASE_URL =
-  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson/countries/";
+  `${BASE_URL}/countries`;
 const YEAR_TO_COUNTRIES_URL: Record<number, string> = {
-  1897: `${COUNTRIES_BASE_URL}1900.geojson`,
-  1914: `${COUNTRIES_BASE_URL}1914.geojson`,
-  1937: `${COUNTRIES_BASE_URL}1937.geojson`,
-  1945: `${COUNTRIES_BASE_URL}1945.geojson`,
-  1991: `${COUNTRIES_BASE_URL}1991.geojson`,
+  1897: `${COUNTRIES_BASE_URL}/1900.geojson`,
+  1914: `${COUNTRIES_BASE_URL}/1914.geojson`,
+  1937: `${COUNTRIES_BASE_URL}/1937.geojson`,
+  1945: `${COUNTRIES_BASE_URL}/1945.geojson`,
+  1991: `${COUNTRIES_BASE_URL}/1991.geojson`,
 };
 
 const STATE_BASE_URL =
-  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson/states/";
+  `${BASE_URL}/states`;
 const YEAR_TO_STATE_URL: Record<number, string> = {
-  1897: `${STATE_BASE_URL}1897.geojson`,
-  1914: `${STATE_BASE_URL}1914.geojson`,
-  1937: `${STATE_BASE_URL}1937.geojson`,
-  1945: `${STATE_BASE_URL}1945.geojson`,
-  1991: `${STATE_BASE_URL}1991.geojson`,
+  1897: `${STATE_BASE_URL}/1897.geojson`,
+  1914: `${STATE_BASE_URL}/1914.geojson`,
+  1937: `${STATE_BASE_URL}/1937.geojson`,
+  1945: `${STATE_BASE_URL}/1945.geojson`,
+  1991: `${STATE_BASE_URL}/1991.geojson`,
 };
 
 // Fetcher function for SWR

@@ -288,7 +288,7 @@ function processGeoJSONFiles(countriesFolder: string, statesFolder: string) {
   // Step 4: Process states files - detect country relationships and clean up properties.id
   console.log('🗺️  Processing states files...');
   const statesFiles = fs.readdirSync(statesFolder)
-    .filter(file => file.endsWith('.geojson') && !countryFiles.includes(file))
+    .filter(file => file.endsWith('.geojson'))
     .sort();
 
   let processedStates = 0;
