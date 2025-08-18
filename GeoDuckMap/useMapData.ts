@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { useMemo, useState } from "react";
 
 const BASE_URL =
-  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/geojson";
+  "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson";
 interface Collection {
   year: number;
   label?: string;
