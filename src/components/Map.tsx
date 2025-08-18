@@ -24,16 +24,13 @@ const Map: React.FC<MapProps> = ({ position, onPositionChange }) => (
     zoom={6}
     zoomControl={false}
   >
-    <MapLocationSearch />
     <TileLayer
       className="grayscale"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      // url="https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=YOUR_KEY&language=uk"
       url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      // url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
-      // url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png"
     />
     <UkraineLayer />
+    <MapLocationSearch />
     <HistoricalLayers />
     <LocationMarker value={position} onChange={onPositionChange} />
   </MapContainer>

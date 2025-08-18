@@ -1,5 +1,39 @@
 import useSWR from "swr";
 import { useMemo, useState } from "react";
+import { Feature, FeatureCollection } from "geojson";
+
+const colorPalette = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "blue",
+  "darkblue",
+  "purple",
+];
+
+const getCountryFeatureColor = (feature: Feature) => {
+  const colorIndex = (feature.properties?.admin_level_1?.length || 0) % colorPalette.length;
+  return colorPalette[colorIndex];
+};
+
+const addColors = (featureCollection: FeatureCollection) => {
+  return {
+    ...featureCollection,
+    features: featureCollection.features.map((feature) => {
+      if (feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon") {
+        return {
+          ...feature,
+          properties: {
+            ...feature.properties,
+            color: getCountryFeatureColor(feature),
+          },
+        };
+      }
+      return feature;
+    }
+  )};
+};
 
 interface MapData {
   countries: GeoJSON.FeatureCollection | null;
@@ -58,9 +92,9 @@ const useMapData = (defaultYear: number): MapData => {
     refreshWhenOffline: false,
   });
 
-  const countries = useMemo(() => countriesData || null, [countriesData]);
+  const countries = useMemo(() => countriesData ? addColors(countriesData) : null, [countriesData]);
 
-  const states = useMemo(() => statesData || null, [statesData]);
+  const states = useMemo(() => statesData ? addColors(statesData) : null, [statesData]);
 
   const updateYear = (year: number) => {
     setYear(year);

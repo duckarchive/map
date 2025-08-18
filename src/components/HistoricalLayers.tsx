@@ -8,10 +8,7 @@ import {
   useState,
 } from "react";
 import { GeoJSON, GeoJSONProps, useMap } from "react-leaflet";
-import { Card, CardBody } from "@heroui/card";
 import { Spinner } from "@heroui/spinner";
-import { Input } from "@heroui/input";
-import { Button } from "@heroui/button";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point as turfPoint } from "@turf/helpers";
 
@@ -19,7 +16,7 @@ import useMapData from "./useMapData";
 import useStopPropagation from "./useStopPropagation";
 import MapTooltip from "./Tooltip";
 import YearSelect from "./YearSelect";
-
+import { Feature } from "geojson";
 
 // Color palette for countries (OHM data)
 const colorPalette = [
@@ -39,21 +36,19 @@ const getFeatureColor = (feature: any) => {
   return colorPalette[colorIndex];
 };
 
-// Styles for countries (OHM data)
-const countryDefaultStyle = (feature: any) => ({
-  color: getFeatureColor(feature),
-  weight: 2,
-  fillColor: "transparent",
-  opacity: 0.4,
+const countryDefaultStyle = {
+  color: "purple",
+  weight: 1,
+  fillOpacity: 0,
+  fillColor: "purple",
   interactive: true,
-});
+};
 
-const countryHighlightStyle = (feature: any) => ({
-  ...countryDefaultStyle(feature),
-  opacity: 0.8,
-});
+const countryHighlightStyle = {
+  ...countryDefaultStyle,
+  fillOpacity: 0.5,
+};
 
-// Styles for states (historical data)
 const stateDefaultStyle = {
   color: "gold",
   weight: 1,
@@ -73,11 +68,11 @@ const CountriesLayer = memo(
       <GeoJSON
         ref={ref}
         data={data}
-        style={countryDefaultStyle}
+        style={stateDefaultStyle}
         onEachFeature={onEachFeature}
       />
-    ) : null,
-  ),
+    ) : null
+  )
 );
 
 CountriesLayer.displayName = "CountriesLayer";
@@ -89,7 +84,7 @@ const StatesLayer = memo(({ data, onEachFeature }: GeoJSONProps) =>
       style={stateDefaultStyle}
       onEachFeature={onEachFeature}
     />
-  ) : null,
+  ) : null
 );
 
 StatesLayer.displayName = "StatesLayer";
@@ -103,48 +98,64 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
   const [hoveredStateFeature, setHoveredStateFeature] = useState<any>(null);
   const [yearOverride, setYearOverride] = useState(year);
   const { countries, states, updateYear, isLoading } = useMapData(yearOverride);
-  const countriesRef = useRef<L.GeoJSON>(null);
+  // const countriesRef = useRef<L.GeoJSON>(null);
   const yearSelectRef = useStopPropagation();
   const map = useMap();
 
-  useEffect(() => {
-    if (!map || !countriesRef.current) return;
+  // useEffect(() => {
+  //   if (!map || !countriesRef.current) return;
 
-    const handleMouseMove = (e: LeafletMouseEvent) => {
-      const point = turfPoint([e.latlng.lng, e.latlng.lat]);
+  //   const handleMouseMove = (e: LeafletMouseEvent) => {
+  //     const point = turfPoint([e.latlng.lng, e.latlng.lat]);
 
-      countriesRef.current?.eachLayer((l: any) => {
-        const feature: GeoJSON.Feature = l.feature;
+  //     countriesRef.current?.eachLayer((l: any) => {
+  //       const feature: GeoJSON.Feature = l.feature;
 
-        if (!feature || !feature.geometry) return;
-        try {
-          if (feature.geometry.type.endsWith("Polygon")) {
-            if (booleanPointInPolygon(point, feature as any)) {
-              setHoveredCountryFeature(feature);
-              l.setStyle(countryHighlightStyle(feature));
-            } else {
-              l.setStyle(countryDefaultStyle(feature));
-            }
-          }
-        } catch {
-          // Skip invalid geometry features
-          console.warn("Invalid geometry for feature", feature);
-        }
-      });
-    };
+  //       if (!feature || !feature.geometry) return;
+  //       try {
+  //         if (feature.geometry.type.endsWith("Polygon")) {
+  //           if (booleanPointInPolygon(point, feature as any)) {
+  //             setHoveredCountryFeature(feature);
+  //             l.setStyle(countryHighlightStyle(feature));
+  //           } else {
+  //             l.setStyle(countryDefaultStyle(feature));
+  //           }
+  //         }
+  //       } catch {
+  //         // Skip invalid geometry features
+  //         console.warn("Invalid geometry for feature", feature);
+  //       }
+  //     });
+  //   };
 
-    map.on("mousemove", handleMouseMove);
+  //   map.on("mousemove", handleMouseMove);
 
-    return () => {
-      map.off("mousemove", handleMouseMove);
-    };
-  }, [map, countriesRef, countries, states]);
+  //   return () => {
+  //     map.off("mousemove", handleMouseMove);
+  //   };
+  // }, [map, countriesRef, countries, states]);
 
   useEffect(() => {
     updateYear(yearOverride);
     setHoveredCountryFeature(null);
     setHoveredStateFeature(null);
   }, [yearOverride]);
+
+  const onEachCountryFeature = useCallback(
+    (feature: GeoJSON.Feature, layer: Layer) => {
+      layer.on({
+        mouseover: (e) => {
+          setHoveredCountryFeature(feature);
+          e.target.setStyle(countryHighlightStyle);
+        },
+        mouseout: (e) => {
+          setHoveredCountryFeature(null);
+          e.target.setStyle(countryDefaultStyle);
+        },
+      });
+    },
+    []
+  );
 
   const onEachStateFeature = useCallback(
     (feature: GeoJSON.Feature, layer: Layer) => {
@@ -159,7 +170,7 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
         },
       });
     },
-    [],
+    []
   );
 
   return (
@@ -170,7 +181,12 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
         </div>
       ) : (
         <>
-          {countries && <CountriesLayer ref={countriesRef} data={countries} />}
+          {countries && (
+            <CountriesLayer
+              data={countries}
+              onEachFeature={onEachCountryFeature}
+            />
+          )}
 
           {states && (
             <StatesLayer data={states} onEachFeature={onEachStateFeature} />
