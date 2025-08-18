@@ -13,7 +13,8 @@ const colorPalette = [
 ];
 
 const getCountryFeatureColor = (feature: Feature) => {
-  const colorIndex = (feature.properties?.admin_level_1?.length || 0) % colorPalette.length;
+  const colorIndex =
+    (feature.properties?.admin_level_1?.length || 0) % colorPalette.length;
   return colorPalette[colorIndex];
 };
 
@@ -21,7 +22,10 @@ const addColors = (featureCollection: FeatureCollection) => {
   return {
     ...featureCollection,
     features: featureCollection.features.map((feature) => {
-      if (feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon") {
+      if (
+        feature.geometry.type === "Polygon" ||
+        feature.geometry.type === "MultiPolygon"
+      ) {
         return {
           ...feature,
           properties: {
@@ -31,9 +35,59 @@ const addColors = (featureCollection: FeatureCollection) => {
         };
       }
       return feature;
-    }
-  )};
+    }),
+  };
 };
+
+const BASE_URL =
+  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson";
+interface Collection {
+  year: number;
+  label?: string;
+  url: string;
+}
+export const countryCollections: Collection[] = [
+  { year: 1500, url: `${BASE_URL}/countries/1500.geojson` },
+  { year: 1530, url: `${BASE_URL}/countries/1530.geojson` },
+  { year: 1600, url: `${BASE_URL}/countries/1600.geojson` },
+  { year: 1650, url: `${BASE_URL}/countries/1650.geojson` },
+  { year: 1700, url: `${BASE_URL}/countries/1700.geojson` },
+  { year: 1715, url: `${BASE_URL}/countries/1715.geojson` },
+  { year: 1783, url: `${BASE_URL}/countries/1783.geojson` },
+  { year: 1800, url: `${BASE_URL}/countries/1800.geojson` },
+  { year: 1815, url: `${BASE_URL}/countries/1815.geojson` },
+  { year: 1880, url: `${BASE_URL}/countries/1880.geojson` },
+  { year: 1900, url: `${BASE_URL}/countries/1900.geojson` },
+  { year: 1914, url: `${BASE_URL}/countries/1914.geojson` },
+  { year: 1920, url: `${BASE_URL}/countries/1920.geojson` },
+  { year: 1930, url: `${BASE_URL}/countries/1930.geojson` },
+  { year: 1938, url: `${BASE_URL}/countries/1938.geojson` },
+  { year: 1945, url: `${BASE_URL}/countries/1945.geojson` },
+  { year: 1960, url: `${BASE_URL}/countries/1960.geojson` },
+  { year: 1991, url: `${BASE_URL}/countries/1991.geojson` },
+];
+
+export const stateCollections: Collection[] = [
+  { year: 1897, url: `${BASE_URL}/states/1897.geojson` },
+  { year: 1914, url: `${BASE_URL}/states/1914.geojson` },
+  { year: 1937, url: `${BASE_URL}/states/1937.geojson` },
+  { year: 1945, url: `${BASE_URL}/states/1945.geojson` },
+  { year: 1991, url: `${BASE_URL}/states/1991.geojson` },
+];
+
+const getClosestCollectionUrl = (
+  targetYear: number,
+  collections: Collection[]
+): string | null => {
+  const countryYears = collections
+    .filter(({ year }) => year > 0 && year <= targetYear)
+    .sort((a, b) => b.year - a.year);
+
+  return countryYears.length > 0 ? countryYears[0].url : null;
+};
+
+// Fetcher function for SWR
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 interface MapData {
   countries: GeoJSON.FeatureCollection | null;
@@ -42,34 +96,10 @@ interface MapData {
   isLoading: boolean;
 }
 
-const BASE_URL = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson";
-const COUNTRIES_BASE_URL =
-  `${BASE_URL}/countries`;
-const YEAR_TO_COUNTRIES_URL: Record<number, string> = {
-  1897: `${COUNTRIES_BASE_URL}/1900.geojson`,
-  1914: `${COUNTRIES_BASE_URL}/1914.geojson`,
-  1937: `${COUNTRIES_BASE_URL}/1937.geojson`,
-  1945: `${COUNTRIES_BASE_URL}/1945.geojson`,
-  1991: `${COUNTRIES_BASE_URL}/1991.geojson`,
-};
-
-const STATE_BASE_URL =
-  `${BASE_URL}/states`;
-const YEAR_TO_STATE_URL: Record<number, string> = {
-  1897: `${STATE_BASE_URL}/1897.geojson`,
-  1914: `${STATE_BASE_URL}/1914.geojson`,
-  1937: `${STATE_BASE_URL}/1937.geojson`,
-  1945: `${STATE_BASE_URL}/1945.geojson`,
-  1991: `${STATE_BASE_URL}/1991.geojson`,
-};
-
-// Fetcher function for SWR
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const useMapData = (defaultYear: number): MapData => {
   const [year, setYear] = useState(defaultYear);
 
-  const countriesUrl = YEAR_TO_COUNTRIES_URL[year] || null;
+  const countriesUrl = getClosestCollectionUrl(year, countryCollections);
   const {
     data: countriesData,
     isLoading: isLoadingCountries,
@@ -81,7 +111,7 @@ const useMapData = (defaultYear: number): MapData => {
     refreshWhenOffline: false,
   });
 
-  const statesUrl = YEAR_TO_STATE_URL[year] || null;
+  const statesUrl = getClosestCollectionUrl(year, stateCollections);
   const {
     data: statesData,
     isLoading: isLoadingStates,
@@ -93,9 +123,15 @@ const useMapData = (defaultYear: number): MapData => {
     refreshWhenOffline: false,
   });
 
-  const countries = useMemo(() => countriesData ? addColors(countriesData) : null, [countriesData]);
+  const countries = useMemo(
+    () => (countriesData ? addColors(countriesData) : null),
+    [countriesData]
+  );
 
-  const states = useMemo(() => statesData ? addColors(statesData) : null, [statesData]);
+  const states = useMemo(
+    () => (statesData ? addColors(statesData) : null),
+    [statesData]
+  );
 
   const updateYear = (year: number) => {
     setYear(year);

@@ -47,7 +47,7 @@ out geom;
 }
 
 async function saveGeoJSON(year: number, geojson: FeatureCollection): Promise<void> {
-  const outputDir = path.join(__dirname, '../public/assets/geojson/countries');
+  const outputDir = path.join(__dirname, '../geojson/countries');
   const outputPath = path.join(outputDir, `${year}.geojson`);
 
   // Ensure directory exists

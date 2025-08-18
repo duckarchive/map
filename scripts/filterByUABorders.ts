@@ -10,7 +10,7 @@ import { expandBbox, UKRAINE_BBOX } from "./helpers";
 // Load and process Ukraine GeoJSON with 20% buffer
 function loadUkrainePolygonWithBuffer(): GeoJSON.Feature {
   try {
-    const ukraineGeoJSON: GeoJSON.FeatureCollection = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'public/assets/geojson/ukraine.geojson'), 'utf8'));
+    const ukraineGeoJSON: GeoJSON.FeatureCollection = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'geojson/ukraine.geojson'), 'utf8'));
 
     // Calculate buffer distance (20% expansion)
     // For rough estimation, use ~50km buffer which is approximately 20% expansion for Ukraine

@@ -184,7 +184,7 @@ function main() {
   
   if (args.length !== 2) {
     console.error('Usage: tsx scripts/generateIds.ts <countries-folder> <states-folder>');
-    console.error('Example: tsx scripts/generateIds.ts public/assets/geojson/countries public/assets/geojson');
+    console.error('Example: tsx scripts/generateIds.ts geojson/countries geojson');
     process.exit(1);
   }
 
