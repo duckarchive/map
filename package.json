@@ -6,7 +6,7 @@
     "react",
     "leaflet",
     "map",
-    "historical",
+    "history",
     "geojson",
     "ukraine",
     "geography"
@@ -20,9 +20,9 @@
     "url": "https://github.com/duckarchive/map.duckarchive.com/issues"
   },
   "license": "MIT",
-  "author": "DuckArchive",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+  "author": {
+    "name": "Alexandr Tovmach",
+    "email": "alexandrtovmach@gmail.com"
   },
   "type": "module",
   "main": "dist/index.cjs",
@@ -37,8 +37,7 @@
     "./package.json": "./package.json"
   },
   "files": [
-    "dist",
-    "geojson"
+    "dist"
   ],
   "scripts": {
     "fetch-ohm-borders": "tsx scripts/fetchAllOHMBorders.ts",
@@ -53,21 +52,10 @@
     "merge": "tsx scripts/merge.ts",
     "minify": "tsx scripts/minify.ts",
     "translator": "tsx scripts/translator.ts",
-    "build": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
-    "build:lib": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist && mv dist/src/* dist/ && rm -rf dist/src",
-    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist",
+    "build": "cd demo && vite build",
+    "build:lib": "vite build && tsc --emitDeclarationOnly --declaration --outDir dist",
     "dev": "cd demo && vite",
-    "build:demo": "cd demo && vite build",
-    "preview": "cd demo && vite preview",
-    "prepare-package": "cp README.package.md README.md",
-    "prepublishOnly": "npm run prepare-package && npm run build:lib",
-    "postpublish": "git checkout README.md",
-    "pack-test": "npm run prepare-package && npm run build:lib && npm pack",
-    "version:patch": "npm version patch",
-    "version:minor": "npm version minor",
-    "version:major": "npm version major",
-    "release": "npm run build:lib && npm run pack-test",
-    "publish:github": "npm run prepare-package && npm run build:lib && npm publish"
+    "preview": "cd demo && vite preview"
   },
   "peerDependencies": {
     "leaflet": "^1.9.0",
@@ -102,22 +90,8 @@
     }
   },
   "dependencies": {
-    "@turf/area": "^7.2.0",
-    "@turf/bbox-polygon": "^7.2.0",
-    "@turf/boolean-contains": "^7.2.0",
-    "@turf/boolean-intersects": "^7.2.0",
-    "@turf/boolean-overlap": "^7.2.0",
-    "@turf/boolean-point-in-polygon": "^7.2.0",
-    "@turf/buffer": "^7.2.0",
-    "@turf/helpers": "^7.2.0",
-    "@turf/inside": "^5.0.0",
-    "@turf/intersect": "^7.2.0",
-    "@turf/random": "^7.2.0",
-    "@turf/simplify": "^7.2.0",
-    "json5": "^2.2.3",
     "leaflet-defaulticon-compatibility": "^0.1.2",
-    "leaflet-geosearch": "^4.2.0",
-    "proj4": "^2.9.0"
+    "leaflet-geosearch": "^4.2.0"
   },
   "devDependencies": {
     "@heroui/autocomplete": "^2.3.26",
@@ -127,6 +101,17 @@
     "@heroui/spinner": "^2.2.21",
     "@heroui/system": "^2.4.20",
     "@tailwindcss/vite": "4.1.12",
+    "@turf/area": "^7.2.0",
+    "@turf/bbox-polygon": "^7.2.0",
+    "@turf/boolean-contains": "^7.2.0",
+    "@turf/boolean-intersects": "^7.2.0",
+    "@turf/boolean-overlap": "^7.2.0",
+    "@turf/boolean-point-in-polygon": "^7.2.0",
+    "@turf/buffer": "^7.2.0",
+    "@turf/helpers": "^7.2.0",
+    "@turf/intersect": "^7.2.0",
+    "@turf/random": "^7.2.0",
+    "@turf/simplify": "^7.2.0",
     "@turf/union": "^7.2.0",
     "@types/geojson": "^7946.0.16",
     "@types/leaflet": "^1.9.20",
@@ -143,12 +128,12 @@
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "postcss": "^8.4.35",
+    "proj4": "^2.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
     "swr": "^2.3.6",
     "tailwindcss": "^3.4.1",
-    "terser": "^5.43.1",
     "topojson-client": "^3.1.0",
     "ts-node": "^10.9.2",
     "tsx": "^3.12.7",

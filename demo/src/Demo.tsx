@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardBody } from "@heroui/card";
-import GeoDuckMap from "../../src/GeoDuckMap";
+// @ts-ignore
+import GeoDuckMap from "../../";
 
 const Demo: React.FC = () => {
   const [position, setPosition] = useState<[number, number]>([49.0139, 31.2858]);

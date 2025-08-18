@@ -1,7 +1,0 @@
-# Configuration for installing @duckarchive packages from GitHub Packages
-@duckarchive:registry=https://npm.pkg.github.com
-
-# Authentication token (replace with your GitHub Personal Access Token)
-# Generate at: https://github.com/settings/tokens
-# Required scopes: read:packages
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}

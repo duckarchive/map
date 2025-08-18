@@ -20,7 +20,7 @@
     "isolatedModules": true,
     "noEmit": false
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "GeoDuckMap"],
   "exclude": ["node_modules", "dist", "demo", "scripts"],
   "ts-node": {
     "esm": true,

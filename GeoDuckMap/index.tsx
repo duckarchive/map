@@ -1,4 +1,6 @@
 import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import "leaflet-geosearch/assets/css/leaflet.css";
 
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
@@ -20,7 +22,7 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({ position, onPositionChange }) =
     scrollWheelZoom
     worldCopyJump
     center={[49.0139, 31.2858]}
-    style={{ height: "100%", width: "100%" }}
+    style={{ height: "100%", width: "50%" }}
     zoom={6}
     zoomControl={false}
   >

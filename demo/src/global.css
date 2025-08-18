@@ -1,7 +1,5 @@
 /* Import Leaflet styles */
 @import "leaflet/dist/leaflet.css";
-@import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-@import "leaflet-geosearch/assets/css/leaflet.css";
 
 @tailwind base;
 @tailwind components;
