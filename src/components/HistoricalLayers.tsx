@@ -238,18 +238,18 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
         >
           <CardBody>
             <div className="flex flex-col gap-1">
-              {hoveredStateFeature?.properties?.admin_level_2 && (
+              {hoveredStateFeature?.properties?.admin_level_3 && (
                 <h4 className="font-semibold text-large">
-                  {hoveredStateFeature.properties.admin_level_2}
+                  {hoveredStateFeature.properties.admin_level_3}
                 </h4>
               )}
-              {hoveredStateFeature?.properties?.admin_level_1 && (
+              {hoveredStateFeature?.properties?.admin_level_2 && (
                 <p className="text-small text-default-500">
-                  {hoveredStateFeature.properties.admin_level_1}
+                  {hoveredStateFeature.properties.admin_level_2}
                 </p>
               )}
               <p className="text-small text-default-500">
-                {hoveredCountryFeature?.properties?.name}
+                {hoveredCountryFeature?.properties?.admin_level_1}
               </p>
             </div>
           </CardBody>
