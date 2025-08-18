@@ -124,11 +124,11 @@ const MapLocationSearch = memo(() => {
   return (
     <div
       ref={autocompleteRef} // Prevents click events from propagating to the map
-      className="absolute z-[1000] top-1 left-1 right-1 w-auto"
+      className="absolute leaflet-top leaflet-left"
     >
       <Autocomplete
         aria-label="Пошук за сучасною назвою"
-        className="w-full"
+        className="leaflet-control w-auto bg-white rounded-xl shadow"
         defaultItems={results}
         inputValue={query}
         listboxProps={{
@@ -136,7 +136,7 @@ const MapLocationSearch = memo(() => {
         }}
         placeholder="Пошук за сучасною назвою"
         startContent={<SearchSVG />}
-        variant="flat"
+        variant="bordered"
         onClick={(e) => e.stopPropagation()}
         onInputChange={handleInputChange}
         onMouseDown={(e) => e.stopPropagation()}

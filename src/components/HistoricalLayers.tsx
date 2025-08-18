@@ -177,7 +177,11 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
           )}
         </>
       )}
-
+      <YearSelect
+        ref={yearSelectRef}
+        value={yearOverride}
+        onChange={setYearOverride}
+      />
       {/* Fixed tooltip at bottom left corner */}
       {(hoveredCountryFeature || hoveredStateFeature) && (
         <MapTooltip
@@ -186,11 +190,6 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
           level3={hoveredStateFeature?.properties?.admin_level_3}
         />
       )}
-      <YearSelect
-        ref={yearSelectRef}
-        value={yearOverride}
-        onChange={setYearOverride}
-      />
     </>
   );
 };

@@ -64,8 +64,24 @@ const YearSelect = forwardRef<HTMLDivElement, YearSelectProps>(
     };
 
     return (
-      <div ref={ref} className="absolute leaflet-bottom leaflet-right">
+      <div ref={ref} className="absolute leaflet-top leaflet-right">
         <div className="leaflet-control bg-white rounded-xl shadow">
+          <Input
+            classNames={{
+              inputWrapper: "bg-default-100 relative",
+              input: "text-sm",
+            }}
+            errorMessage={isInvalid ? "Введіть рік від 1600 до 2025" : ""}
+            isInvalid={isInvalid}
+            placeholder="1897"
+            type="text"
+            value={yearInput}
+            variant="bordered"
+            onBlur={handleInputBlur}
+            onFocus={handleInputFocus}
+            onValueChange={handleYearInputChange}
+          />
+
           {showPresets && (
             <div className="flex flex-col gap-1 p-2">
               {YEAR_PRESETS.map((preset) => (
@@ -82,23 +98,6 @@ const YearSelect = forwardRef<HTMLDivElement, YearSelectProps>(
               ))}
             </div>
           )}
-          <Input
-            classNames={{
-              inputWrapper: "bg-default-100 relative",
-              input: "text-sm",
-            }}
-            errorMessage={isInvalid ? "Введіть рік від 1600 до 2025" : ""}
-            isInvalid={isInvalid}
-            label="Рік"
-            placeholder="1897"
-            size="sm"
-            type="text"
-            value={yearInput}
-            variant="bordered"
-            onBlur={handleInputBlur}
-            onFocus={handleInputFocus}
-            onValueChange={handleYearInputChange}
-          />
         </div>
       </div>
     );
