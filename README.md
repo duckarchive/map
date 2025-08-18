@@ -1,33 +1,40 @@
-# TypeScript Conversion
+# Ukrainian Lands History Maps
 
-## Scripts
+This project provides interactive maps showcasing the historical borders of Ukrainian administrative states. It aims to visualize the evolution of Ukrainian territories over time.
 
-Run scripts using `pnpm run <script>`:
+## Features
 
-- `filter` - Filter GeoJSON features within Ukraine polygon
-- `fix` - Convert coordinates from Stereo70 to WGS84
-- `gisloader` - Download features from ArcGIS service
-- `merge` - Merge translation data with GeoJSON
-- `rename` - Rename GeoJSON properties
-- `translator` - Convert GeoJSON to CSV/JSON without geometry
-- `build` - Build TypeScript files to JavaScript
-- `start` - Run all scripts in sequence
+- **Historical Maps**: Explore the changing borders of Ukrainian lands through different historical periods.
+- **React/Next.js Map Component**: Built with [React](https://reactjs.org/) and [Next.js](https://nextjs.org/) for fast, modern web experiences.
+- **Map Rendering**: Utilizes [react-leaflet](https://react-leaflet.js.org/) and [OpenStreetMap](https://www.openstreetmap.org/) for interactive and customizable map displays.
+- **GeoJSON Support**: Maps are rendered from GeoJSON files representing historical administrative boundaries.
+- **Helper Scripts**: Includes various scripts to process, validate, and manage GeoJSON files for development and data preparation.
+
+## Getting Started
+
+1. **Install dependencies:**
+  ```bash
+  pnpm install
+  ```
+2. **Run the development server:**
+  ```bash
+  pnpm run dev
+  ```
+3. **Open your browser:**  
+  Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ## Development
 
-- Uses TypeScript with `ts-node` for development
-- Output directory: `dist/`
-- Source files in `src/`
+- Helper scripts for GeoJSON manipulation are located in the `scripts/` directory.
+- Map components are in the `components/` directory.
 
-### Dependencies
+## License
 
-Core packages:
-- `@turf/*` - GeoJSON manipulation utilities
-- `proj4` - Coordinate system transformations
-- `csv-parse` - CSV parsing
-- `node-fetch` - HTTP requests
+This project is open source and available under the [MIT License](LICENSE).
 
-Development:
-- `typescript`
-- `ts-node`
-- Type definitions (`@types/*`)
+## Acknowledgements
+
+- [React](https://reactjs.org/)
+- [Next.js](https://nextjs.org/)
+- [react-leaflet](https://react-leaflet.js.org/)
+- [OpenStreetMap](https://www.openstreetmap.org/)
