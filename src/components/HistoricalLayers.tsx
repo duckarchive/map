@@ -124,7 +124,7 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
         }
       });
     },
-    []
+    [countries]
   );
 
   return (

@@ -2,11 +2,11 @@ import { GeoJSON } from "react-leaflet";
 import useSWR from "swr";
 
 const UKRAINE_URL =
-  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/public/assets/geojson/ukraine.geojson";
+  "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/geojson/ukraine.geojson";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const UkraineLayer: React.FC = () => {
-  const { data, isLoading, isValidating } = useSWR<GeoJSON.FeatureCollection>(
+  const { data } = useSWR<GeoJSON.FeatureCollection>(
     UKRAINE_URL,
     fetcher,
     {
