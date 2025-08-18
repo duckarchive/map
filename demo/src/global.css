@@ -25,14 +25,3 @@
 body {
   margin: 0;
 }
-
-/* Fix Leaflet marker icons */
-.leaflet-default-icon-path {
-  background-image: url("https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png");
-}
-
-.leaflet-control-geosearch form {
-  background: #fff;
-  padding: 10px;
-  border-radius: 4px;
-}
