@@ -1,12 +1,12 @@
 import { jsx as o, jsxs as v, Fragment as O } from "react/jsx-runtime";
 import "leaflet-defaulticon-compatibility";
-import { useMapEvents as B, Marker as U, useMap as T, GeoJSON as I, MapContainer as A, TileLayer as H } from "react-leaflet";
-import { useRef as G, useEffect as L, memo as $, useState as m, useCallback as w, useMemo as R, forwardRef as q } from "react";
+import { useMapEvents as B, Marker as U, useMap as T, GeoJSON as L, MapContainer as A, TileLayer as H } from "react-leaflet";
+import { useRef as G, useEffect as k, memo as $, useState as m, useCallback as w, useMemo as R, forwardRef as q } from "react";
 import { OpenStreetMapProvider as J } from "leaflet-geosearch";
 import { Autocomplete as K, AutocompleteItem as Z } from "@heroui/autocomplete";
 import { DomEvent as Q } from "leaflet";
 import { Spinner as X } from "@heroui/spinner";
-import k from "swr";
+import I from "swr";
 import { Card as ee, CardBody as te } from "@heroui/card";
 import { Button as oe } from "@heroui/button";
 import { Input as ne } from "@heroui/input";
@@ -18,7 +18,7 @@ const re = ({ value: e, onChange: t }) => (B({
   }
 }), e ? /* @__PURE__ */ o(U, { position: e }) : null), V = () => {
   const e = G(null);
-  return L(() => {
+  return k(() => {
     e.current && Q.disableClickPropagation(e.current);
   }, [e.current]), e;
 }, ae = () => /* @__PURE__ */ o(
@@ -67,14 +67,14 @@ const re = ({ value: e, onChange: t }) => (B({
     ]
   }
 ), F = $(() => {
-  const [e, t] = m(""), [r, n] = m([]), l = V(), c = T(), d = new J({
+  const [e, t] = m(""), [r, n] = m([]), l = V(), i = T(), d = new J({
     params: {
       "accept-language": "ua",
       countrycodes: "ua,pl,by,ru,ro,md,tr",
       limit: 5,
       email: "admin@duckarchive.com"
     }
-  }), i = w(
+  }), c = w(
     async (a) => {
       if (!a.trim()) {
         n([]);
@@ -89,14 +89,14 @@ const re = ({ value: e, onChange: t }) => (B({
     },
     [d]
   );
-  L(() => {
+  k(() => {
     const a = setTimeout(() => {
-      i(e);
+      c(e);
     }, 300);
     return () => clearTimeout(a);
   }, [e]);
   const p = (a) => {
-    t(a.label), c.setView([a.y, a.x], 15), c.fire("geosearch/showlocation", {
+    t(a.label), i.setView([a.y, a.x], 15), i.fire("geosearch/showlocation", {
       location: a,
       marker: null
     });
@@ -145,7 +145,7 @@ const re = ({ value: e, onChange: t }) => (B({
   );
 });
 F.displayName = "MapLocationSearch";
-const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/geojson", le = [
+const s = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", le = [
   { year: 1500, url: `${s}/countries/1500.geojson` },
   { year: 1530, url: `${s}/countries/1530.geojson` },
   { year: 1600, url: `${s}/countries/1600.geojson` },
@@ -164,7 +164,7 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
   { year: 1945, url: `${s}/countries/1945.geojson` },
   { year: 1960, url: `${s}/countries/1960.geojson` },
   { year: 1991, url: `${s}/countries/1991.geojson` }
-], ce = [
+], ie = [
   { year: 1897, url: `${s}/states/1897.geojson` },
   { year: 1914, url: `${s}/states/1914.geojson` },
   { year: 1937, url: `${s}/states/1937.geojson` },
@@ -172,26 +172,26 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
   { year: 1991, url: `${s}/states/1991.geojson` }
 ], _ = (e, t, r = !1) => {
   if (r) {
-    const l = t.find(({ year: c }) => c === e);
+    const l = t.find(({ year: i }) => i === e);
     return l ? l.url : null;
   }
-  const n = t.filter(({ year: l }) => l > 0 && l <= e).sort((l, c) => c.year - l.year);
+  const n = t.filter(({ year: l }) => l > 0 && l <= e).sort((l, i) => i.year - l.year);
   return n.length > 0 ? n[0].url : null;
-}, P = (e) => fetch(e).then((t) => t.json()), ie = (e) => {
+}, P = (e) => fetch(e).then((t) => t.json()), ce = (e) => {
   const [t, r] = m(e), n = _(t, le), {
     data: l,
-    isLoading: c,
+    isLoading: i,
     isValidating: d
-  } = k(n, P, {
+  } = I(n, P, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), i = _(t, ce, !0), {
+  }), c = _(t, ie, !0), {
     data: p,
     isLoading: j,
     isValidating: b
-  } = k(i, P, {
+  } = I(c, P, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
@@ -209,7 +209,7 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
     updateYear: (h) => {
       r(h);
     },
-    isLoading: c || j || d || b
+    isLoading: i || j || d || b
   };
 }, ue = ({ level1: e, level2: t, level3: r }) => /* @__PURE__ */ o("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ o(ee, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ o(te, { className: "py-2", children: /* @__PURE__ */ v("div", { className: "flex flex-col gap-0", children: [
   r && /* @__PURE__ */ o("p", { className: "text-large", children: r }),
@@ -225,15 +225,15 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
   const t = parseInt(e, 10);
   return /^\d{4}$/.test(e) && t >= 1500 && t <= 1991;
 }, fe = ({ value: e, onChange: t }) => {
-  const [r, n] = m(e.toString()), [l, c] = m(!1), [d, i] = m(!1), p = V(), j = (u) => {
+  const [r, n] = m(e.toString()), [l, i] = m(!1), [d, c] = m(!1), p = V(), j = (u) => {
     const h = u.replace(/\D/g, "").slice(0, 4);
     if (n(h), h.length === 4) {
       const S = pe(h);
-      i(!S), S && t(parseInt(h, 10));
+      c(!S), S && t(parseInt(h, 10));
     } else
-      i(!1);
+      c(!1);
   }, b = (u) => {
-    n(u.toString()), t(u), c(!1), i(!1);
+    n(u.toString()), t(u), i(!1), c(!1);
   };
   return /* @__PURE__ */ o("div", { ref: p, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ v("div", { className: "leaflet-control bg-white rounded-xl shadow", children: [
     /* @__PURE__ */ o(
@@ -250,10 +250,10 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
         value: r,
         variant: "bordered",
         onBlur: () => {
-          setTimeout(() => c(!1), 150);
+          setTimeout(() => i(!1), 150);
         },
         onFocus: () => {
-          c(!0);
+          i(!0);
         },
         onValueChange: j
       }
@@ -303,7 +303,7 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
 }, D = $(
   q(
     ({ data: e, onEachFeature: t }, r) => e ? /* @__PURE__ */ o(
-      I,
+      L,
       {
         ref: r,
         data: e,
@@ -316,7 +316,7 @@ const s = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/ref
 D.displayName = "CountriesLayer";
 const Y = $(
   ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ o(
-    I,
+    L,
     {
       data: e,
       style: (r) => C(r, !1, 2),
@@ -327,10 +327,10 @@ const Y = $(
 Y.displayName = "StatesLayer";
 const me = ({ year: e = 1897 }) => {
   var u, h, S;
-  const [t, r] = m(null), [n, l] = m(null), [c, d] = m(e), { countries: i, states: p, updateYear: j, isLoading: b } = ie(c);
-  L(() => {
-    j(c), r(null), l(null);
-  }, [c]);
+  const [t, r] = m(null), [n, l] = m(null), [i, d] = m(e), { countries: c, states: p, updateYear: j, isLoading: b } = ce(i);
+  k(() => {
+    j(i), r(null), l(null);
+  }, [i]);
   const a = w(
     (g, x) => {
       x.on({
@@ -348,7 +348,7 @@ const me = ({ year: e = 1897 }) => {
       x.on({
         mouseover: (y) => {
           l(g);
-          const N = i == null ? void 0 : i.features.find(
+          const N = c == null ? void 0 : c.features.find(
             (z) => {
               var M, W;
               return ((M = z.id) == null ? void 0 : M.toString()) === ((W = g.properties) == null ? void 0 : W.admin_level_1_ID.toString());
@@ -361,14 +361,14 @@ const me = ({ year: e = 1897 }) => {
         }
       });
     },
-    [i]
+    [c]
   );
   return /* @__PURE__ */ v(O, { children: [
     b ? /* @__PURE__ */ o("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ o(X, {}) }) : /* @__PURE__ */ v(O, { children: [
-      i && /* @__PURE__ */ o(
+      c && /* @__PURE__ */ o(
         D,
         {
-          data: i,
+          data: c,
           onEachFeature: a
         }
       ),
@@ -377,7 +377,7 @@ const me = ({ year: e = 1897 }) => {
     /* @__PURE__ */ o(
       fe,
       {
-        value: c,
+        value: i,
         onChange: d
       }
     ),
@@ -390,8 +390,8 @@ const me = ({ year: e = 1897 }) => {
       }
     )
   ] });
-}, ge = "https://raw.githubusercontent.com/duckarchive/map.duckarchive.com/refs/heads/main/geojson/ukraine.geojson", ye = (e) => fetch(e).then((t) => t.json()), ve = () => {
-  const { data: e } = k(
+}, ge = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", ye = (e) => fetch(e).then((t) => t.json()), ve = () => {
+  const { data: e } = I(
     ge,
     ye,
     {
@@ -402,7 +402,7 @@ const me = ({ year: e = 1897 }) => {
     }
   );
   return e && /* @__PURE__ */ o(
-    I,
+    L,
     {
       data: e,
       style: {
