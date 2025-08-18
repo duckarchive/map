@@ -6,11 +6,10 @@ import {
   useEffect,
   useState,
 } from "react";
-import { GeoJSON, GeoJSONProps, useMap } from "react-leaflet";
+import { GeoJSON, GeoJSONProps } from "react-leaflet";
 import { Spinner } from "@heroui/spinner";
 
 import useMapData from "./useMapData";
-import useStopPropagation from "./useStopPropagation";
 import MapTooltip from "./Tooltip";
 import YearSelect from "./YearSelect";
 import { Feature } from "geojson";
@@ -78,42 +77,6 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
   const [hoveredStateFeature, setHoveredStateFeature] = useState<any>(null);
   const [yearOverride, setYearOverride] = useState(year);
   const { countries, states, updateYear, isLoading } = useMapData(yearOverride);
-  // const countriesRef = useRef<L.GeoJSON>(null);
-  const yearSelectRef = useStopPropagation();
-  const map = useMap();
-
-  // useEffect(() => {
-  //   if (!map || !countriesRef.current) return;
-
-  //   const handleMouseMove = (e: LeafletMouseEvent) => {
-  //     const point = turfPoint([e.latlng.lng, e.latlng.lat]);
-
-  //     countriesRef.current?.eachLayer((l: any) => {
-  //       const feature: GeoJSON.Feature = l.feature;
-
-  //       if (!feature || !feature.geometry) return;
-  //       try {
-  //         if (feature.geometry.type.endsWith("Polygon")) {
-  //           if (booleanPointInPolygon(point, feature as any)) {
-  //             setHoveredCountryFeature(feature);
-  //             l.setStyle(countryHighlightStyle(feature));
-  //           } else {
-  //             l.setStyle(countryDefaultStyle(feature));
-  //           }
-  //         }
-  //       } catch {
-  //         // Skip invalid geometry features
-  //         console.warn("Invalid geometry for feature", feature);
-  //       }
-  //     });
-  //   };
-
-  //   map.on("mousemove", handleMouseMove);
-
-  //   return () => {
-  //     map.off("mousemove", handleMouseMove);
-  //   };
-  // }, [map, countriesRef, countries, states]);
 
   useEffect(() => {
     updateYear(yearOverride);
@@ -174,7 +137,6 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year = 1897 }) => {
         </>
       )}
       <YearSelect
-        ref={yearSelectRef}
         value={yearOverride}
         onChange={setYearOverride}
       />

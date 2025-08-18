@@ -1,6 +1,7 @@
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
-import React, { forwardRef, useState } from "react";
+import React, { useState } from "react";
+import useStopPropagation from "./useStopPropagation";
 
 // Year presets
 const YEAR_PRESETS = [
@@ -22,11 +23,12 @@ interface YearSelectProps {
   onChange: (year: number) => void;
 }
 
-const YearSelect = forwardRef<HTMLDivElement, YearSelectProps>(
-  ({ value, onChange }, ref) => {
+const YearSelect: React.FC<YearSelectProps> = (
+  ({ value, onChange }) => {
     const [yearInput, setYearInput] = useState(value.toString());
     const [showPresets, setShowPresets] = useState(false);
     const [isInvalid, setIsInvalid] = useState(false);
+    const yearSelectRef = useStopPropagation();
 
     const handleYearInputChange = (value: string) => {
       // Only allow digits and limit to 4 characters
@@ -64,7 +66,7 @@ const YearSelect = forwardRef<HTMLDivElement, YearSelectProps>(
     };
 
     return (
-      <div ref={ref} className="absolute leaflet-top leaflet-right">
+      <div ref={yearSelectRef} className="absolute leaflet-top leaflet-right">
         <div className="leaflet-control bg-white rounded-xl shadow">
           <Input
             classNames={{
