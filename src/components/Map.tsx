@@ -27,7 +27,10 @@ const Map: React.FC<MapProps> = ({ position, onPositionChange }) => (
     <MapLocationSearch />
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png"
+      // url="https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=YOUR_KEY&language=uk"
+      url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      // url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
+      // url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png"
     />
     <UkraineLayer />
     <HistoricalLayers />
