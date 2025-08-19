@@ -19,7 +19,7 @@ import UkraineLayer from "./UkraineLayer";
 export interface GeoDuckMapProps extends MapContainerProps {
   position: [number, number];
   onPositionChange: (pos: [number, number]) => void;
-  tileLayerProps: TileLayerProps;
+  tileLayerProps?: TileLayerProps;
 }
 
 const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
@@ -40,10 +40,8 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
     <TileLayer
       className="grayscale"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      url={"https://tile.openstreetmap.org/{z}/{x}/{y}.png"}
       {...tileLayerProps}
-      url={
-        tileLayerProps.url || "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      }
     />
     <UkraineLayer />
     <MapLocationSearch />
