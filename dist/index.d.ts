@@ -6,7 +6,7 @@ import { MapContainerProps, TileLayerProps } from "react-leaflet";
 export interface GeoDuckMapProps extends MapContainerProps {
     position: [number, number];
     onPositionChange: (pos: [number, number]) => void;
-    tileLayerProps: TileLayerProps;
+    tileLayerProps?: TileLayerProps;
 }
 declare const GeoDuckMap: React.FC<GeoDuckMapProps>;
 export default GeoDuckMap;
