@@ -3,7 +3,12 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-geosearch/assets/css/leaflet.css";
 
 import React from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import {
+  MapContainer,
+  MapContainerProps,
+  TileLayer,
+  TileLayerProps,
+} from "react-leaflet";
 
 import LocationMarker from "./LocationMarker";
 import MapLocationSearch from "./MapLocationSearch";
@@ -11,13 +16,18 @@ import MapLocationSearch from "./MapLocationSearch";
 import HistoricalLayers from "./HistoricalLayers";
 import UkraineLayer from "./UkraineLayer";
 
-
-export interface GeoDuckMapProps {
+export interface GeoDuckMapProps extends MapContainerProps {
   position: [number, number];
   onPositionChange: (pos: [number, number]) => void;
+  tileLayerProps: TileLayerProps;
 }
 
-const GeoDuckMap: React.FC<GeoDuckMapProps> = ({ position, onPositionChange }) => (
+const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
+  position,
+  onPositionChange,
+  tileLayerProps,
+  ...mapContainerProps
+}) => (
   <MapContainer
     scrollWheelZoom
     worldCopyJump
@@ -25,11 +35,15 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({ position, onPositionChange }) =
     style={{ height: "100%", width: "100%" }}
     zoom={6}
     zoomControl={false}
+    {...mapContainerProps}
   >
     <TileLayer
       className="grayscale"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      {...tileLayerProps}
+      url={
+        tileLayerProps.url || "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+      }
     />
     <UkraineLayer />
     <MapLocationSearch />
