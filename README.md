@@ -45,9 +45,13 @@ npm install react react-dom leaflet react-leaflet tailwindcss swr @heroui/autoco
 
 ```tsx
 import React, { useState } from 'react';
-import { GeoDuckMap } from '@duckarchive/map';
+import dynamic from "next/dynamic";
 import 'leaflet/dist/leaflet.css';
 import "node_modules/@duckarchive/map/dist/style.css";
+
+const GeoDuckMap = dynamic(() => import("@duckarchive/map").then((mod) => mod.default), {
+  ssr: false,
+});
 
 function App() {
   const [position, setPosition] = useState<[number, number]>([49.0139, 31.2858]);
