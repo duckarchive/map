@@ -47,6 +47,7 @@ npm install react react-dom leaflet react-leaflet tailwindcss swr @heroui/autoco
 import React, { useState } from 'react';
 import { GeoDuckMap } from '@duckarchive/map';
 import 'leaflet/dist/leaflet.css';
+import "node_modules/@duckarchive/map/dist/style.css";
 
 function App() {
   const [position, setPosition] = useState<[number, number]>([49.0139, 31.2858]);
@@ -81,6 +82,7 @@ Make sure to import Leaflet CSS in your application:
 
 ```tsx
 import 'leaflet/dist/leaflet.css';
+import "node_modules/@duckarchive/map/dist/style.css";
 ```
 
 Make sure Tailwind CSS and HeroUI are properly configured in your project.
