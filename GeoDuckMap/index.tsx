@@ -20,12 +20,22 @@ export interface GeoDuckMapProps extends MapContainerProps {
   position: [number, number];
   onPositionChange: (pos: [number, number]) => void;
   tileLayerProps?: TileLayerProps;
+  defaultYear?: number;
+  hideLayers?: Partial<{
+    yearInput: boolean;
+    searchInput: boolean;
+    locationMarker: boolean;
+    historicalLayers: boolean;
+    ukraineLayer: boolean;
+  }>;
 }
 
 const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
   position,
   onPositionChange,
   tileLayerProps,
+  defaultYear = 1897,
+  hideLayers,
   ...mapContainerProps
 }) => (
   <MapContainer
@@ -43,10 +53,10 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
       url={"https://tile.openstreetmap.org/{z}/{x}/{y}.png"}
       {...tileLayerProps}
     />
-    <UkraineLayer />
-    <MapLocationSearch />
-    <HistoricalLayers />
-    <LocationMarker value={position} onChange={onPositionChange} />
+    {!hideLayers?.ukraineLayer && <UkraineLayer />}
+    {!hideLayers?.searchInput && <MapLocationSearch />}
+    {!hideLayers?.historicalLayers && <HistoricalLayers defaultYear={defaultYear} />}
+    {!hideLayers?.locationMarker && <LocationMarker value={position} onChange={onPositionChange} />}
   </MapContainer>
 );
 

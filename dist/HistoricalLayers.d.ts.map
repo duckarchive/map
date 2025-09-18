@@ -1,1 +1,1 @@
-{"version":3,"file":"HistoricalLayers.d.ts","sourceRoot":"","sources":["../../GeoDuckMap/HistoricalLayers.tsx"],"names":[],"mappings":"AA2EA,UAAU,qBAAqB;IAC7B,IAAI,CAAC,EAAE,MAAM,CAAC;CACf;AAED,QAAA,MAAM,gBAAgB,EAAE,KAAK,CAAC,EAAE,CAAC,qBAAqB,CAoFrD,CAAC;AAEF,eAAe,gBAAgB,CAAC"}
+{"version":3,"file":"HistoricalLayers.d.ts","sourceRoot":"","sources":["../../GeoDuckMap/HistoricalLayers.tsx"],"names":[],"mappings":"AA2EA,UAAU,qBAAqB;IAC7B,WAAW,EAAE,MAAM,CAAC;CACrB;AAED,QAAA,MAAM,gBAAgB,EAAE,KAAK,CAAC,EAAE,CAAC,qBAAqB,CAoFrD,CAAC;AAEF,eAAe,gBAAgB,CAAC"}

@@ -7,6 +7,14 @@ export interface GeoDuckMapProps extends MapContainerProps {
     position: [number, number];
     onPositionChange: (pos: [number, number]) => void;
     tileLayerProps?: TileLayerProps;
+    defaultYear?: number;
+    hideLayers?: Partial<{
+        yearInput: boolean;
+        searchInput: boolean;
+        locationMarker: boolean;
+        historicalLayers: boolean;
+        ukraineLayer: boolean;
+    }>;
 }
 declare const GeoDuckMap: React.FC<GeoDuckMapProps>;
 export default GeoDuckMap;
