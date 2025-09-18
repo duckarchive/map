@@ -67,11 +67,11 @@ const YearSelect: React.FC<YearSelectProps> = (
 
     return (
       <div ref={yearSelectRef} className="absolute leaflet-top leaflet-right">
-        <div className="leaflet-control bg-white rounded-xl shadow">
+        <div className="leaflet-control bg-background rounded-xl shadow">
           <Input
             classNames={{
-              inputWrapper: "bg-default-100 relative",
-              input: "text-sm text-gray-900",
+              inputWrapper: "bg-background relative",
+              input: "text-sm text-foreground",
             }}
             errorMessage={isInvalid ? "Введіть рік від 1600 до 2025" : ""}
             isInvalid={isInvalid}
