@@ -20,7 +20,10 @@ export interface GeoDuckMapProps extends MapContainerProps {
   position: [number, number];
   onPositionChange: (pos: [number, number]) => void;
   tileLayerProps?: TileLayerProps;
-  defaultYear?: number;
+  year?: number;
+  onYearChange?: (year: number) => void;
+  radius?: number;
+  onRadiusChange?: (radius: number) => void;
   hideLayers?: Partial<{
     yearInput: boolean;
     searchInput: boolean;
@@ -34,7 +37,10 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
   position,
   onPositionChange,
   tileLayerProps,
-  defaultYear = 1897,
+  year = 1897,
+  onYearChange,
+  radius,
+  onRadiusChange,
   hideLayers,
   ...mapContainerProps
 }) => (
@@ -55,8 +61,17 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
     />
     {!hideLayers?.ukraineLayer && <UkraineLayer />}
     {!hideLayers?.searchInput && <MapLocationSearch />}
-    {!hideLayers?.historicalLayers && <HistoricalLayers defaultYear={defaultYear} />}
-    {!hideLayers?.locationMarker && <LocationMarker value={position} onChange={onPositionChange} />}
+    {!hideLayers?.historicalLayers && (
+      <HistoricalLayers year={year} onYearChange={onYearChange} />
+    )}
+    {!hideLayers?.locationMarker && (
+      <LocationMarker
+        value={position}
+        onChange={onPositionChange}
+        radius={radius}
+        onRadiusChange={onRadiusChange}
+      />
+    )}
   </MapContainer>
 );
 

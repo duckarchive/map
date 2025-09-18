@@ -128,7 +128,7 @@ const MapLocationSearch = memo(() => {
     >
       <Autocomplete
         aria-label="Пошук за сучасною назвою"
-        className="leaflet-control w-auto bg-white rounded-xl shadow"
+        className="leaflet-control w-auto bg-white rounded-xl shadow text-gray-900"
         defaultItems={results}
         inputValue={query}
         listboxProps={{

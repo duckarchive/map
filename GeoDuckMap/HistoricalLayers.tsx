@@ -74,13 +74,13 @@ const StatesLayer = memo(({ data, onEachFeature }: GeoJSONProps) =>
 StatesLayer.displayName = "StatesLayer";
 
 interface HistoricalLayersProps {
-  defaultYear: number;
+  year: number;
+  onYearChange?: (year: number) => void;
 }
 
-const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ defaultYear }) => {
+const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ year, onYearChange }) => {
   const [hoveredCountryFeature, setHoveredCountryFeature] = useState<any>(null);
   const [hoveredStateFeature, setHoveredStateFeature] = useState<any>(null);
-  const [year, setYear] = useState(defaultYear);
   const { countries, states, updateYear, isLoading } = useMapData(year);
 
   useEffect(() => {
@@ -147,10 +147,14 @@ const HistoricalLayers: React.FC<HistoricalLayersProps> = ({ defaultYear }) => {
           )}
         </>
       )}
-      <YearSelect
-        value={year}
-        onChange={setYear}
-      />
+      {
+        onYearChange && (
+          <YearSelect
+            value={year}
+            onChange={onYearChange}
+          />
+        )
+      }
       {/* Fixed tooltip at bottom left corner */}
       {(hoveredCountryFeature || hoveredStateFeature) && (
         <MapTooltip

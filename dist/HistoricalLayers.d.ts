@@ -1,5 +1,6 @@
 interface HistoricalLayersProps {
-    defaultYear: number;
+    year: number;
+    onYearChange?: (year: number) => void;
 }
 declare const HistoricalLayers: React.FC<HistoricalLayersProps>;
 export default HistoricalLayers;

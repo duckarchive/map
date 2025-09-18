@@ -7,7 +7,10 @@ export interface GeoDuckMapProps extends MapContainerProps {
     position: [number, number];
     onPositionChange: (pos: [number, number]) => void;
     tileLayerProps?: TileLayerProps;
-    defaultYear?: number;
+    year?: number;
+    onYearChange?: (year: number) => void;
+    radius?: number;
+    onRadiusChange?: (radius: number) => void;
     hideLayers?: Partial<{
         yearInput: boolean;
         searchInput: boolean;

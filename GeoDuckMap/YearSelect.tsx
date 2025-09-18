@@ -71,7 +71,7 @@ const YearSelect: React.FC<YearSelectProps> = (
           <Input
             classNames={{
               inputWrapper: "bg-default-100 relative",
-              input: "text-sm",
+              input: "text-sm text-gray-900",
             }}
             errorMessage={isInvalid ? "Введіть рік від 1600 до 2025" : ""}
             isInvalid={isInvalid}

@@ -80,6 +80,9 @@
     "@heroui/spinner": {
       "optional": true
     },
+    "@heroui/switch": {
+      "optional": true
+    },
     "@heroui/system": {
       "optional": true
     },

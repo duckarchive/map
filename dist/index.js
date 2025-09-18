@@ -1,27 +1,75 @@
-import { jsx as n, jsxs as v, Fragment as _ } from "react/jsx-runtime";
+import { jsxs as k, Fragment as j, jsx as n } from "react/jsx-runtime";
 import "leaflet-defaulticon-compatibility";
-import { useMapEvents as B, Marker as U, useMap as T, GeoJSON as I, MapContainer as A, TileLayer as H } from "react-leaflet";
-import { useRef as G, useEffect as $, memo as N, useState as g, useCallback as w, useMemo as O, forwardRef as q } from "react";
-import { OpenStreetMapProvider as J } from "leaflet-geosearch";
-import { Autocomplete as K, AutocompleteItem as Z } from "@heroui/autocomplete";
-import { DomEvent as Q } from "leaflet";
-import { Spinner as X } from "@heroui/spinner";
-import k from "swr";
-import { Card as ee, CardBody as te } from "@heroui/card";
-import { Button as oe } from "@heroui/button";
-import { Input as ne } from "@heroui/input";
-const re = ({ value: e, onChange: t }) => (B({
-  click(a) {
-    if (!a.latlng) return;
-    const { lat: r, lng: o } = a.latlng;
-    t([r, o]);
-  }
-}), e ? /* @__PURE__ */ n(U, { position: e }) : null), F = () => {
-  const e = G(null);
-  return $(() => {
-    e.current && Q.disableClickPropagation(e.current);
+import { useMap as _, useMapEvents as U, Marker as Y, Circle as A, GeoJSON as N, MapContainer as T, TileLayer as G } from "react-leaflet";
+import H, { useEffect as x, useRef as K, memo as $, useState as v, useCallback as S, useMemo as R, forwardRef as Z } from "react";
+import q, { DomEvent as J } from "leaflet";
+import { OpenStreetMapProvider as Q } from "leaflet-geosearch";
+import { Autocomplete as X, AutocompleteItem as ee } from "@heroui/autocomplete";
+import { Spinner as te } from "@heroui/spinner";
+import I from "swr";
+import { Card as oe, CardBody as ne } from "@heroui/card";
+import { Button as re } from "@heroui/button";
+import { Input as le } from "@heroui/input";
+const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 512 512"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"/><circle cx="256" cy="192" r="48" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>', se = ({
+  value: e,
+  onChange: t,
+  radius: o,
+  onRadiusChange: r
+}) => {
+  const l = _();
+  U({
+    click(i) {
+      if (!i.latlng) return;
+      const { lat: s, lng: f } = i.latlng;
+      t([s, f]);
+    }
+  }), x(() => {
+    if (!r || o === void 0) return;
+    const i = (d) => {
+      if (d.ctrlKey) {
+        d.preventDefault(), d.stopPropagation(), d.stopImmediatePropagation();
+        const a = d.deltaY, h = 100, p = 100, g = 1e4;
+        let m = o;
+        a < 0 ? m = Math.min(o + h, g) : m = Math.max(o - h, p), m !== o && r(m);
+      }
+    }, s = (d) => {
+      d.key === "Control" && l.scrollWheelZoom.disable();
+    }, f = (d) => {
+      d.key === "Control" && l.scrollWheelZoom.enable();
+    }, y = l.getContainer();
+    return y.addEventListener("wheel", i, { passive: !1, capture: !0 }), document.addEventListener("keydown", s), document.addEventListener("keyup", f), () => {
+      y.removeEventListener("wheel", i, { capture: !0 }), document.removeEventListener("keydown", s), document.removeEventListener("keyup", f), l.scrollWheelZoom.enable();
+    };
+  }, [l, o, r]);
+  const u = H.useMemo(() => q.divIcon({
+    html: ae,
+    className: "io5-icon",
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40]
+  }), []);
+  return e ? /* @__PURE__ */ k(j, { children: [
+    /* @__PURE__ */ n(Y, { position: e, icon: u }),
+    o && o > 0 && /* @__PURE__ */ n(
+      A,
+      {
+        center: e,
+        radius: o,
+        pathOptions: {
+          color: "currentColor",
+          fillColor: "currentColor",
+          fillOpacity: 0.2,
+          weight: 0
+        }
+      }
+    )
+  ] }) : null;
+}, V = () => {
+  const e = K(null);
+  return x(() => {
+    e.current && J.disableClickPropagation(e.current);
   }, [e.current]), e;
-}, ae = () => /* @__PURE__ */ n(
+}, ce = () => /* @__PURE__ */ n(
   "svg",
   {
     className: "w-4 h-4 text-gray-400",
@@ -38,7 +86,7 @@ const re = ({ value: e, onChange: t }) => (B({
       }
     )
   }
-), le = () => /* @__PURE__ */ v(
+), ie = () => /* @__PURE__ */ k(
   "svg",
   {
     className: "w-4 h-4 text-gray-400 flex-shrink-0",
@@ -66,216 +114,216 @@ const re = ({ value: e, onChange: t }) => (B({
       )
     ]
   }
-), L = N(() => {
-  const [e, t] = g(""), [a, r] = g([]), o = F(), c = T(), d = new J({
+), D = $(() => {
+  const [e, t] = v(""), [o, r] = v([]), l = V(), u = _(), i = new Q({
     params: {
       "accept-language": "ua",
       countrycodes: "ua,pl,by,ru,ro,md,tr",
       limit: 5,
       email: "admin@duckarchive.com"
     }
-  }), i = w(
-    async (l) => {
-      if (!l.trim()) {
+  }), s = S(
+    async (a) => {
+      if (!a.trim()) {
         r([]);
         return;
       }
       try {
-        const f = await d.search({ query: l });
-        r(f);
+        const h = await i.search({ query: a });
+        r(h);
       } catch {
         r([]);
       }
     },
-    [d]
+    [i]
   );
-  $(() => {
-    const l = setTimeout(() => {
-      i(e);
+  x(() => {
+    const a = setTimeout(() => {
+      s(e);
     }, 300);
-    return () => clearTimeout(l);
+    return () => clearTimeout(a);
   }, [e]);
-  const p = (l) => {
-    t(l.label), c.setView([l.y, l.x], 15), c.fire("geosearch/showlocation", {
-      location: l,
+  const f = (a) => {
+    t(a.label), u.setView([a.y, a.x], 15), u.fire("geosearch/showlocation", {
+      location: a,
       marker: null
     });
   };
   return /* @__PURE__ */ n(
     "div",
     {
-      ref: o,
+      ref: l,
       className: "absolute leaflet-top leaflet-left",
       children: /* @__PURE__ */ n(
-        K,
+        X,
         {
           "aria-label": "Пошук за сучасною назвою",
-          className: "leaflet-control w-auto bg-white rounded-xl shadow",
-          defaultItems: a,
+          className: "leaflet-control w-auto bg-white rounded-xl shadow text-gray-900",
+          defaultItems: o,
           inputValue: e,
           listboxProps: {
             emptyContent: "Нічого не знайдено. Уточніть свій запит."
           },
           placeholder: "Пошук за сучасною назвою",
-          startContent: /* @__PURE__ */ n(ae, {}),
+          startContent: /* @__PURE__ */ n(ce, {}),
           variant: "bordered",
-          onClick: (l) => l.stopPropagation(),
-          onInputChange: (l) => {
-            t(l);
+          onClick: (a) => a.stopPropagation(),
+          onInputChange: (a) => {
+            t(a);
           },
-          onMouseDown: (l) => l.stopPropagation(),
-          onSelectionChange: (l) => {
-            if (l) {
-              const f = a[l];
-              f && p(f);
+          onMouseDown: (a) => a.stopPropagation(),
+          onSelectionChange: (a) => {
+            if (a) {
+              const h = o[a];
+              h && f(h);
             }
           },
-          children: (l) => /* @__PURE__ */ n(
-            Z,
+          children: (a) => /* @__PURE__ */ n(
+            ee,
             {
-              startContent: /* @__PURE__ */ n(le, {}),
-              textValue: l.label,
-              children: l.label
+              startContent: /* @__PURE__ */ n(ie, {}),
+              textValue: a.label,
+              children: a.label
             },
-            a.indexOf(l)
+            o.indexOf(a)
           )
         }
       )
     }
   );
 });
-L.displayName = "MapLocationSearch";
-const s = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", se = [
-  { year: 1500, url: `${s}/countries/1500.geojson` },
-  { year: 1530, url: `${s}/countries/1530.geojson` },
-  { year: 1600, url: `${s}/countries/1600.geojson` },
-  { year: 1650, url: `${s}/countries/1650.geojson` },
-  { year: 1700, url: `${s}/countries/1700.geojson` },
-  { year: 1715, url: `${s}/countries/1715.geojson` },
-  { year: 1783, url: `${s}/countries/1783.geojson` },
-  { year: 1800, url: `${s}/countries/1800.geojson` },
-  { year: 1815, url: `${s}/countries/1815.geojson` },
-  { year: 1880, url: `${s}/countries/1880.geojson` },
-  { year: 1900, url: `${s}/countries/1900.geojson` },
-  { year: 1914, url: `${s}/countries/1914.geojson` },
-  { year: 1920, url: `${s}/countries/1920.geojson` },
-  { year: 1930, url: `${s}/countries/1930.geojson` },
-  { year: 1938, url: `${s}/countries/1938.geojson` },
-  { year: 1945, url: `${s}/countries/1945.geojson` },
-  { year: 1960, url: `${s}/countries/1960.geojson` },
-  { year: 1991, url: `${s}/countries/1991.geojson` }
-], ce = [
-  { year: 1897, url: `${s}/states/1897.geojson` },
-  { year: 1914, url: `${s}/states/1914.geojson` },
-  { year: 1937, url: `${s}/states/1937.geojson` },
-  { year: 1945, url: `${s}/states/1945.geojson` },
-  { year: 1991, url: `${s}/states/1991.geojson` }
-], P = (e, t, a = !1) => {
-  if (a) {
-    const o = t.find(({ year: c }) => c === e);
-    return o ? o.url : null;
+D.displayName = "MapLocationSearch";
+const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", ue = [
+  { year: 1500, url: `${c}/countries/1500.geojson` },
+  { year: 1530, url: `${c}/countries/1530.geojson` },
+  { year: 1600, url: `${c}/countries/1600.geojson` },
+  { year: 1650, url: `${c}/countries/1650.geojson` },
+  { year: 1700, url: `${c}/countries/1700.geojson` },
+  { year: 1715, url: `${c}/countries/1715.geojson` },
+  { year: 1783, url: `${c}/countries/1783.geojson` },
+  { year: 1800, url: `${c}/countries/1800.geojson` },
+  { year: 1815, url: `${c}/countries/1815.geojson` },
+  { year: 1880, url: `${c}/countries/1880.geojson` },
+  { year: 1900, url: `${c}/countries/1900.geojson` },
+  { year: 1914, url: `${c}/countries/1914.geojson` },
+  { year: 1920, url: `${c}/countries/1920.geojson` },
+  { year: 1930, url: `${c}/countries/1930.geojson` },
+  { year: 1938, url: `${c}/countries/1938.geojson` },
+  { year: 1945, url: `${c}/countries/1945.geojson` },
+  { year: 1960, url: `${c}/countries/1960.geojson` },
+  { year: 1991, url: `${c}/countries/1991.geojson` }
+], de = [
+  { year: 1897, url: `${c}/states/1897.geojson` },
+  { year: 1914, url: `${c}/states/1914.geojson` },
+  { year: 1937, url: `${c}/states/1937.geojson` },
+  { year: 1945, url: `${c}/states/1945.geojson` },
+  { year: 1991, url: `${c}/states/1991.geojson` }
+], L = (e, t, o = !1) => {
+  if (o) {
+    const l = t.find(({ year: u }) => u === e);
+    return l ? l.url : null;
   }
-  const r = t.filter(({ year: o }) => o > 0 && o <= e).sort((o, c) => c.year - o.year);
+  const r = t.filter(({ year: l }) => l > 0 && l <= e).sort((l, u) => u.year - l.year);
   return r.length > 0 ? r[0].url : null;
-}, E = (e) => fetch(e).then((t) => t.json()), ie = (e) => {
-  const [t, a] = g(e), r = P(t, se), {
-    data: o,
-    isLoading: c,
+}, O = (e) => fetch(e).then((t) => t.json()), pe = (e) => {
+  const [t, o] = v(e), r = L(t, ue), {
+    data: l,
+    isLoading: u,
+    isValidating: i
+  } = I(r, O, {
+    revalidateOnFocus: !1,
+    revalidateOnReconnect: !1,
+    refreshWhenHidden: !1,
+    refreshWhenOffline: !1
+  }), s = L(t, de, !0), {
+    data: f,
+    isLoading: y,
     isValidating: d
-  } = k(r, E, {
+  } = I(s, O, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), i = P(t, ce, !0), {
-    data: p,
-    isLoading: j,
-    isValidating: b
-  } = k(i, E, {
-    revalidateOnFocus: !1,
-    revalidateOnReconnect: !1,
-    refreshWhenHidden: !1,
-    refreshWhenOffline: !1
-  }), l = O(
-    () => o || null,
-    [o]
-  ), f = O(
-    () => p || null,
-    [p]
+  }), a = R(
+    () => l || null,
+    [l]
+  ), h = R(
+    () => f || null,
+    [f]
   );
   return {
-    countries: l,
-    states: f,
-    updateYear: (m) => {
-      a(m);
+    countries: a,
+    states: h,
+    updateYear: (g) => {
+      o(g);
     },
-    isLoading: c || j || d || b
+    isLoading: u || y || i || d
   };
-}, ue = ({ level1: e, level2: t, level3: a }) => /* @__PURE__ */ n("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ n(ee, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ n(te, { className: "py-2", children: /* @__PURE__ */ v("div", { className: "flex flex-col gap-0", children: [
-  a && /* @__PURE__ */ n("p", { className: "text-large", children: a }),
+}, me = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ n("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ n(oe, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ n(ne, { className: "py-2", children: /* @__PURE__ */ k("div", { className: "flex flex-col gap-0", children: [
+  o && /* @__PURE__ */ n("p", { className: "text-large", children: o }),
   t && /* @__PURE__ */ n("p", { className: "text-small text-default-500", children: t }),
   e && /* @__PURE__ */ n("p", { className: "text-small text-default-500", children: e })
-] }) }) }) }), de = [
+] }) }) }) }), fe = [
   { value: 1897, label: "Російська Імперія" },
   { value: 1914, label: "WWI" },
   { value: 1937, label: "Перед WWII" },
   { value: 1945, label: "Після WWII" },
   { value: 1991, label: "Незалежність" }
-], pe = (e) => {
+], he = (e) => {
   const t = parseInt(e, 10);
   return /^\d{4}$/.test(e) && t >= 1500 && t <= 1991;
-}, fe = ({ value: e, onChange: t }) => {
-  const [a, r] = g(e.toString()), [o, c] = g(!1), [d, i] = g(!1), p = F(), j = (u) => {
-    const m = u.replace(/\D/g, "").slice(0, 4);
-    if (r(m), m.length === 4) {
-      const S = pe(m);
-      i(!S), S && t(parseInt(m, 10));
+}, ge = ({ value: e, onChange: t }) => {
+  const [o, r] = v(e.toString()), [l, u] = v(!1), [i, s] = v(!1), f = V(), y = (p) => {
+    const g = p.replace(/\D/g, "").slice(0, 4);
+    if (r(g), g.length === 4) {
+      const m = he(g);
+      s(!m), m && t(parseInt(g, 10));
     } else
-      i(!1);
-  }, b = (u) => {
-    r(u.toString()), t(u), c(!1), i(!1);
+      s(!1);
+  }, d = (p) => {
+    r(p.toString()), t(p), u(!1), s(!1);
   };
-  return /* @__PURE__ */ n("div", { ref: p, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ v("div", { className: "leaflet-control bg-white rounded-xl shadow", children: [
+  return /* @__PURE__ */ n("div", { ref: f, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ k("div", { className: "leaflet-control bg-white rounded-xl shadow", children: [
     /* @__PURE__ */ n(
-      ne,
+      le,
       {
         classNames: {
           inputWrapper: "bg-default-100 relative",
-          input: "text-sm"
+          input: "text-sm text-gray-900"
         },
-        errorMessage: d ? "Введіть рік від 1600 до 2025" : "",
-        isInvalid: d,
+        errorMessage: i ? "Введіть рік від 1600 до 2025" : "",
+        isInvalid: i,
         placeholder: "1897",
         type: "text",
-        value: a,
+        value: o,
         variant: "bordered",
         onBlur: () => {
-          setTimeout(() => c(!1), 150);
+          setTimeout(() => u(!1), 150);
         },
         onFocus: () => {
-          c(!0);
+          u(!0);
         },
-        onValueChange: j
+        onValueChange: y
       }
     ),
-    o && /* @__PURE__ */ n("div", { className: "flex flex-col gap-1 p-2", children: de.map((u) => /* @__PURE__ */ v(
-      oe,
+    l && /* @__PURE__ */ n("div", { className: "flex flex-col gap-1 p-2", children: fe.map((p) => /* @__PURE__ */ k(
+      re,
       {
         className: "text-xs justify-start",
         color: "default",
         size: "sm",
-        variant: e === u.value ? "flat" : "bordered",
-        onPress: () => b(u.value),
+        variant: e === p.value ? "flat" : "bordered",
+        onPress: () => d(p.value),
         children: [
-          u.value,
+          p.value,
           " - ",
-          u.label
+          p.label
         ]
       },
-      u.value
+      p.value
     )) })
   ] }) });
-}, V = [
+}, P = [
   "green",
   "darkblue",
   "purple",
@@ -283,29 +331,29 @@ const s = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
   "blue",
   "red",
   "yellow"
-], me = (e) => {
+], ye = (e) => {
   var r;
   const t = ((r = e.properties) == null ? void 0 : r.admin_level_1_ID) || e.id || 0;
   if (t === 22)
     return "gold";
-  const a = t % V.length;
-  return V[a];
-}, C = (e, t, a = 1) => {
-  const r = e ? me(e) : "gray";
+  const o = t % P.length;
+  return P[o];
+}, C = (e, t, o = 1) => {
+  const r = e ? ye(e) : "gray";
   return {
     color: r,
     fillColor: r,
-    weight: a,
+    weight: o,
     opacity: t ? 1 : 0.5,
     fillOpacity: t ? 0.1 : 0,
     interactive: !0
   };
-}, D = N(
-  q(
-    ({ data: e, onEachFeature: t }, a) => e ? /* @__PURE__ */ n(
-      I,
+}, F = $(
+  Z(
+    ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ n(
+      N,
       {
-        ref: a,
+        ref: o,
         data: e,
         style: (r) => C(r, !1, 0),
         onEachFeature: t
@@ -313,87 +361,87 @@ const s = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
     ) : null
   )
 );
-D.displayName = "CountriesLayer";
-const Y = N(
+F.displayName = "CountriesLayer";
+const z = $(
   ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ n(
-    I,
+    N,
     {
       data: e,
-      style: (a) => C(a, !1, 2),
+      style: (o) => C(o, !1, 2),
       onEachFeature: t
     }
   ) : null
 );
-Y.displayName = "StatesLayer";
-const ge = ({ defaultYear: e }) => {
-  var u, m, S;
-  const [t, a] = g(null), [r, o] = g(null), [c, d] = g(e), { countries: i, states: p, updateYear: j, isLoading: b } = ie(c);
-  $(() => {
-    j(c), a(null), o(null);
-  }, [c]);
-  const l = w(
-    (h, x) => {
-      x.on({
-        mouseover: (y) => {
-          a(h), y.target.setStyle(C(h, !1, 1));
+z.displayName = "StatesLayer";
+const ve = ({ year: e, onYearChange: t }) => {
+  var h, p, g;
+  const [o, r] = v(null), [l, u] = v(null), { countries: i, states: s, updateYear: f, isLoading: y } = pe(e);
+  x(() => {
+    f(e), r(null), u(null);
+  }, [e]);
+  const d = S(
+    (m, b) => {
+      b.on({
+        mouseover: (w) => {
+          r(m), w.target.setStyle(C(m, !1, 1));
         },
-        mouseout: (y) => {
-          a(null), y.target.setStyle(C(h, !1, 0));
+        mouseout: (w) => {
+          r(null), w.target.setStyle(C(m, !1, 0));
         }
       });
     },
     []
-  ), f = w(
-    (h, x) => {
-      x.on({
-        mouseover: (y) => {
-          o(h);
+  ), a = S(
+    (m, b) => {
+      b.on({
+        mouseover: (w) => {
+          u(m);
           const M = i == null ? void 0 : i.features.find(
-            (z) => {
-              var W, R;
-              return ((W = z.id) == null ? void 0 : W.toString()) === ((R = h.properties) == null ? void 0 : R.admin_level_1_ID.toString());
+            (B) => {
+              var W, E;
+              return ((W = B.id) == null ? void 0 : W.toString()) === ((E = m.properties) == null ? void 0 : E.admin_level_1_ID.toString());
             }
           );
-          M && a(M), y.target.setStyle(C(h, !0, 4));
+          M && r(M), w.target.setStyle(C(m, !0, 4));
         },
-        mouseout: (y) => {
-          o(null), y.target.setStyle(C(h, !1, 2));
+        mouseout: (w) => {
+          u(null), w.target.setStyle(C(m, !1, 2));
         }
       });
     },
     [i]
   );
-  return /* @__PURE__ */ v(_, { children: [
-    b ? /* @__PURE__ */ n("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ n(X, {}) }) : /* @__PURE__ */ v(_, { children: [
+  return /* @__PURE__ */ k(j, { children: [
+    y ? /* @__PURE__ */ n("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ n(te, {}) }) : /* @__PURE__ */ k(j, { children: [
       i && /* @__PURE__ */ n(
-        D,
+        F,
         {
           data: i,
-          onEachFeature: l
+          onEachFeature: d
         }
       ),
-      p && /* @__PURE__ */ n(Y, { data: p, onEachFeature: f })
+      s && /* @__PURE__ */ n(z, { data: s, onEachFeature: a })
     ] }),
-    /* @__PURE__ */ n(
-      fe,
+    t && /* @__PURE__ */ n(
+      ge,
       {
-        value: c,
-        onChange: d
+        value: e,
+        onChange: t
       }
     ),
-    (t || r) && /* @__PURE__ */ n(
-      ue,
+    (o || l) && /* @__PURE__ */ n(
+      me,
       {
-        level1: (u = t == null ? void 0 : t.properties) == null ? void 0 : u.admin_level_1,
-        level2: (m = r == null ? void 0 : r.properties) == null ? void 0 : m.admin_level_2,
-        level3: (S = r == null ? void 0 : r.properties) == null ? void 0 : S.admin_level_3
+        level1: (h = o == null ? void 0 : o.properties) == null ? void 0 : h.admin_level_1,
+        level2: (p = l == null ? void 0 : l.properties) == null ? void 0 : p.admin_level_2,
+        level3: (g = l == null ? void 0 : l.properties) == null ? void 0 : g.admin_level_3
       }
     )
   ] });
-}, he = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", ye = (e) => fetch(e).then((t) => t.json()), ve = () => {
-  const { data: e } = k(
-    he,
-    ye,
+}, ke = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", we = (e) => fetch(e).then((t) => t.json()), Ce = () => {
+  const { data: e } = I(
+    ke,
+    we,
     {
       revalidateOnFocus: !1,
       revalidateOnReconnect: !1,
@@ -402,7 +450,7 @@ const ge = ({ defaultYear: e }) => {
     }
   );
   return e && /* @__PURE__ */ n(
-    I,
+    N,
     {
       data: e,
       style: {
@@ -414,15 +462,18 @@ const ge = ({ defaultYear: e }) => {
       }
     }
   );
-}, Re = ({
+}, Oe = ({
   position: e,
   onPositionChange: t,
-  tileLayerProps: a,
-  defaultYear: r = 1897,
-  hideLayers: o,
-  ...c
-}) => /* @__PURE__ */ v(
-  A,
+  tileLayerProps: o,
+  year: r = 1897,
+  onYearChange: l,
+  radius: u,
+  onRadiusChange: i,
+  hideLayers: s,
+  ...f
+}) => /* @__PURE__ */ k(
+  T,
   {
     scrollWheelZoom: !0,
     worldCopyJump: !0,
@@ -430,25 +481,33 @@ const ge = ({ defaultYear: e }) => {
     style: { height: "100%", width: "100%" },
     zoom: 6,
     zoomControl: !1,
-    ...c,
+    ...f,
     children: [
       /* @__PURE__ */ n(
-        H,
+        G,
         {
           className: "grayscale",
           attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          ...a
+          ...o
         }
       ),
-      !(o != null && o.ukraineLayer) && /* @__PURE__ */ n(ve, {}),
-      !(o != null && o.searchInput) && /* @__PURE__ */ n(L, {}),
-      !(o != null && o.historicalLayers) && /* @__PURE__ */ n(ge, { defaultYear: r }),
-      !(o != null && o.locationMarker) && /* @__PURE__ */ n(re, { value: e, onChange: t })
+      !(s != null && s.ukraineLayer) && /* @__PURE__ */ n(Ce, {}),
+      !(s != null && s.searchInput) && /* @__PURE__ */ n(D, {}),
+      !(s != null && s.historicalLayers) && /* @__PURE__ */ n(ve, { year: r, onYearChange: l }),
+      !(s != null && s.locationMarker) && /* @__PURE__ */ n(
+        se,
+        {
+          value: e,
+          onChange: t,
+          radius: u,
+          onRadiusChange: i
+        }
+      )
     ]
   }
 );
 export {
-  Re as default
+  Oe as default
 };
 //# sourceMappingURL=index.js.map
