@@ -1,5 +1,4 @@
 import { jsxs as k, Fragment as j, jsx as n } from "react/jsx-runtime";
-import "leaflet-defaulticon-compatibility";
 import { useMap as _, useMapEvents as U, Marker as Y, Circle as A, GeoJSON as N, MapContainer as T, TileLayer as G } from "react-leaflet";
 import H, { useEffect as x, useRef as K, memo as $, useState as v, useCallback as S, useMemo as R, forwardRef as Z } from "react";
 import q, { DomEvent as J } from "leaflet";
@@ -462,7 +461,7 @@ const ve = ({ year: e, onYearChange: t }) => {
       }
     }
   );
-}, Oe = ({
+}, Le = ({
   position: e,
   onPositionChange: t,
   tileLayerProps: o,
@@ -508,6 +507,6 @@ const ve = ({ year: e, onYearChange: t }) => {
   }
 );
 export {
-  Oe as default
+  Le as default
 };
 //# sourceMappingURL=index.js.map

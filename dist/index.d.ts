@@ -1,5 +1,3 @@
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-geosearch/assets/css/leaflet.css";
 import React from "react";
 import { MapContainerProps, TileLayerProps } from "react-leaflet";

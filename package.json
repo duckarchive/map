@@ -94,7 +94,6 @@
     }
   },
   "dependencies": {
-    "leaflet-defaulticon-compatibility": "^0.1.2",
     "leaflet-geosearch": "^4.2.0"
   },
   "devDependencies": {

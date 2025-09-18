@@ -18,7 +18,6 @@ export default defineConfig({
         'react/jsx-runtime',
         'leaflet',
         'react-leaflet',
-        'leaflet-defaulticon-compatibility',
         'leaflet-geosearch',
         '@heroui/autocomplete',
         '@heroui/button',
@@ -40,7 +39,6 @@ export default defineConfig({
           'react/jsx-runtime': 'ReactJSXRuntime',
           leaflet: 'L',
           'react-leaflet': 'ReactLeaflet',
-          'leaflet-defaulticon-compatibility': 'LeafletDefaultIconCompatibility',
           'leaflet-geosearch': 'LeafletGeoSearch',
           swr: 'SWR'
         }
