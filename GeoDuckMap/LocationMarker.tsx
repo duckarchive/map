@@ -6,7 +6,7 @@ const markerSVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" s
 
 interface LocationMarkerProps {
   value: [number, number];
-  onChange: (position: [number, number]) => void;
+  onChange?: (position: [number, number]) => void;
   radius?: number;
   onRadiusChange?: (radius: number) => void;
 }
@@ -24,7 +24,7 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({
       if (!e.latlng) return;
       const { lat, lng } = e.latlng;
 
-      onChange([lat, lng]);
+      onChange?.([lat, lng]);
     },
   });
 

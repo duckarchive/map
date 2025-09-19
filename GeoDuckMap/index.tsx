@@ -7,6 +7,7 @@ import {
   TileLayer,
   TileLayerProps,
 } from "react-leaflet";
+import type { Map } from "leaflet";
 
 import LocationMarker from "./LocationMarker";
 import MapLocationSearch from "./MapLocationSearch";
@@ -14,9 +15,9 @@ import MapLocationSearch from "./MapLocationSearch";
 import HistoricalLayers from "./HistoricalLayers";
 import UkraineLayer from "./UkraineLayer";
 
-export interface GeoDuckMapProps extends MapContainerProps {
+export interface GeoDuckMapProps extends MapContainerProps, React.RefAttributes<Map> {
   position: [number, number];
-  onPositionChange: (pos: [number, number]) => void;
+  onPositionChange?: (pos: [number, number]) => void;
   tileLayerProps?: TileLayerProps;
   year?: number;
   onYearChange?: (year: number) => void;
