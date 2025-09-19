@@ -1,6 +1,6 @@
 import { jsxs as k, Fragment as j, jsx as n } from "react/jsx-runtime";
 import { useMap as _, useMapEvents as U, Marker as Y, Circle as A, GeoJSON as N, MapContainer as T, TileLayer as G } from "react-leaflet";
-import H, { useEffect as b, useRef as K, memo as $, useState as v, useCallback as S, useMemo as R, forwardRef as Z } from "react";
+import H, { useEffect as x, useRef as K, memo as $, useState as v, useCallback as S, useMemo as R, forwardRef as Z } from "react";
 import q, { DomEvent as J } from "leaflet";
 import { OpenStreetMapProvider as Q } from "leaflet-geosearch";
 import { Autocomplete as X, AutocompleteItem as ee } from "@heroui/autocomplete";
@@ -20,9 +20,9 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
     click(i) {
       if (!i.latlng) return;
       const { lat: s, lng: f } = i.latlng;
-      t([s, f]);
+      t == null || t([s, f]);
     }
-  }), b(() => {
+  }), x(() => {
     if (!r || o === void 0) return;
     const i = (d) => {
       if (d.ctrlKey) {
@@ -65,7 +65,7 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
   ] }) : null;
 }, V = () => {
   const e = K(null);
-  return b(() => {
+  return x(() => {
     e.current && J.disableClickPropagation(e.current);
   }, [e.current]), e;
 }, ce = () => /* @__PURE__ */ n(
@@ -136,7 +136,7 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
     },
     [i]
   );
-  b(() => {
+  x(() => {
     const a = setTimeout(() => {
       s(e);
     }, 300);
@@ -337,7 +337,7 @@ const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
     return "gold";
   const o = t % P.length;
   return P[o];
-}, C = (e, t, o = 1) => {
+}, b = (e, t, o = 1) => {
   const r = e ? ye(e) : "gray";
   return {
     color: r,
@@ -354,7 +354,7 @@ const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
       {
         ref: o,
         data: e,
-        style: (r) => C(r, !1, 0),
+        style: (r) => b(r, !1, 0),
         onEachFeature: t
       }
     ) : null
@@ -366,7 +366,7 @@ const z = $(
     N,
     {
       data: e,
-      style: (o) => C(o, !1, 2),
+      style: (o) => b(o, !1, 2),
       onEachFeature: t
     }
   ) : null
@@ -375,24 +375,24 @@ z.displayName = "StatesLayer";
 const ve = ({ year: e, onYearChange: t }) => {
   var h, p, g;
   const [o, r] = v(null), [l, u] = v(null), { countries: i, states: s, updateYear: f, isLoading: y } = pe(e);
-  b(() => {
+  x(() => {
     f(e), r(null), u(null);
   }, [e]);
   const d = S(
-    (m, x) => {
-      x.on({
+    (m, C) => {
+      C.on({
         mouseover: (w) => {
-          r(m), w.target.setStyle(C(m, !1, 1));
+          r(m), w.target.setStyle(b(m, !1, 1));
         },
         mouseout: (w) => {
-          r(null), w.target.setStyle(C(m, !1, 0));
+          r(null), w.target.setStyle(b(m, !1, 0));
         }
       });
     },
     []
   ), a = S(
-    (m, x) => {
-      x.on({
+    (m, C) => {
+      C.on({
         mouseover: (w) => {
           u(m);
           const M = i == null ? void 0 : i.features.find(
@@ -401,10 +401,10 @@ const ve = ({ year: e, onYearChange: t }) => {
               return ((W = B.id) == null ? void 0 : W.toString()) === ((E = m.properties) == null ? void 0 : E.admin_level_1_ID.toString());
             }
           );
-          M && r(M), w.target.setStyle(C(m, !0, 4));
+          M && r(M), w.target.setStyle(b(m, !0, 4));
         },
         mouseout: (w) => {
-          u(null), w.target.setStyle(C(m, !1, 2));
+          u(null), w.target.setStyle(b(m, !1, 2));
         }
       });
     },
@@ -437,7 +437,7 @@ const ve = ({ year: e, onYearChange: t }) => {
       }
     )
   ] });
-}, ke = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", we = (e) => fetch(e).then((t) => t.json()), Ce = () => {
+}, ke = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", we = (e) => fetch(e).then((t) => t.json()), be = () => {
   const { data: e } = I(
     ke,
     we,
@@ -491,7 +491,7 @@ const ve = ({ year: e, onYearChange: t }) => {
           ...o
         }
       ),
-      !(s != null && s.ukraineLayer) && /* @__PURE__ */ n(Ce, {}),
+      !(s != null && s.ukraineLayer) && /* @__PURE__ */ n(be, {}),
       !(s != null && s.searchInput) && /* @__PURE__ */ n(D, {}),
       !(s != null && s.historicalLayers) && /* @__PURE__ */ n(ve, { year: r, onYearChange: l }),
       !(s != null && s.locationMarker) && /* @__PURE__ */ n(

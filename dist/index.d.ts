@@ -1,9 +1,10 @@
 import "leaflet-geosearch/assets/css/leaflet.css";
 import React from "react";
 import { MapContainerProps, TileLayerProps } from "react-leaflet";
-export interface GeoDuckMapProps extends MapContainerProps {
+import type { Map } from "leaflet";
+export interface GeoDuckMapProps extends MapContainerProps, React.RefAttributes<Map> {
     position: [number, number];
-    onPositionChange: (pos: [number, number]) => void;
+    onPositionChange?: (pos: [number, number]) => void;
     tileLayerProps?: TileLayerProps;
     year?: number;
     onYearChange?: (year: number) => void;
