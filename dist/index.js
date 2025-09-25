@@ -487,8 +487,8 @@ const ve = ({ year: e, onYearChange: t }) => {
     center: [49.0139, 31.2858],
     style: { height: "100%", width: "100%" },
     zoom: 6,
-    ...i,
     ...t ? je : xe,
+    ...i,
     children: [
       /* @__PURE__ */ o(
         G,
