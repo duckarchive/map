@@ -15,14 +15,31 @@ import MapLocationSearch from "./MapLocationSearch";
 import HistoricalLayers from "./HistoricalLayers";
 import UkraineLayer from "./UkraineLayer";
 
-export interface GeoDuckMapProps extends MapContainerProps, React.RefAttributes<Map> {
-  position: [number, number];
-  onPositionChange?: (pos: [number, number]) => void;
+const STATIC = {
+  zoomControl: false,
+  doubleClickZoom: false,
+  closePopupOnClick: false,
+  dragging: false,
+  zoomSnap: 0,
+  zoomDelta: 1,
+  trackResize: false,
+  touchZoom: false,
+  scrollWheelZoom: false,
+};
+
+const DEFAULT = {
+  zoomControl: false,
+  scrollWheelZoom: true,
+};
+
+export interface GeoDuckMapProps
+  extends MapContainerProps,
+    React.RefAttributes<Map> {
+  positions: [number, number, number?][];
+  onPositionChange?: (pos: [number, number, number?]) => void;
   tileLayerProps?: TileLayerProps;
   year?: number;
   onYearChange?: (year: number) => void;
-  radius?: number;
-  onRadiusChange?: (radius: number) => void;
   hideLayers?: Partial<{
     yearInput: boolean;
     searchInput: boolean;
@@ -33,24 +50,21 @@ export interface GeoDuckMapProps extends MapContainerProps, React.RefAttributes<
 }
 
 const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
-  position,
+  positions,
   onPositionChange,
   tileLayerProps,
   year = 1897,
   onYearChange,
-  radius,
-  onRadiusChange,
   hideLayers,
   ...mapContainerProps
 }) => (
   <MapContainer
-    scrollWheelZoom
     worldCopyJump
     center={[49.0139, 31.2858]}
     style={{ height: "100%", width: "100%" }}
     zoom={6}
-    zoomControl={false}
     {...mapContainerProps}
+    {...(onPositionChange ? DEFAULT : STATIC)}
   >
     <TileLayer
       className="grayscale"
@@ -59,18 +73,20 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
       {...tileLayerProps}
     />
     {!hideLayers?.ukraineLayer && <UkraineLayer />}
-    {!hideLayers?.searchInput && <MapLocationSearch />}
+    {!hideLayers?.searchInput && (
+      <MapLocationSearch onSelect={onPositionChange} />
+    )}
     {!hideLayers?.historicalLayers && (
       <HistoricalLayers year={year} onYearChange={onYearChange} />
     )}
-    {!hideLayers?.locationMarker && (
-      <LocationMarker
-        value={position}
-        onChange={onPositionChange}
-        radius={radius}
-        onRadiusChange={onRadiusChange}
-      />
-    )}
+    {!hideLayers?.locationMarker &&
+      (onPositionChange ? (
+        <LocationMarker value={positions[0]} onChange={onPositionChange} />
+      ) : (
+        positions.map((pos, idx) => (
+          <LocationMarker key={idx} value={pos} />
+        ))
+      ))}
   </MapContainer>
 );
 

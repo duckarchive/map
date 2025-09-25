@@ -5,31 +5,28 @@ import L from "leaflet";
 const markerSVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 512 512"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"/><circle cx="256" cy="192" r="48" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`;
 
 interface LocationMarkerProps {
-  value: [number, number];
-  onChange?: (position: [number, number]) => void;
-  radius?: number;
-  onRadiusChange?: (radius: number) => void;
+  value: [number, number, number?];
+  onChange?: (position: [number, number, number?]) => void;
 }
 
 const LocationMarker: React.FC<LocationMarkerProps> = ({
   value,
   onChange,
-  radius,
-  onRadiusChange,
 }) => {
+  const isStatic = !onChange;
   const map = useMap();
   
   useMapEvents({
     click(e) {
-      if (!e.latlng) return;
+      if (!e.latlng || isStatic) return;
       const { lat, lng } = e.latlng;
 
-      onChange?.([lat, lng]);
+      onChange?.([lat, lng, value[2] || 0]);
     },
   });
 
   useEffect(() => {
-    if (!onRadiusChange || radius === undefined) return;
+    if (isStatic) return;
 
     const handleWheel = (e: WheelEvent) => {
       if (e.ctrlKey) {
@@ -43,17 +40,17 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({
         const minRadius = 100;
         const maxRadius = 10000;
         
-        let newRadius = radius;
+        let newRadius = value[2] || 0;
         if (delta < 0) {
           // Scroll up - increase radius
-          newRadius = Math.min(radius + step, maxRadius);
+          newRadius = Math.min((value[2] || 0) + step, maxRadius);
         } else {
           // Scroll down - decrease radius
-          newRadius = Math.max(radius - step, minRadius);
+          newRadius = Math.max((value[2] || 0) - step, minRadius);
         }
         
-        if (newRadius !== radius) {
-          onRadiusChange(newRadius);
+        if (newRadius !== value[2] || 0) {
+          onChange?.([value[0], value[1], newRadius]);
         }
       }
     };
@@ -86,7 +83,7 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({
       // Ensure scroll zoom is re-enabled on cleanup
       map.scrollWheelZoom.enable();
     };
-  }, [map, radius, onRadiusChange]);
+  }, [isStatic, map, value, onChange]);
 
   const markerIcon = React.useMemo(() => {
     return L.divIcon({
@@ -103,10 +100,10 @@ const LocationMarker: React.FC<LocationMarkerProps> = ({
   return (
     <>
       <Marker position={value} icon={markerIcon} />
-      {radius && radius > 0 && (
+      {value[2] && value[2] > 0 && (
         <Circle
           center={value}
-          radius={radius}
+          radius={value[2]}
           pathOptions={{
             color: "currentColor",
             fillColor: "currentColor",

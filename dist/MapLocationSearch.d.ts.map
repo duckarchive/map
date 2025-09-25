@@ -1,1 +1,1 @@
-{"version":3,"file":"MapLocationSearch.d.ts","sourceRoot":"","sources":["../../GeoDuckMap/MapLocationSearch.tsx"],"names":[],"mappings":"AAqDA,QAAA,MAAM,iBAAiB,oFAuGrB,CAAC;AAIH,eAAe,iBAAiB,CAAC"}
+{"version":3,"file":"MapLocationSearch.d.ts","sourceRoot":"","sources":["../../GeoDuckMap/MapLocationSearch.tsx"],"names":[],"mappings":"AAqDA,UAAU,sBAAsB;IAC9B,QAAQ,CAAC,EAAE,CAAC,KAAK,EAAE,CAAC,MAAM,EAAE,MAAM,CAAC,KAAK,IAAI,CAAC;CAC9C;AAED,QAAA,MAAM,iBAAiB,8DAyGrB,CAAC;AAIH,eAAe,iBAAiB,CAAC"}

@@ -1,59 +1,57 @@
-import { jsxs as k, Fragment as j, jsx as n } from "react/jsx-runtime";
-import { useMap as _, useMapEvents as U, Marker as Y, Circle as A, GeoJSON as N, MapContainer as T, TileLayer as G } from "react-leaflet";
-import H, { useEffect as x, useRef as K, memo as $, useState as v, useCallback as S, useMemo as R, forwardRef as Z } from "react";
-import q, { DomEvent as J } from "leaflet";
-import { OpenStreetMapProvider as Q } from "leaflet-geosearch";
-import { Autocomplete as X, AutocompleteItem as ee } from "@heroui/autocomplete";
-import { Spinner as te } from "@heroui/spinner";
+import { jsxs as k, Fragment as S, jsx as o } from "react/jsx-runtime";
+import { useMap as D, useMapEvents as T, Marker as U, Circle as Y, GeoJSON as N, MapContainer as Z, TileLayer as G } from "react-leaflet";
+import H, { useEffect as x, useRef as K, memo as $, useState as v, useCallback as C, useMemo as E, forwardRef as q } from "react";
+import J, { DomEvent as Q } from "leaflet";
+import { OpenStreetMapProvider as X } from "leaflet-geosearch";
+import { Autocomplete as ee, AutocompleteItem as te } from "@heroui/autocomplete";
+import { Spinner as oe } from "@heroui/spinner";
 import I from "swr";
-import { Card as oe, CardBody as ne } from "@heroui/card";
-import { Button as re } from "@heroui/button";
-import { Input as le } from "@heroui/input";
-const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 512 512"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"/><circle cx="256" cy="192" r="48" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>', se = ({
+import { Card as ne, CardBody as re } from "@heroui/card";
+import { Button as le } from "@heroui/button";
+import { Input as se } from "@heroui/input";
+const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 512 512"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"/><circle cx="256" cy="192" r="48" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>', L = ({
   value: e,
-  onChange: t,
-  radius: o,
-  onRadiusChange: r
+  onChange: t
 }) => {
-  const l = _();
-  U({
-    click(i) {
-      if (!i.latlng) return;
-      const { lat: s, lng: f } = i.latlng;
-      t == null || t([s, f]);
+  const s = !t, r = D();
+  T({
+    click(n) {
+      if (!n.latlng || s) return;
+      const { lat: i, lng: d } = n.latlng;
+      t == null || t([i, d, e[2] || 0]);
     }
   }), x(() => {
-    if (!r || o === void 0) return;
-    const i = (d) => {
-      if (d.ctrlKey) {
-        d.preventDefault(), d.stopPropagation(), d.stopImmediatePropagation();
-        const a = d.deltaY, h = 100, p = 100, g = 1e4;
-        let m = o;
-        a < 0 ? m = Math.min(o + h, g) : m = Math.max(o - h, p), m !== o && r(m);
+    if (s) return;
+    const n = (p) => {
+      if (p.ctrlKey) {
+        p.preventDefault(), p.stopPropagation(), p.stopImmediatePropagation();
+        const h = p.deltaY, y = 100, l = 100, u = 1e4;
+        let m = e[2] || 0;
+        h < 0 ? m = Math.min((e[2] || 0) + y, u) : m = Math.max((e[2] || 0) - y, l), m !== e[2] && (t == null || t([e[0], e[1], m]));
       }
-    }, s = (d) => {
-      d.key === "Control" && l.scrollWheelZoom.disable();
-    }, f = (d) => {
-      d.key === "Control" && l.scrollWheelZoom.enable();
-    }, y = l.getContainer();
-    return y.addEventListener("wheel", i, { passive: !1, capture: !0 }), document.addEventListener("keydown", s), document.addEventListener("keyup", f), () => {
-      y.removeEventListener("wheel", i, { capture: !0 }), document.removeEventListener("keydown", s), document.removeEventListener("keyup", f), l.scrollWheelZoom.enable();
+    }, i = (p) => {
+      p.key === "Control" && r.scrollWheelZoom.disable();
+    }, d = (p) => {
+      p.key === "Control" && r.scrollWheelZoom.enable();
+    }, f = r.getContainer();
+    return f.addEventListener("wheel", n, { passive: !1, capture: !0 }), document.addEventListener("keydown", i), document.addEventListener("keyup", d), () => {
+      f.removeEventListener("wheel", n, { capture: !0 }), document.removeEventListener("keydown", i), document.removeEventListener("keyup", d), r.scrollWheelZoom.enable();
     };
-  }, [l, o, r]);
-  const u = H.useMemo(() => q.divIcon({
+  }, [s, r, e, t]);
+  const a = H.useMemo(() => J.divIcon({
     html: ae,
     className: "io5-icon",
     iconSize: [40, 40],
     iconAnchor: [20, 40],
     popupAnchor: [0, -40]
   }), []);
-  return e ? /* @__PURE__ */ k(j, { children: [
-    /* @__PURE__ */ n(Y, { position: e, icon: u }),
-    o && o > 0 && /* @__PURE__ */ n(
-      A,
+  return e ? /* @__PURE__ */ k(S, { children: [
+    /* @__PURE__ */ o(U, { position: e, icon: a }),
+    e[2] && e[2] > 0 && /* @__PURE__ */ o(
+      Y,
       {
         center: e,
-        radius: o,
+        radius: e[2],
         pathOptions: {
           color: "currentColor",
           fillColor: "currentColor",
@@ -63,19 +61,19 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
       }
     )
   ] }) : null;
-}, V = () => {
+}, P = () => {
   const e = K(null);
   return x(() => {
-    e.current && J.disableClickPropagation(e.current);
+    e.current && Q.disableClickPropagation(e.current);
   }, [e.current]), e;
-}, ce = () => /* @__PURE__ */ n(
+}, ce = () => /* @__PURE__ */ o(
   "svg",
   {
     className: "w-4 h-4 text-gray-400",
     fill: "none",
     stroke: "currentColor",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ n(
+    children: /* @__PURE__ */ o(
       "path",
       {
         d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
@@ -93,7 +91,7 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
     stroke: "currentColor",
     viewBox: "0 0 24 24",
     children: [
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ o(
         "path",
         {
           d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z",
@@ -102,7 +100,7 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
           strokeWidth: 2
         }
       ),
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ o(
         "path",
         {
           d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z",
@@ -113,85 +111,85 @@ const ae = '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="
       )
     ]
   }
-), D = $(() => {
-  const [e, t] = v(""), [o, r] = v([]), l = V(), u = _(), i = new Q({
+), V = $(({ onSelect: e }) => {
+  const [t, s] = v(""), [r, a] = v([]), n = P(), i = D(), d = new X({
     params: {
       "accept-language": "ua",
       countrycodes: "ua,pl,by,ru,ro,md,tr",
       limit: 5,
       email: "admin@duckarchive.com"
     }
-  }), s = S(
-    async (a) => {
-      if (!a.trim()) {
-        r([]);
+  }), f = C(
+    async (l) => {
+      if (!l.trim()) {
+        a([]);
         return;
       }
       try {
-        const h = await i.search({ query: a });
-        r(h);
+        const u = await d.search({ query: l });
+        a(u);
       } catch {
-        r([]);
+        a([]);
       }
     },
-    [i]
+    [d]
   );
   x(() => {
-    const a = setTimeout(() => {
-      s(e);
+    const l = setTimeout(() => {
+      f(t);
     }, 300);
-    return () => clearTimeout(a);
-  }, [e]);
-  const f = (a) => {
-    t(a.label), u.setView([a.y, a.x], 15), u.fire("geosearch/showlocation", {
-      location: a,
+    return () => clearTimeout(l);
+  }, [t]);
+  const p = (l) => {
+    s(l.label), i.setView([l.y, l.x], 15), i.fire("geosearch/showlocation", {
+      location: l,
       marker: null
-    });
+    }), e == null || e([l.y, l.x]);
   };
-  return /* @__PURE__ */ n(
+  return /* @__PURE__ */ o(
     "div",
     {
-      ref: l,
+      ref: n,
       className: "absolute leaflet-top leaflet-left",
-      children: /* @__PURE__ */ n(
-        X,
+      children: /* @__PURE__ */ o(
+        ee,
         {
           "aria-label": "Пошук за сучасною назвою",
           className: "leaflet-control w-auto bg-background rounded-xl shadow text-foreground",
-          defaultItems: o,
-          inputValue: e,
+          defaultItems: r,
+          inputValue: t,
           listboxProps: {
             emptyContent: "Нічого не знайдено. Уточніть свій запит."
           },
           placeholder: "Пошук за сучасною назвою",
-          startContent: /* @__PURE__ */ n(ce, {}),
+          startContent: /* @__PURE__ */ o(ce, {}),
           variant: "bordered",
-          onClick: (a) => a.stopPropagation(),
-          onInputChange: (a) => {
-            t(a);
+          onClick: (l) => l.stopPropagation(),
+          onInputChange: (l) => {
+            s(l);
           },
-          onMouseDown: (a) => a.stopPropagation(),
-          onSelectionChange: (a) => {
-            if (a) {
-              const h = o[a];
-              h && f(h);
+          onMouseDown: (l) => l.stopPropagation(),
+          onSelectionChange: (l) => {
+            if (l) {
+              const u = r[l];
+              u && p(u);
             }
           },
-          children: (a) => /* @__PURE__ */ n(
-            ee,
+          children: (l) => /* @__PURE__ */ o(
+            te,
             {
-              startContent: /* @__PURE__ */ n(ie, {}),
-              textValue: a.label,
-              children: a.label
+              startContent: /* @__PURE__ */ o(ie, {}),
+              textValue: l.label,
+              children: l.label
             },
-            o.indexOf(a)
+            r.indexOf(l)
           )
         }
       )
     }
   );
 });
-D.displayName = "MapLocationSearch";
+V.displayName = "MapLocationSearch";
 const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", ue = [
   { year: 1500, url: `${c}/countries/1500.geojson` },
   { year: 1530, url: `${c}/countries/1530.geojson` },
@@ -217,74 +215,74 @@ const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
   { year: 1937, url: `${c}/states/1937.geojson` },
   { year: 1945, url: `${c}/states/1945.geojson` },
   { year: 1991, url: `${c}/states/1991.geojson` }
-], L = (e, t, o = !1) => {
-  if (o) {
-    const l = t.find(({ year: u }) => u === e);
-    return l ? l.url : null;
+], O = (e, t, s = !1) => {
+  if (s) {
+    const a = t.find(({ year: n }) => n === e);
+    return a ? a.url : null;
   }
-  const r = t.filter(({ year: l }) => l > 0 && l <= e).sort((l, u) => u.year - l.year);
+  const r = t.filter(({ year: a }) => a > 0 && a <= e).sort((a, n) => n.year - a.year);
   return r.length > 0 ? r[0].url : null;
-}, O = (e) => fetch(e).then((t) => t.json()), pe = (e) => {
-  const [t, o] = v(e), r = L(t, ue), {
-    data: l,
-    isLoading: u,
+}, _ = (e) => fetch(e).then((t) => t.json()), pe = (e) => {
+  const [t, s] = v(e), r = O(t, ue), {
+    data: a,
+    isLoading: n,
     isValidating: i
-  } = I(r, O, {
+  } = I(r, _, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), s = L(t, de, !0), {
+  }), d = O(t, de, !0), {
     data: f,
-    isLoading: y,
-    isValidating: d
-  } = I(s, O, {
+    isLoading: p,
+    isValidating: h
+  } = I(d, _, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), a = R(
-    () => l || null,
-    [l]
-  ), h = R(
+  }), y = E(
+    () => a || null,
+    [a]
+  ), l = E(
     () => f || null,
     [f]
   );
   return {
-    countries: a,
-    states: h,
-    updateYear: (g) => {
-      o(g);
+    countries: y,
+    states: l,
+    updateYear: (m) => {
+      s(m);
     },
-    isLoading: u || y || i || d
+    isLoading: n || p || i || h
   };
-}, me = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ n("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ n(oe, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ n(ne, { className: "py-2", children: /* @__PURE__ */ k("div", { className: "flex flex-col gap-0", children: [
-  o && /* @__PURE__ */ n("p", { className: "text-large", children: o }),
-  t && /* @__PURE__ */ n("p", { className: "text-small text-default-500", children: t }),
-  e && /* @__PURE__ */ n("p", { className: "text-small text-default-500", children: e })
+}, me = ({ level1: e, level2: t, level3: s }) => /* @__PURE__ */ o("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ o(ne, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ o(re, { className: "py-2", children: /* @__PURE__ */ k("div", { className: "flex flex-col gap-0", children: [
+  s && /* @__PURE__ */ o("p", { className: "text-large", children: s }),
+  t && /* @__PURE__ */ o("p", { className: "text-small text-default-500", children: t }),
+  e && /* @__PURE__ */ o("p", { className: "text-small text-default-500", children: e })
 ] }) }) }) }), fe = [
   { value: 1897, label: "Російська Імперія" },
   { value: 1914, label: "WWI" },
   { value: 1937, label: "Перед WWII" },
   { value: 1945, label: "Після WWII" },
   { value: 1991, label: "Незалежність" }
-], he = (e) => {
+], ge = (e) => {
   const t = parseInt(e, 10);
   return /^\d{4}$/.test(e) && t >= 1500 && t <= 1991;
-}, ge = ({ value: e, onChange: t }) => {
-  const [o, r] = v(e.toString()), [l, u] = v(!1), [i, s] = v(!1), f = V(), y = (p) => {
-    const g = p.replace(/\D/g, "").slice(0, 4);
-    if (r(g), g.length === 4) {
-      const m = he(g);
-      s(!m), m && t(parseInt(g, 10));
+}, he = ({ value: e, onChange: t }) => {
+  const [s, r] = v(e.toString()), [a, n] = v(!1), [i, d] = v(!1), f = P(), p = (u) => {
+    const m = u.replace(/\D/g, "").slice(0, 4);
+    if (r(m), m.length === 4) {
+      const g = ge(m);
+      d(!g), g && t(parseInt(m, 10));
     } else
-      s(!1);
-  }, d = (p) => {
-    r(p.toString()), t(p), u(!1), s(!1);
+      d(!1);
+  }, h = (u) => {
+    r(u.toString()), t(u), n(!1), d(!1);
   };
-  return /* @__PURE__ */ n("div", { ref: f, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ k("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
-    /* @__PURE__ */ n(
-      le,
+  return /* @__PURE__ */ o("div", { ref: f, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ k("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
+    /* @__PURE__ */ o(
+      se,
       {
         classNames: {
           inputWrapper: "bg-background relative",
@@ -294,35 +292,35 @@ const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
         isInvalid: i,
         placeholder: "1897",
         type: "text",
-        value: o,
+        value: s,
         variant: "bordered",
         onBlur: () => {
-          setTimeout(() => u(!1), 150);
+          setTimeout(() => n(!1), 150);
         },
         onFocus: () => {
-          u(!0);
+          n(!0);
         },
-        onValueChange: y
+        onValueChange: p
       }
     ),
-    l && /* @__PURE__ */ n("div", { className: "flex flex-col gap-1 p-2", children: fe.map((p) => /* @__PURE__ */ k(
-      re,
+    a && /* @__PURE__ */ o("div", { className: "flex flex-col gap-1 p-2", children: fe.map((u) => /* @__PURE__ */ k(
+      le,
       {
         className: "text-xs justify-start",
         color: "default",
         size: "sm",
-        variant: e === p.value ? "flat" : "bordered",
-        onPress: () => d(p.value),
+        variant: e === u.value ? "flat" : "bordered",
+        onPress: () => h(u.value),
         children: [
-          p.value,
+          u.value,
           " - ",
-          p.label
+          u.label
         ]
       },
-      p.value
+      u.value
     )) })
   ] }) });
-}, P = [
+}, z = [
   "green",
   "darkblue",
   "purple",
@@ -335,24 +333,24 @@ const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
   const t = ((r = e.properties) == null ? void 0 : r.admin_level_1_ID) || e.id || 0;
   if (t === 22)
     return "gold";
-  const o = t % P.length;
-  return P[o];
-}, b = (e, t, o = 1) => {
+  const s = t % z.length;
+  return z[s];
+}, b = (e, t, s = 1) => {
   const r = e ? ye(e) : "gray";
   return {
     color: r,
     fillColor: r,
-    weight: o,
+    weight: s,
     opacity: t ? 1 : 0.5,
     fillOpacity: t ? 0.1 : 0,
     interactive: !0
   };
 }, F = $(
-  Z(
-    ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ n(
+  q(
+    ({ data: e, onEachFeature: t }, s) => e ? /* @__PURE__ */ o(
       N,
       {
-        ref: o,
+        ref: s,
         data: e,
         style: (r) => b(r, !1, 0),
         onEachFeature: t
@@ -361,79 +359,79 @@ const c = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geo
   )
 );
 F.displayName = "CountriesLayer";
-const z = $(
-  ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ n(
+const A = $(
+  ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ o(
     N,
     {
       data: e,
-      style: (o) => b(o, !1, 2),
+      style: (s) => b(s, !1, 2),
       onEachFeature: t
     }
   ) : null
 );
-z.displayName = "StatesLayer";
+A.displayName = "StatesLayer";
 const ve = ({ year: e, onYearChange: t }) => {
-  var h, p, g;
-  const [o, r] = v(null), [l, u] = v(null), { countries: i, states: s, updateYear: f, isLoading: y } = pe(e);
+  var l, u, m;
+  const [s, r] = v(null), [a, n] = v(null), { countries: i, states: d, updateYear: f, isLoading: p } = pe(e);
   x(() => {
-    f(e), r(null), u(null);
+    f(e), r(null), n(null);
   }, [e]);
-  const d = S(
-    (m, C) => {
-      C.on({
+  const h = C(
+    (g, j) => {
+      j.on({
         mouseover: (w) => {
-          r(m), w.target.setStyle(b(m, !1, 1));
+          r(g), w.target.setStyle(b(g, !1, 1));
         },
         mouseout: (w) => {
-          r(null), w.target.setStyle(b(m, !1, 0));
+          r(null), w.target.setStyle(b(g, !1, 0));
         }
       });
     },
     []
-  ), a = S(
-    (m, C) => {
-      C.on({
+  ), y = C(
+    (g, j) => {
+      j.on({
         mouseover: (w) => {
-          u(m);
+          n(g);
           const M = i == null ? void 0 : i.features.find(
             (B) => {
-              var W, E;
-              return ((W = B.id) == null ? void 0 : W.toString()) === ((E = m.properties) == null ? void 0 : E.admin_level_1_ID.toString());
+              var W, R;
+              return ((W = B.id) == null ? void 0 : W.toString()) === ((R = g.properties) == null ? void 0 : R.admin_level_1_ID.toString());
             }
           );
-          M && r(M), w.target.setStyle(b(m, !0, 4));
+          M && r(M), w.target.setStyle(b(g, !0, 4));
         },
         mouseout: (w) => {
-          u(null), w.target.setStyle(b(m, !1, 2));
+          n(null), w.target.setStyle(b(g, !1, 2));
         }
       });
     },
     [i]
   );
-  return /* @__PURE__ */ k(j, { children: [
-    y ? /* @__PURE__ */ n("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ n(te, {}) }) : /* @__PURE__ */ k(j, { children: [
-      i && /* @__PURE__ */ n(
+  return /* @__PURE__ */ k(S, { children: [
+    p ? /* @__PURE__ */ o("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ o(oe, {}) }) : /* @__PURE__ */ k(S, { children: [
+      i && /* @__PURE__ */ o(
         F,
         {
           data: i,
-          onEachFeature: d
+          onEachFeature: h
         }
       ),
-      s && /* @__PURE__ */ n(z, { data: s, onEachFeature: a })
+      d && /* @__PURE__ */ o(A, { data: d, onEachFeature: y })
     ] }),
-    t && /* @__PURE__ */ n(
-      ge,
+    t && /* @__PURE__ */ o(
+      he,
       {
         value: e,
         onChange: t
       }
     ),
-    (o || l) && /* @__PURE__ */ n(
+    (s || a) && /* @__PURE__ */ o(
       me,
       {
-        level1: (h = o == null ? void 0 : o.properties) == null ? void 0 : h.admin_level_1,
-        level2: (p = l == null ? void 0 : l.properties) == null ? void 0 : p.admin_level_2,
-        level3: (g = l == null ? void 0 : l.properties) == null ? void 0 : g.admin_level_3
+        level1: (l = s == null ? void 0 : s.properties) == null ? void 0 : l.admin_level_1,
+        level2: (u = a == null ? void 0 : a.properties) == null ? void 0 : u.admin_level_2,
+        level3: (m = a == null ? void 0 : a.properties) == null ? void 0 : m.admin_level_3
       }
     )
   ] });
@@ -448,7 +446,7 @@ const ve = ({ year: e, onYearChange: t }) => {
       refreshWhenOffline: !1
     }
   );
-  return e && /* @__PURE__ */ n(
+  return e && /* @__PURE__ */ o(
     N,
     {
       data: e,
@@ -461,52 +459,54 @@ const ve = ({ year: e, onYearChange: t }) => {
       }
     }
   );
-}, Le = ({
-  position: e,
+}, xe = {
+  zoomControl: !1,
+  doubleClickZoom: !1,
+  closePopupOnClick: !1,
+  dragging: !1,
+  zoomSnap: 0,
+  zoomDelta: 1,
+  trackResize: !1,
+  touchZoom: !1,
+  scrollWheelZoom: !1
+}, je = {
+  zoomControl: !1,
+  scrollWheelZoom: !0
+}, _e = ({
+  positions: e,
   onPositionChange: t,
-  tileLayerProps: o,
+  tileLayerProps: s,
   year: r = 1897,
-  onYearChange: l,
-  radius: u,
-  onRadiusChange: i,
-  hideLayers: s,
-  ...f
+  onYearChange: a,
+  hideLayers: n,
+  ...i
 }) => /* @__PURE__ */ k(
-  T,
+  Z,
   {
-    scrollWheelZoom: !0,
     worldCopyJump: !0,
     center: [49.0139, 31.2858],
     style: { height: "100%", width: "100%" },
     zoom: 6,
-    zoomControl: !1,
-    ...f,
+    ...i,
+    ...t ? je : xe,
     children: [
-      /* @__PURE__ */ n(
+      /* @__PURE__ */ o(
         G,
         {
           className: "grayscale",
           attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          ...o
+          ...s
         }
       ),
-      !(s != null && s.ukraineLayer) && /* @__PURE__ */ n(be, {}),
-      !(s != null && s.searchInput) && /* @__PURE__ */ n(D, {}),
-      !(s != null && s.historicalLayers) && /* @__PURE__ */ n(ve, { year: r, onYearChange: l }),
-      !(s != null && s.locationMarker) && /* @__PURE__ */ n(
-        se,
-        {
-          value: e,
-          onChange: t,
-          radius: u,
-          onRadiusChange: i
-        }
-      )
+      !(n != null && n.ukraineLayer) && /* @__PURE__ */ o(be, {}),
+      !(n != null && n.searchInput) && /* @__PURE__ */ o(V, { onSelect: t }),
+      !(n != null && n.historicalLayers) && /* @__PURE__ */ o(ve, { year: r, onYearChange: a }),
+      !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ o(L, { value: e[0], onChange: t }) : e.map((d, f) => /* @__PURE__ */ o(L, { value: d }, f)))
     ]
   }
 );
 export {
-  Le as default
+  _e as default
 };
 //# sourceMappingURL=index.js.map

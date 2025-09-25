@@ -3,13 +3,11 @@ import React from "react";
 import { MapContainerProps, TileLayerProps } from "react-leaflet";
 import type { Map } from "leaflet";
 export interface GeoDuckMapProps extends MapContainerProps, React.RefAttributes<Map> {
-    position: [number, number];
-    onPositionChange?: (pos: [number, number]) => void;
+    positions: [number, number, number?][];
+    onPositionChange?: (pos: [number, number, number?]) => void;
     tileLayerProps?: TileLayerProps;
     year?: number;
     onYearChange?: (year: number) => void;
-    radius?: number;
-    onRadiusChange?: (radius: number) => void;
     hideLayers?: Partial<{
         yearInput: boolean;
         searchInput: boolean;

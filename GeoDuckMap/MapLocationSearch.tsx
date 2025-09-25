@@ -51,7 +51,11 @@ interface SearchResult {
   raw: any;
 }
 
-const MapLocationSearch = memo(() => {
+interface MapLocationSearchProps {
+  onSelect?: (coord: [number, number]) => void;
+}
+
+const MapLocationSearch = memo<MapLocationSearchProps>(({ onSelect }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const autocompleteRef = useStopPropagation();
@@ -105,6 +109,8 @@ const MapLocationSearch = memo(() => {
       location: result,
       marker: null,
     });
+
+    onSelect?.([result.y, result.x]);
   };
 
   const handleInputChange = (value: string) => {
