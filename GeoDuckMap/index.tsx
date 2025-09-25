@@ -63,8 +63,8 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
     center={[49.0139, 31.2858]}
     style={{ height: "100%", width: "100%" }}
     zoom={6}
-    {...mapContainerProps}
     {...(onPositionChange ? DEFAULT : STATIC)}
+    {...mapContainerProps}
   >
     <TileLayer
       className="grayscale"
