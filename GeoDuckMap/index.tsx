@@ -9,7 +9,7 @@ import {
 } from "react-leaflet";
 import type { Map } from "leaflet";
 
-import LocationMarker from "./LocationMarker";
+import LocationMarker, { MarkerValue } from "./LocationMarker";
 import MapLocationSearch from "./MapLocationSearch";
 
 import HistoricalLayers from "./HistoricalLayers";
@@ -35,8 +35,8 @@ const DEFAULT = {
 export interface GeoDuckMapProps
   extends MapContainerProps,
     React.RefAttributes<Map> {
-  positions: [number, number, number?][];
-  onPositionChange?: (pos: [number, number, number?]) => void;
+  positions: MarkerValue[];
+  onPositionChange?: (pos: MarkerValue) => void;
   tileLayerProps?: TileLayerProps;
   year?: number;
   onYearChange?: (year: number) => void;

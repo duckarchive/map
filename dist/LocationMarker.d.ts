@@ -1,7 +1,8 @@
 import React from "react";
+export type MarkerValue = [number, number, number?, string?, string?];
 interface LocationMarkerProps {
-    value: [number, number, number?];
-    onChange?: (position: [number, number, number?]) => void;
+    value: MarkerValue;
+    onChange?: (position: MarkerValue) => void;
 }
 declare const LocationMarker: React.FC<LocationMarkerProps>;
 export default LocationMarker;
