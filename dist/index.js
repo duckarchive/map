@@ -1,60 +1,84 @@
-import { jsx as r, jsxs as g, Fragment as b } from "react/jsx-runtime";
-import { Marker as $, Tooltip as H, Circle as P, useMap as E, useMapEvents as Z, GeoJSON as V, MapContainer as Q, TileLayer as ee } from "react-leaflet";
-import { useEffect as S, useRef as te, memo as W, useState as y, useCallback as I, useMemo as j, forwardRef as oe } from "react";
-import C, { DomEvent as ne, latLngBounds as re, DivIcon as se } from "leaflet";
-import { OpenStreetMapProvider as le } from "leaflet-geosearch";
-import { Autocomplete as ce, AutocompleteItem as ae } from "@heroui/autocomplete";
-import { Spinner as ie } from "@heroui/spinner";
-import L from "swr";
-import { Card as ue, CardBody as de } from "@heroui/card";
-import { Button as he } from "@heroui/button";
-import { Input as me } from "@heroui/input";
-const pe = C.divIcon({
+import { jsx as s, jsxs as g, Fragment as z } from "react/jsx-runtime";
+import { Marker as L, Tooltip as T, Circle as F, useMap as V, useMapEvents as P, GeoJSON as $, MapContainer as Q, TileLayer as e1 } from "react-leaflet";
+import { useEffect as b, useRef as t1, memo as E, useState as q, useCallback as I, useMemo as M, forwardRef as o1 } from "react";
+import w, { DomEvent as n1, latLngBounds as s1, DivIcon as r1 } from "leaflet";
+import { OpenStreetMapProvider as l1 } from "leaflet-geosearch";
+import { Autocomplete as c1, AutocompleteItem as a1 } from "@heroui/autocomplete";
+import { Spinner as i1 } from "@heroui/spinner";
+import N from "swr";
+import { Card as u1, CardBody as m1 } from "@heroui/card";
+import { Button as d1 } from "@heroui/button";
+import { Input as h1 } from "@heroui/input";
+const p1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 384 512"><path stroke="none" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/></svg>',
   className: "io5-icon",
-  iconSize: [20, 20],
+  iconSize: [30, 30],
   iconAnchor: [10, 30]
-}), fe = C.divIcon({
-  html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 384 512"><path stroke="none" d="M352 128h-96V32c0-17.67-14.33-32-32-32h-64c-17.67 0-32 14.33-32 32v96H32c-17.67 0-32 14.33-32 32v64c0 17.67 14.33 32 32 32h96v224c0 17.67 14.33 32 32 32h64c17.67 0 32-14.33 32-32V256h96c17.67 0 32-14.33 32-32v-64c0-17.67-14.33-32-32-32z"/></svg>',
+}), f1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-20 32v114H32v40h140v294h40V186h140v-40H212V32z"/></svg>',
   className: "io5-icon",
-  iconSize: [20, 20],
+  iconSize: [30, 30],
   iconAnchor: [10, 30]
-}), ge = C.divIcon({
-  html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 24 24"><path stroke="none" d="M8.433 6H3l-.114.006a1 1 0 0 0-.743 1.508L4.833 12l-2.69 4.486-.054.1A1 1 0 0 0 3 18h5.434l2.709 4.514.074.108a1 1 0 0 0 1.64-.108L15.565 18H21l.114-.006a1 1 0 0 0 .743-1.508L19.166 12l2.691-4.486.054-.1A1 1 0 0 0 21 6h-5.434l-2.709-4.514a1 1 0 0 0-1.714 0L8.433 6z"/></svg>',
+}), g1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-30 32v130H32v60h130v258h60V222h130v-60H222V32z"/></svg>',
   className: "io5-icon",
-  iconSize: [20, 20],
+  iconSize: [30, 30],
   iconAnchor: [10, 30]
-}), ve = C.divIcon({
-  html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 24 24"><path fill="none" stroke="none" d="M0 0h24v24H0z"/><path stroke="none" d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm2.5 11.59.9 3.88-3.4-2.05-3.4 2.05.9-3.87-3-2.59 3.96-.34L12 6.02l1.54 3.64 3.96.34-3 2.59z"/></svg>',
+}), v1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m0 32q-10 1-18 7-6 8-7 18-10 1-17 7-8 8-8 18t8 17 17 8v60h-60q0-10-8-17-7-8-17-8t-18 8-7 17q-10 0-18 8-6 7-7 17 1 11 7 18 8 6 18 7 1 10 7 18 8 7 18 7 10-1 17-7 8-7 8-18h60v167q-10 0-17 8-8 7-8 17 0 11 8 18 7 6 17 7 1 10 7 18 8 7 18 7 11 0 18-7 6-7 7-18 10-1 17-7 8-8 8-18t-8-17-17-8V217h60q0 10 8 18 7 7 17 7 11-1 18-7 7-7 7-18 11-1 18-7 6-8 7-18 0-10-7-17-8-8-18-8 0-10-7-17-7-8-18-8-10 0-17 8-8 7-8 17h-60v-60q10 0 17-8 8-7 8-17t-8-18-17-7q0-10-7-18-8-6-18-7"/></svg>',
   className: "io5-icon",
-  iconSize: [20, 20],
+  iconSize: [30, 30],
   iconAnchor: [10, 30]
-}), we = C.divIcon({
-  html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 512 512"><path stroke="none" d="m243.4 2.6-224 96c-14 6-21.8 21-18.7 35.8S16.8 160 32 160v8c0 13.3 10.7 24 24 24h400c13.3 0 24-10.7 24-24v-8c15.2 0 28.3-10.7 31.3-25.6s-4.8-29.9-18.7-35.8l-224-96c-8-3.4-17.2-3.4-25.2 0zM128 224H64v196.3c-.6.3-1.2.7-1.8 1.1l-48 32c-11.7 7.8-17 22.4-12.9 35.9S17.9 512 32 512h448c14.1 0 26.5-9.2 30.6-22.7s-1.1-28.1-12.9-35.9l-48-32c-.6-.4-1.2-.7-1.8-1.1L448 224h-64v192h-40V224h-64v192h-48V224h-64v192h-40V224zM256 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>',
+}), w1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-19 32v68h-68v35h68v28H64v35h109v282h35V198h109v-35H208v-28h68v-35h-68V32z"/></svg>',
   className: "io5-icon",
-  iconSize: [20, 20],
+  iconSize: [30, 30],
   iconAnchor: [10, 30]
-}), ye = C.divIcon({
-  html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 448 512"><path stroke="none" d="M436 480h-20V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v456H12c-6.627 0-12 5.373-12 12v20h448v-20c0-6.627-5.373-12-12-12zM128 76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76zm0 96c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40zm52 148h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12zm76 160h-64v-84c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v84zm64-172c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40z"/></svg>',
+}), y1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m0 32s-10 9-19 12-53-4-62 19c-8 23 15 25 29 45 4 8-3 13-3 13s-7 5-12-2c-15-19-10-42-35-41-24 1-31 45-37 53-5 8-17 14-17 14 0 1 6 12 6 22-1 10-21 50-2 65 20 15 29-7 52-13 9-2 11 6 11 6s3 8-5 12c-22 8-43-4-50 20-6 23 34 43 39 51 6 8 8 21 8 21 1 0 14-2 23 1s41 35 61 22c20-14 3-30 4-54 0-9 9-9 9-9s9 0 9 9c1 24-16 40 4 54 20 13 52-19 61-22s23-1 23-1 2-13 8-21c5-8 45-28 39-51-7-24-28-12-50-20-8-4-5-12-5-12s2-8 11-6c23 6 32 28 52 13 19-15-1-55-2-65 0-10 6-22 6-22s-12-6-17-14c-6-8-13-52-37-53-25-1-20 22-35 41-5 7-12 2-12 2s-7-5-3-13c14-20 37-22 29-45-9-23-53-16-62-19s-19-12-19-12m-42 229-43 58-3-2-3-2 43-59zm133 54-3 2-3 2-43-58 6-5zm-60-194c24 0 44 26 44 55 0 61-75 104-75 104s-75-43-75-104c0-29 20-55 44-55 14 0 31 16 31 16s17-16 31-16m-41 23v26h-26v20h26v71h20v-71h26v-20h-26v-26zm-72 21-1 4-1 4-59-19 2-8zm225-11-59 19-1-4-1-4 59-19zM196 47v73h-8V47z"/></svg>',
   className: "io5-icon",
-  iconSize: [20, 20],
+  iconSize: [30, 30],
   iconAnchor: [10, 30]
-}), U = {
-  pinIcon: pe,
-  christChurchIcon: fe,
-  jewChurchIcon: ge,
-  crimeIcon: ve,
-  govIcon: we,
-  gov2Icon: ye
-}, ke = ({
+}), q1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m64 33a11 11 0 0 0-9 16l-55 37-55-37a11 11 0 1 0-5 4l54 131-2 2-131-54a11 11 0 1 0-4 5l37 55-37 55a11 11 0 0 0-13 1 11 11 0 1 0 17 4l131-53 2 2-54 130a11 11 0 1 0 5 4l33-22q4 13 17 17v4q-5 2-6 8v2h-1c0 3 6 10 7 12 4 8 0 14-2 21l-3 8-11-7q-9-1-19 2-9 0-16-2c1 10 6 11 12 15 7 4 10 3 17 4 9 1 10 4 17 8l3 7q5 4 2 8-4 6 1 10 4 1 3 4l1 5 1-5 3-4q5-4 1-10-3-4 2-8l4-7c6-4 8-7 16-8q9 0 17-4c7-4 12-5 12-15q-7 2-15 2-10-3-20-2l-11 7-2-8c-3-7-7-13-3-21 2-2 7-9 7-12h-1v-2q0-6-6-8v-4q14-4 17-17l33 22a11 11 0 0 0 1 13 11 11 0 1 0 4-17l-32-79c12 9 17-2 21 0 5 5 7 18 3 23-2 2-6-7-7-8q-7 10-3 20c11 19 29 2 23-16l-9-18 7 10q4 10 9 19c7 11 18 13 31 14h1v-1q0-19-15-30-8-5-18-9l-10-8c4 0 12 7 17 9 18 6 35-12 17-22q-11-6-21 3c2 1 10 4 8 6-4 3-19 3-22-2-2-4 8-9 0-22-2 18-6 25-20 12 13 15 5 18-12 20l-21-51 2-2 130 53a11 11 0 1 0 4-5l-37-55 37-55a11 11 0 0 0 13-1 11 11 0 1 0-17-4l-130 54-2-2 21-53c18 2 25 6 11 21 15-14 19-6 21 12 9-13-2-18 0-22 4-4 18-6 22-3 2 2-6 6-8 7q10 8 21 3c18-11 1-28-16-22l-18 8 10-7q10-4 18-9 15-11 15-31h-1q-19-1-31 14-5 8-9 18-2 6-7 10c-1-4 6-12 8-17 6-17-11-34-22-17l18-43a11 11 0 1 0 4-20m-60 304q3 2 3 5 0 2-2 4l-5 1-5-1-2-4q0-3 3-5l1 2 1 3 2 1 2-1 2-3zm13-27q0 12-13 15v-2l-2-3-2-1-2 1-1 3-1 2q-12-3-13-15l17-12zm-77-90c-9 13 2 18 0 22-5 4-18 6-23 2-2-1 6-5 8-6q-10-8-21-3c-18 11-1 28 17 22l17-9q-4 6-9 8-10 4-19 9c-11 7-13 18-14 30v1h1q19 1 30-14 5-9 9-19 2-5 8-10c0 4-7 13-9 18-6 17 12 34 22 16q6-11-3-21c-1 2-4 11-6 9-3-4-3-19 2-23 4-2 9 8 22 0-19-2-25-5-12-20-15 13-18 6-20-12M88 88q0 20 14 31 9 5 19 9 5 3 9 7c-3 1-12-6-17-8-17-6-34 12-16 22q10 5 21-3c-2-1-11-5-9-6 4-3 19-3 23 2 2 4-8 9 0 22 2-19 5-26 20-12-13-15-6-18 12-20-13-9-18 1-22 0-4-5-6-19-2-23 1-2 5 6 6 8q8-10 3-21c-11-18-28-1-22 17l9 17q-6-3-8-10-4-10-9-18c-7-11-18-13-30-14zm144 13q-1 9 5 16c1-1 5-10 6-8 4 4 3 19-2 23-4 1-9-8-21-1z"/></svg>',
+  className: "io5-icon",
+  iconSize: [30, 30],
+  iconAnchor: [10, 30]
+}), x1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-9 62-38 67H50l8 15 39 68-39 67-8 15h95l38 67 9 15 9-15 38-67h95l-8-15-39-67 39-68 8-15h-95l-38-67-9-15zm33 232-24 42-24-42zm-83-20H84l25-42zm95-125 36 63-36 62h-72l-36-62 36-63zm72 125h-49l24-42zM133 149l-24 42-25-42zm167 0-25 42-24-42zm-84-20h-48l24-42z"/></svg>',
+  className: "io5-icon",
+  iconSize: [30, 30],
+  iconAnchor: [10, 30]
+}), C1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0M87 262zl-26 18a18 18 0 0 0 10 32h245a17 17 0 0 0 9-32l-26-18h-1V154h-35v105h-22V154h-35v105h-26V154h-35v105h-22V154H87zM199 33h-14L63 86q-12 6-11 19 4 14 18 14v5q1 12 13 13h218q13-1 14-13v-5a17 17 0 0 0 6-33zm-7 34a17 17 0 1 1 0 35 17 17 0 0 1 0-35"/></svg>',
+  className: "io5-icon",
+  iconSize: [30, 30],
+  iconAnchor: [10, 30]
+}), z1 = w.divIcon({
+  html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 383 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-90 52q-12 1-13 12v222H78q-5 1-6 6v10h240v-10q-1-5-6-6h-11V64q-1-11-13-12zm101 188q5 0 6 5v41h-34v-41q1-5 6-5zm-35-63q7 1 7 6v19q0 6-7 6h-21q-6 0-6-6v-19q0-5 6-6zm69 0q6 1 6 6v19q0 6-6 6h-21q-7 0-7-6v-19q0-5 7-6zm-69-47q7 1 7 6v20q0 5-7 5h-21q-6 0-6-5v-20q0-5 6-6zm69 0q6 1 6 6v20q0 5-6 5h-21q-7 0-7-5v-20q0-5 7-6zm-69-47q7 1 7 6v20q0 5-7 6h-21q-6-1-6-6V89q0-5 6-6zm69 0q6 1 6 6v20q0 5-6 6h-21q-7-1-7-6V89q0-5 7-6z"/></svg>',
+  className: "io5-icon",
+  iconSize: [30, 30],
+  iconAnchor: [10, 30]
+}), Z = {
+  pinIcon: p1,
+  latinCrossIcon: f1,
+  christianCrossIcon: g1,
+  orthodoxCrossIcon: v1,
+  patriarchalCrossIcon: w1,
+  davidStarIcon: x1,
+  lutherRoseIcon: y1,
+  huguenotCrossIcon: q1,
+  courtBuildingIcon: C1,
+  buildingIcon: z1
+}, I1 = ({
   value: e
 }) => {
   if (!e) return null;
-  const t = U[e[4] || "pinIcon"], o = [e[0], e[1]];
-  return /* @__PURE__ */ g(b, { children: [
-    /* @__PURE__ */ r($, { position: o, icon: t, children: e[3] && /* @__PURE__ */ r(H, { direction: "top", offset: [0, -30], children: e[3] }) }),
-    e[2] && e[2] > 0 && /* @__PURE__ */ r(
-      P,
+  const t = Z[e[4] || "pinIcon"], o = [e[0], e[1]];
+  return /* @__PURE__ */ g(z, { children: [
+    /* @__PURE__ */ s(L, { position: o, icon: t, children: e[3] && /* @__PURE__ */ s(T, { direction: "top", offset: [0, -30], children: e[3] }) }),
+    e[2] && e[2] > 0 && /* @__PURE__ */ s(
+      F,
       {
         center: o,
         radius: e[2],
@@ -67,39 +91,39 @@ const pe = C.divIcon({
       }
     )
   ] });
-}, xe = ({ value: e, onChange: t }) => {
-  const o = E();
-  if (Z({
-    click(s) {
-      if (!s.latlng) return;
-      const { lat: i, lng: n } = s.latlng;
+}, b1 = ({ value: e, onChange: t }) => {
+  const o = V();
+  if (P({
+    click(r) {
+      if (!r.latlng) return;
+      const { lat: i, lng: n } = r.latlng;
       t == null || t([i, n, e[2] || 0]);
     }
-  }), S(() => {
-    const s = (u) => {
+  }), b(() => {
+    const r = (u) => {
       if (u.ctrlKey) {
         u.preventDefault(), u.stopPropagation(), u.stopImmediatePropagation();
-        const p = u.deltaY, m = 100, f = 100, l = 1e4;
-        let d = e[2] || 0;
-        p < 0 ? d = Math.min((e[2] || 0) + m, l) : d = Math.max((e[2] || 0) - m, f), d !== e[2] && (t == null || t([e[0], e[1], d]));
+        const p = u.deltaY, h = 100, f = 100, l = 1e4;
+        let m = e[2] || 0;
+        p < 0 ? m = Math.min((e[2] || 0) + h, l) : m = Math.max((e[2] || 0) - h, f), m !== e[2] && (t == null || t([e[0], e[1], m]));
       }
     }, i = (u) => {
       u.key === "Control" && o.scrollWheelZoom.disable();
     }, n = (u) => {
       u.key === "Control" && o.scrollWheelZoom.enable();
     }, a = o.getContainer();
-    return a.addEventListener("wheel", s, {
+    return a.addEventListener("wheel", r, {
       passive: !1,
       capture: !0
     }), document.addEventListener("keydown", i), document.addEventListener("keyup", n), () => {
-      a.removeEventListener("wheel", s, { capture: !0 }), document.removeEventListener("keydown", i), document.removeEventListener("keyup", n), o.scrollWheelZoom.enable();
+      a.removeEventListener("wheel", r, { capture: !0 }), document.removeEventListener("keydown", i), document.removeEventListener("keyup", n), o.scrollWheelZoom.enable();
     };
   }, [o, e, t]), !e) return null;
   const c = [e[0], e[1]];
-  return /* @__PURE__ */ g(b, { children: [
-    /* @__PURE__ */ r($, { position: c, icon: U.pinIcon }),
-    e[2] && e[2] > 0 && /* @__PURE__ */ r(
-      P,
+  return /* @__PURE__ */ g(z, { children: [
+    /* @__PURE__ */ s(L, { position: c, icon: Z.pinIcon }),
+    e[2] && e[2] > 0 && /* @__PURE__ */ s(
+      F,
       {
         center: c,
         radius: e[2],
@@ -112,19 +136,19 @@ const pe = C.divIcon({
       }
     )
   ] });
-}, N = ({ value: e, onChange: t }) => !t ? /* @__PURE__ */ r(ke, { value: e }) : /* @__PURE__ */ r(xe, { value: e, onChange: t }), Y = () => {
-  const e = te(null);
-  return S(() => {
-    e.current && ne.disableClickPropagation(e.current);
+}, j = ({ value: e, onChange: t }) => !t ? /* @__PURE__ */ s(I1, { value: e }) : /* @__PURE__ */ s(b1, { value: e, onChange: t }), U = () => {
+  const e = t1(null);
+  return b(() => {
+    e.current && n1.disableClickPropagation(e.current);
   }, [e.current]), e;
-}, Ce = () => /* @__PURE__ */ r(
+}, S1 = () => /* @__PURE__ */ s(
   "svg",
   {
     className: "w-4 h-4 text-gray-400",
     fill: "none",
     stroke: "currentColor",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ r(
+    children: /* @__PURE__ */ s(
       "path",
       {
         d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
@@ -134,7 +158,7 @@ const pe = C.divIcon({
       }
     )
   }
-), be = () => /* @__PURE__ */ g(
+), k1 = () => /* @__PURE__ */ g(
   "svg",
   {
     className: "w-4 h-4 text-gray-400 flex-shrink-0",
@@ -142,7 +166,7 @@ const pe = C.divIcon({
     stroke: "currentColor",
     viewBox: "0 0 24 24",
     children: [
-      /* @__PURE__ */ r(
+      /* @__PURE__ */ s(
         "path",
         {
           d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z",
@@ -151,7 +175,7 @@ const pe = C.divIcon({
           strokeWidth: 2
         }
       ),
-      /* @__PURE__ */ r(
+      /* @__PURE__ */ s(
         "path",
         {
           d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z",
@@ -162,8 +186,8 @@ const pe = C.divIcon({
       )
     ]
   }
-), G = W(({ onSelect: e }) => {
-  const [t, o] = y(""), [c, s] = y([]), i = Y(), n = E(), a = new le({
+), Y = E(({ onSelect: e }) => {
+  const [t, o] = q(""), [c, r] = q([]), i = U(), n = V(), a = new l1({
     params: {
       "accept-language": "ua",
       countrycodes: "ua,pl,by,ru,ro,md,tr",
@@ -173,19 +197,19 @@ const pe = C.divIcon({
   }), u = I(
     async (l) => {
       if (!l.trim()) {
-        s([]);
+        r([]);
         return;
       }
       try {
-        const d = await a.search({ query: l });
-        s(d);
+        const m = await a.search({ query: l });
+        r(m);
       } catch {
-        s([]);
+        r([]);
       }
     },
     [a]
   );
-  S(() => {
+  b(() => {
     const l = setTimeout(() => {
       u(t);
     }, 300);
@@ -197,13 +221,13 @@ const pe = C.divIcon({
       marker: null
     }), e == null || e([l.y, l.x]);
   };
-  return /* @__PURE__ */ r(
+  return /* @__PURE__ */ s(
     "div",
     {
       ref: i,
       className: "absolute leaflet-top leaflet-left",
-      children: /* @__PURE__ */ r(
-        ce,
+      children: /* @__PURE__ */ s(
+        c1,
         {
           "aria-label": "Пошук за сучасною назвою",
           className: "leaflet-control w-auto bg-background rounded-xl shadow text-foreground",
@@ -213,7 +237,7 @@ const pe = C.divIcon({
             emptyContent: "Нічого не знайдено. Уточніть свій запит."
           },
           placeholder: "Пошук за сучасною назвою",
-          startContent: /* @__PURE__ */ r(Ce, {}),
+          startContent: /* @__PURE__ */ s(S1, {}),
           variant: "bordered",
           onClick: (l) => l.stopPropagation(),
           onInputChange: (l) => {
@@ -222,14 +246,14 @@ const pe = C.divIcon({
           onMouseDown: (l) => l.stopPropagation(),
           onSelectionChange: (l) => {
             if (l) {
-              const d = c[l];
-              d && p(d);
+              const m = c[l];
+              m && p(m);
             }
           },
-          children: (l) => /* @__PURE__ */ r(
-            ae,
+          children: (l) => /* @__PURE__ */ s(
+            a1,
             {
-              startContent: /* @__PURE__ */ r(be, {}),
+              startContent: /* @__PURE__ */ s(k1, {}),
               textValue: l.label,
               children: l.label
             },
@@ -240,27 +264,27 @@ const pe = C.divIcon({
     }
   );
 });
-G.displayName = "MapLocationSearch";
-const _ = 72, Ie = 0.25, M = 5, Se = (e) => {
+Y.displayName = "MapLocationSearch";
+const O = 72, M1 = 0.25, k = 5, N1 = (e) => {
   const t = e % 10, o = e % 100;
   return t === 1 && o !== 11 ? "позначка" : t >= 2 && t <= 4 && (o < 12 || o > 14) ? "позначки" : "позначок";
-}, K = (e) => e < 10 ? 32 : e < 100 ? 40 : e < 1e3 ? 48 : 56, A = /* @__PURE__ */ new Map(), ze = (e) => {
+}, G = (e) => e < 10 ? 32 : e < 100 ? 40 : e < 1e3 ? 48 : 56, A = /* @__PURE__ */ new Map(), j1 = (e) => {
   const t = A.get(e);
   if (t) return t;
-  const o = K(e), c = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, s = new se({
+  const o = G(e), c = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, r = new r1({
     html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;font-size:${o / 3}px;font-weight:600;line-height:1">${c}</span></div>`,
     className: "geoduck-cluster-icon",
     iconSize: [o, o],
     iconAnchor: [o / 2, o / 2]
   });
-  return A.set(e, s), s;
-}, Me = (e, t, { zoom: o, bounds: c }) => {
-  const s = c.pad(Ie), i = /* @__PURE__ */ new Map();
+  return A.set(e, r), r;
+}, L1 = (e, t, { zoom: o, bounds: c }) => {
+  const r = c.pad(M1), i = /* @__PURE__ */ new Map();
   for (const n of e) {
     const [a, u] = n;
-    if (!Number.isFinite(a) || !Number.isFinite(u) || !s.contains([a, u])) continue;
-    const { x: p, y: m } = t.project([a, u], o), f = `${Math.floor(p / _)}:${Math.floor(m / _)}`, l = i.get(f);
-    l ? (l.items.push(n), l.sumX += p, l.sumY += m) : i.set(f, { key: f, lat: a, lng: u, items: [n], sumX: p, sumY: m });
+    if (!Number.isFinite(a) || !Number.isFinite(u) || !r.contains([a, u])) continue;
+    const { x: p, y: h } = t.project([a, u], o), f = `${Math.floor(p / O)}:${Math.floor(h / O)}`, l = i.get(f);
+    l ? (l.items.push(n), l.sumX += p, l.sumY += h) : i.set(f, { key: f, lat: a, lng: u, items: [n], sumX: p, sumY: h });
   }
   return Array.from(i.values()).map((n) => {
     if (n.items.length === 1) return n;
@@ -270,55 +294,55 @@ const _ = 72, Ie = 0.25, M = 5, Se = (e) => {
     );
     return { ...n, lat: a.lat, lng: a.lng };
   });
-}, je = ({ cluster: e, onExpand: t }) => {
-  const { items: o, lat: c, lng: s } = e, i = o.map((n) => n[3]).filter((n) => !!n);
-  return /* @__PURE__ */ r(
-    $,
+}, V1 = ({ cluster: e, onExpand: t }) => {
+  const { items: o, lat: c, lng: r } = e, i = o.map((n) => n[3]).filter((n) => !!n);
+  return /* @__PURE__ */ s(
+    L,
     {
       eventHandlers: { click: () => t(e) },
-      icon: ze(o.length),
-      position: [c, s],
-      children: /* @__PURE__ */ g(H, { direction: "top", offset: [0, -K(o.length) / 2], children: [
+      icon: j1(o.length),
+      position: [c, r],
+      children: /* @__PURE__ */ g(T, { direction: "top", offset: [0, -G(o.length) / 2], children: [
         /* @__PURE__ */ g("span", { className: "font-semibold", children: [
           o.length,
           " ",
-          Se(o.length)
+          N1(o.length)
         ] }),
-        i.slice(0, M).map((n, a) => /* @__PURE__ */ r("div", { children: n }, a)),
-        i.length > M && /* @__PURE__ */ g("div", { children: [
+        i.slice(0, k).map((n, a) => /* @__PURE__ */ s("div", { children: n }, a)),
+        i.length > k && /* @__PURE__ */ g("div", { children: [
           "…і ще ",
-          i.length - M
+          i.length - k
         ] })
       ] })
     }
   );
-}, Le = ({ positions: e }) => {
-  const t = E(), [o, c] = y(() => ({
+}, $1 = ({ positions: e }) => {
+  const t = V(), [o, c] = q(() => ({
     zoom: t.getZoom(),
     bounds: t.getBounds()
-  })), s = I(() => {
+  })), r = I(() => {
     c({ zoom: t.getZoom(), bounds: t.getBounds() });
   }, [t]);
-  Z({
-    zoomend: s,
-    moveend: s,
-    resize: s
+  P({
+    zoomend: r,
+    moveend: r,
+    resize: r
   });
-  const i = j(
-    () => Me(e, t, o),
+  const i = M(
+    () => L1(e, t, o),
     [e, t, o]
   ), n = I(
     ({ items: a, lat: u, lng: p }) => {
-      const m = re(
+      const h = s1(
         a.map((l) => [l[0], l[1]])
       );
-      m.isValid() && !m.getNorthEast().equals(m.getSouthWest()) ? t.fitBounds(m, { padding: [48, 48] }) : t.setView([u, p], Math.min(t.getZoom() + 2, t.getMaxZoom()));
+      h.isValid() && !h.getNorthEast().equals(h.getSouthWest()) ? t.fitBounds(h, { padding: [48, 48] }) : t.setView([u, p], Math.min(t.getZoom() + 2, t.getMaxZoom()));
     },
     [t]
   );
-  return /* @__PURE__ */ r(b, { children: i.map(
-    (a) => a.items.length === 1 ? /* @__PURE__ */ r(N, { value: a.items[0] }, a.key) : /* @__PURE__ */ r(
-      je,
+  return /* @__PURE__ */ s(z, { children: i.map(
+    (a) => a.items.length === 1 ? /* @__PURE__ */ s(j, { value: a.items[0] }, a.key) : /* @__PURE__ */ s(
+      V1,
       {
         cluster: a,
         onExpand: n
@@ -326,99 +350,99 @@ const _ = 72, Ie = 0.25, M = 5, Se = (e) => {
       a.key
     )
   ) });
-}, h = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", Ne = [
-  { year: 1500, url: `${h}/countries/1500.geojson` },
-  { year: 1530, url: `${h}/countries/1530.geojson` },
-  { year: 1600, url: `${h}/countries/1600.geojson` },
-  { year: 1650, url: `${h}/countries/1650.geojson` },
-  { year: 1700, url: `${h}/countries/1700.geojson` },
-  { year: 1715, url: `${h}/countries/1715.geojson` },
-  { year: 1783, url: `${h}/countries/1783.geojson` },
-  { year: 1800, url: `${h}/countries/1800.geojson` },
-  { year: 1815, url: `${h}/countries/1815.geojson` },
-  { year: 1880, url: `${h}/countries/1880.geojson` },
-  { year: 1900, url: `${h}/countries/1900.geojson` },
-  { year: 1914, url: `${h}/countries/1914.geojson` },
-  { year: 1920, url: `${h}/countries/1920.geojson` },
-  { year: 1930, url: `${h}/countries/1930.geojson` },
-  { year: 1938, url: `${h}/countries/1938.geojson` },
-  { year: 1945, url: `${h}/countries/1945.geojson` },
-  { year: 1960, url: `${h}/countries/1960.geojson` },
-  { year: 1991, url: `${h}/countries/1991.geojson` }
-], $e = [
-  { year: 1897, url: `${h}/states/1897.geojson` },
-  { year: 1914, url: `${h}/states/1914.geojson` },
-  { year: 1937, url: `${h}/states/1937.geojson` },
-  { year: 1945, url: `${h}/states/1945.geojson` },
-  { year: 1991, url: `${h}/states/1991.geojson` }
-], D = (e, t, o = !1) => {
+}, d = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", E1 = [
+  { year: 1500, url: `${d}/countries/1500.geojson` },
+  { year: 1530, url: `${d}/countries/1530.geojson` },
+  { year: 1600, url: `${d}/countries/1600.geojson` },
+  { year: 1650, url: `${d}/countries/1650.geojson` },
+  { year: 1700, url: `${d}/countries/1700.geojson` },
+  { year: 1715, url: `${d}/countries/1715.geojson` },
+  { year: 1783, url: `${d}/countries/1783.geojson` },
+  { year: 1800, url: `${d}/countries/1800.geojson` },
+  { year: 1815, url: `${d}/countries/1815.geojson` },
+  { year: 1880, url: `${d}/countries/1880.geojson` },
+  { year: 1900, url: `${d}/countries/1900.geojson` },
+  { year: 1914, url: `${d}/countries/1914.geojson` },
+  { year: 1920, url: `${d}/countries/1920.geojson` },
+  { year: 1930, url: `${d}/countries/1930.geojson` },
+  { year: 1938, url: `${d}/countries/1938.geojson` },
+  { year: 1945, url: `${d}/countries/1945.geojson` },
+  { year: 1960, url: `${d}/countries/1960.geojson` },
+  { year: 1991, url: `${d}/countries/1991.geojson` }
+], B1 = [
+  { year: 1897, url: `${d}/states/1897.geojson` },
+  { year: 1914, url: `${d}/states/1914.geojson` },
+  { year: 1937, url: `${d}/states/1937.geojson` },
+  { year: 1945, url: `${d}/states/1945.geojson` },
+  { year: 1991, url: `${d}/states/1991.geojson` }
+], _ = (e, t, o = !1) => {
   if (o) {
-    const s = t.find(({ year: i }) => i === e);
-    return s ? s.url : null;
+    const r = t.find(({ year: i }) => i === e);
+    return r ? r.url : null;
   }
-  const c = t.filter(({ year: s }) => s > 0 && s <= e).sort((s, i) => i.year - s.year);
+  const c = t.filter(({ year: r }) => r > 0 && r <= e).sort((r, i) => i.year - r.year);
   return c.length > 0 ? c[0].url : null;
-}, T = (e) => fetch(e).then((t) => t.json()), Ee = (e) => {
-  const [t, o] = y(e), c = D(t, Ne), {
-    data: s,
+}, D = (e) => fetch(e).then((t) => t.json()), W1 = (e) => {
+  const [t, o] = q(e), c = _(t, E1), {
+    data: r,
     isLoading: i,
     isValidating: n
-  } = L(c, T, {
+  } = N(c, D, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), a = D(t, $e, !0), {
+  }), a = _(t, B1, !0), {
     data: u,
     isLoading: p,
-    isValidating: m
-  } = L(a, T, {
+    isValidating: h
+  } = N(a, D, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), f = j(
-    () => s || null,
-    [s]
-  ), l = j(
+  }), f = M(
+    () => r || null,
+    [r]
+  ), l = M(
     () => u || null,
     [u]
   );
   return {
     countries: f,
     states: l,
-    updateYear: (w) => {
-      o(w);
+    updateYear: (y) => {
+      o(y);
     },
-    isLoading: i || p || n || m
+    isLoading: i || p || n || h
   };
-}, Ve = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ r("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ r(ue, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ r(de, { className: "py-2", children: /* @__PURE__ */ g("div", { className: "flex flex-col gap-0", children: [
-  o && /* @__PURE__ */ r("p", { className: "text-large", children: o }),
-  t && /* @__PURE__ */ r("p", { className: "text-small text-default-500", children: t }),
-  e && /* @__PURE__ */ r("p", { className: "text-small text-default-500", children: e })
-] }) }) }) }), We = [
+}, R1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ s("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ s(u1, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ s(m1, { className: "py-2", children: /* @__PURE__ */ g("div", { className: "flex flex-col gap-0", children: [
+  o && /* @__PURE__ */ s("p", { className: "text-large", children: o }),
+  t && /* @__PURE__ */ s("p", { className: "text-small text-default-500", children: t }),
+  e && /* @__PURE__ */ s("p", { className: "text-small text-default-500", children: e })
+] }) }) }) }), O1 = [
   { value: 1897, label: "Російська Імперія" },
   { value: 1914, label: "WWI" },
   { value: 1937, label: "Перед WWII" },
   { value: 1945, label: "Після WWII" },
   { value: 1991, label: "Незалежність" }
-], Oe = (e) => {
+], A1 = (e) => {
   const t = parseInt(e, 10);
   return /^\d{4}$/.test(e) && t >= 1500 && t <= 1991;
-}, Re = ({ value: e, onChange: t }) => {
-  const [o, c] = y(e.toString()), [s, i] = y(!1), [n, a] = y(!1), u = Y(), p = (d) => {
-    const w = d.replace(/\D/g, "").slice(0, 4);
-    if (c(w), w.length === 4) {
-      const v = Oe(w);
-      a(!v), v && t(parseInt(w, 10));
+}, _1 = ({ value: e, onChange: t }) => {
+  const [o, c] = q(e.toString()), [r, i] = q(!1), [n, a] = q(!1), u = U(), p = (m) => {
+    const y = m.replace(/\D/g, "").slice(0, 4);
+    if (c(y), y.length === 4) {
+      const v = A1(y);
+      a(!v), v && t(parseInt(y, 10));
     } else
       a(!1);
-  }, m = (d) => {
-    c(d.toString()), t(d), i(!1), a(!1);
+  }, h = (m) => {
+    c(m.toString()), t(m), i(!1), a(!1);
   };
-  return /* @__PURE__ */ r("div", { ref: u, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ g("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
-    /* @__PURE__ */ r(
-      me,
+  return /* @__PURE__ */ s("div", { ref: u, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ g("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
+    /* @__PURE__ */ s(
+      h1,
       {
         classNames: {
           inputWrapper: "bg-background relative",
@@ -439,24 +463,24 @@ const _ = 72, Ie = 0.25, M = 5, Se = (e) => {
         onValueChange: p
       }
     ),
-    s && /* @__PURE__ */ r("div", { className: "flex flex-col gap-1 p-2", children: We.map((d) => /* @__PURE__ */ g(
-      he,
+    r && /* @__PURE__ */ s("div", { className: "flex flex-col gap-1 p-2", children: O1.map((m) => /* @__PURE__ */ g(
+      d1,
       {
         className: "text-xs justify-start",
         color: "default",
         size: "sm",
-        variant: e === d.value ? "flat" : "bordered",
-        onPress: () => m(d.value),
+        variant: e === m.value ? "flat" : "bordered",
+        onPress: () => h(m.value),
         children: [
-          d.value,
+          m.value,
           " - ",
-          d.label
+          m.label
         ]
       },
-      d.value
+      m.value
     )) })
   ] }) });
-}, F = [
+}, H = [
   "green",
   "darkblue",
   "purple",
@@ -464,15 +488,15 @@ const _ = 72, Ie = 0.25, M = 5, Se = (e) => {
   "blue",
   "red",
   "yellow"
-], Be = (e) => {
+], D1 = (e) => {
   var c;
   const t = ((c = e.properties) == null ? void 0 : c.admin_level_1_ID) || e.id || 0;
   if (t === 22)
     return "gold";
-  const o = t % F.length;
-  return F[o];
-}, x = (e, t, o = 1) => {
-  const c = e ? Be(e) : "gray";
+  const o = t % H.length;
+  return H[o];
+}, C = (e, t, o = 1) => {
+  const c = e ? D1(e) : "gray";
   return {
     color: c,
     fillColor: c,
@@ -481,100 +505,100 @@ const _ = 72, Ie = 0.25, M = 5, Se = (e) => {
     fillOpacity: t ? 0.1 : 0,
     interactive: !0
   };
-}, q = W(
-  oe(
-    ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ r(
-      V,
+}, K = E(
+  o1(
+    ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ s(
+      $,
       {
         ref: o,
         data: e,
-        style: (c) => x(c, !1, 0),
+        style: (c) => C(c, !1, 0),
         onEachFeature: t
       }
     ) : null
   )
 );
-q.displayName = "CountriesLayer";
-const X = W(
-  ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ r(
-    V,
+K.displayName = "CountriesLayer";
+const X = E(
+  ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ s(
+    $,
     {
       data: e,
-      style: (o) => x(o, !1, 2),
+      style: (o) => C(o, !1, 2),
       onEachFeature: t
     }
   ) : null
 );
 X.displayName = "StatesLayer";
-const _e = ({ year: e, onYearChange: t }) => {
-  var l, d, w;
-  const [o, c] = y(null), [s, i] = y(null), { countries: n, states: a, updateYear: u, isLoading: p } = Ee(e);
-  S(() => {
+const H1 = ({ year: e, onYearChange: t }) => {
+  var l, m, y;
+  const [o, c] = q(null), [r, i] = q(null), { countries: n, states: a, updateYear: u, isLoading: p } = W1(e);
+  b(() => {
     u(e), c(null), i(null);
   }, [e]);
-  const m = I(
-    (v, z) => {
-      z.on({
-        mouseover: (k) => {
-          c(v), k.target.setStyle(x(v, !1, 1));
+  const h = I(
+    (v, S) => {
+      S.on({
+        mouseover: (x) => {
+          c(v), x.target.setStyle(C(v, !1, 1));
         },
-        mouseout: (k) => {
-          c(null), k.target.setStyle(x(v, !1, 0));
+        mouseout: (x) => {
+          c(null), x.target.setStyle(C(v, !1, 0));
         }
       });
     },
     []
   ), f = I(
-    (v, z) => {
-      z.on({
-        mouseover: (k) => {
+    (v, S) => {
+      S.on({
+        mouseover: (x) => {
           i(v);
-          const O = n == null ? void 0 : n.features.find(
+          const B = n == null ? void 0 : n.features.find(
             (J) => {
-              var R, B;
-              return ((R = J.id) == null ? void 0 : R.toString()) === ((B = v.properties) == null ? void 0 : B.admin_level_1_ID.toString());
+              var W, R;
+              return ((W = J.id) == null ? void 0 : W.toString()) === ((R = v.properties) == null ? void 0 : R.admin_level_1_ID.toString());
             }
           );
-          O && c(O), k.target.setStyle(x(v, !0, 4));
+          B && c(B), x.target.setStyle(C(v, !0, 4));
         },
-        mouseout: (k) => {
-          i(null), k.target.setStyle(x(v, !1, 2));
+        mouseout: (x) => {
+          i(null), x.target.setStyle(C(v, !1, 2));
         }
       });
     },
     [n]
   );
-  return /* @__PURE__ */ g(b, { children: [
-    p ? /* @__PURE__ */ r("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ r(ie, {}) }) : /* @__PURE__ */ g(b, { children: [
-      n && /* @__PURE__ */ r(
-        q,
+  return /* @__PURE__ */ g(z, { children: [
+    p ? /* @__PURE__ */ s("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ s(i1, {}) }) : /* @__PURE__ */ g(z, { children: [
+      n && /* @__PURE__ */ s(
+        K,
         {
           data: n,
-          onEachFeature: m
+          onEachFeature: h
         }
       ),
-      a && /* @__PURE__ */ r(X, { data: a, onEachFeature: f })
+      a && /* @__PURE__ */ s(X, { data: a, onEachFeature: f })
     ] }),
-    t && /* @__PURE__ */ r(
-      Re,
+    t && /* @__PURE__ */ s(
+      _1,
       {
         value: e,
         onChange: t
       }
     ),
-    (o || s) && /* @__PURE__ */ r(
-      Ve,
+    (o || r) && /* @__PURE__ */ s(
+      R1,
       {
         level1: (l = o == null ? void 0 : o.properties) == null ? void 0 : l.admin_level_1,
-        level2: (d = s == null ? void 0 : s.properties) == null ? void 0 : d.admin_level_2,
-        level3: (w = s == null ? void 0 : s.properties) == null ? void 0 : w.admin_level_3
+        level2: (m = r == null ? void 0 : r.properties) == null ? void 0 : m.admin_level_2,
+        level3: (y = r == null ? void 0 : r.properties) == null ? void 0 : y.admin_level_3
       }
     )
   ] });
-}, Ae = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", De = (e) => fetch(e).then((t) => t.json()), Te = () => {
-  const { data: e } = L(
-    Ae,
-    De,
+}, T1 = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", F1 = (e) => fetch(e).then((t) => t.json()), P1 = () => {
+  const { data: e } = N(
+    T1,
+    F1,
     {
       revalidateOnFocus: !1,
       revalidateOnReconnect: !1,
@@ -582,8 +606,8 @@ const _e = ({ year: e, onYearChange: t }) => {
       refreshWhenOffline: !1
     }
   );
-  return e && /* @__PURE__ */ r(
-    V,
+  return e && /* @__PURE__ */ s(
+    $,
     {
       data: e,
       style: {
@@ -595,7 +619,7 @@ const _e = ({ year: e, onYearChange: t }) => {
       }
     }
   );
-}, Fe = {
+}, Z1 = {
   zoomControl: !1,
   doubleClickZoom: !1,
   closePopupOnClick: !1,
@@ -605,16 +629,16 @@ const _e = ({ year: e, onYearChange: t }) => {
   trackResize: !1,
   touchZoom: !1,
   scrollWheelZoom: !1
-}, He = {
+}, U1 = {
   zoomControl: !1,
   scrollWheelZoom: !0
-}, Pe = 20, ot = ({
+}, Y1 = 20, le = ({
   positions: e,
   onPositionChange: t,
   tileLayerProps: o,
   year: c = 1897,
-  onYearChange: s,
-  clusterThreshold: i = Pe,
+  onYearChange: r,
+  clusterThreshold: i = Y1,
   hideLayers: n,
   ...a
 }) => {
@@ -626,11 +650,11 @@ const _e = ({ year: e, onYearChange: t }) => {
       center: [49.0139, 31.2858],
       style: { height: "100%", width: "100%" },
       zoom: 6,
-      ...t || u ? He : Fe,
+      ...t || u ? U1 : Z1,
       ...a,
       children: [
-        /* @__PURE__ */ r(
-          ee,
+        /* @__PURE__ */ s(
+          e1,
           {
             className: "grayscale",
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -638,15 +662,15 @@ const _e = ({ year: e, onYearChange: t }) => {
             ...o
           }
         ),
-        !(n != null && n.ukraineLayer) && /* @__PURE__ */ r(Te, {}),
-        !(n != null && n.searchInput) && /* @__PURE__ */ r(G, { onSelect: t }),
-        !(n != null && n.historicalLayers) && /* @__PURE__ */ r(_e, { year: c, onYearChange: s }),
-        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ r(N, { value: e[0], onChange: t }) : u ? /* @__PURE__ */ r(Le, { positions: e }) : e.map((p, m) => /* @__PURE__ */ r(N, { value: p }, m)))
+        !(n != null && n.ukraineLayer) && /* @__PURE__ */ s(P1, {}),
+        !(n != null && n.searchInput) && /* @__PURE__ */ s(Y, { onSelect: t }),
+        !(n != null && n.historicalLayers) && /* @__PURE__ */ s(H1, { year: c, onYearChange: r }),
+        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ s(j, { value: e[0], onChange: t }) : u ? /* @__PURE__ */ s($1, { positions: e }) : e.map((p, h) => /* @__PURE__ */ s(j, { value: p }, h)))
       ]
     }
   );
 };
 export {
-  ot as default
+  le as default
 };
 //# sourceMappingURL=index.js.map
