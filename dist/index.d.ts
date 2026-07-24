@@ -9,6 +9,7 @@ export interface GeoDuckMapProps extends MapContainerProps, React.RefAttributes<
     tileLayerProps?: TileLayerProps;
     year?: number;
     onYearChange?: (year: number) => void;
+    clusterThreshold?: number;
     hideLayers?: Partial<{
         yearInput: boolean;
         searchInput: boolean;

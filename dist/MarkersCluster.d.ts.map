@@ -1,0 +1,1 @@
+{"version":3,"file":"MarkersCluster.d.ts","sourceRoot":"","sources":["../../GeoDuckMap/MarkersCluster.tsx"],"names":[],"mappings":"AAEA,OAAO,KAAyC,MAAM,OAAO,CAAC;AAG9D,OAAuB,EAAE,WAAW,EAAE,MAAM,kBAAkB,CAAC;AA0I/D,UAAU,mBAAmB;IAC3B,SAAS,EAAE,WAAW,EAAE,CAAC;CAC1B;AAED,QAAA,MAAM,cAAc,EAAE,KAAK,CAAC,EAAE,CAAC,mBAAmB,CAuDjD,CAAC;AAEF,eAAe,cAAc,CAAC"}

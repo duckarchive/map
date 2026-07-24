@@ -79,6 +79,18 @@ The main map component that displays historical geographical data.
 
 - `position: [number, number]` - Current map center position [lat, lng]
 - `onPositionChange: (pos: [number, number]) => void` - Callback when position changes
+- `clusterThreshold?: number` - Amount of markers above which read-only markers are grouped (default `20`, see below)
+
+#### Marker grouping
+
+In read-only mode (no `onPositionChange`), passing more than `clusterThreshold` positions
+switches rendering to zoom-based grouping: nearby markers collapse into a single badge with
+the amount of markers inside, and only markers within the current viewport are rendered at all.
+Zooming in (scroll) splits groups apart until individual markers are shown; clicking a group
+zooms straight to its contents. Hovering a group lists the labels it contains.
+
+Because grouping relies on zooming, a map that renders groups is interactive even without
+`onPositionChange`. Pass `dragging` / `scrollWheelZoom` explicitly to override that.
 
 ## Styling
 
