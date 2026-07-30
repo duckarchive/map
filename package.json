@@ -58,22 +58,18 @@
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
+    "@heroui/react": "^3.2.2",
     "leaflet": "^1.9.0",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "swr": "^2.3.6"
   },
   "peerDependenciesMeta": {
-    "@heroui/react": {
-      "optional": true
-    },
     "@heroui/styles": {
       "optional": true
     },
     "tailwindcss": {
-      "optional": true
-    },
-    "swr": {
       "optional": true
     }
   },
