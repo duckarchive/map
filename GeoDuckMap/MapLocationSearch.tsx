@@ -144,7 +144,7 @@ const MapLocationSearch = memo<MapLocationSearchProps>(({ onSelect }) => {
       >
         <ComboBox.InputGroup className="flex items-center gap-2 px-2">
           <SearchSVG />
-          <Input placeholder="Пошук за сучасною назвою" />
+          <Input className="bg-transparent" placeholder="Пошук за сучасною назвою" />
         </ComboBox.InputGroup>
         <ComboBox.Popover>
           <ListBox

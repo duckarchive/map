@@ -10,13 +10,13 @@ const MapTooltip: React.FC<MapTooltipProps> = ({ level1, level2, level3 }) => {
   return (
     <div className="absolute leaflet-bottom leaflet-left">
       <Card className="leaflet-control max-w-sm pointer-events-none rounded-xl">
-        <Card.Content className="py-2">
-          <div className="flex flex-col gap-0">
-            {level3 && <p className="text-large">{level3}</p>}
-            {level2 && <p className="text-small text-default-500">{level2}</p>}
-            {level1 && <p className="text-small text-default-500">{level1}</p>}
-          </div>
-        </Card.Content>
+        <Card.Header>
+          <Card.Title className="text-lg">{level3}</Card.Title>
+          <Card.Description>
+            {level2 && <p className="text-foreground">{level2}</p>}
+            {level1 && <p className="text-sm text-foreground">{level1}</p>}
+          </Card.Description>
+        </Card.Header>
       </Card>
     </div>
   );
