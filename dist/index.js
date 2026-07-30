@@ -1,62 +1,62 @@
 import { jsx as s, jsxs as g, Fragment as z } from "react/jsx-runtime";
-import { Marker as E, Tooltip as Z, Circle as U, useMap as V, useMapEvents as Y, GeoJSON as $, MapContainer as n1, TileLayer as s1 } from "react-leaflet";
-import { useEffect as S, useRef as r1, memo as B, useState as q, useCallback as I, useMemo as N, forwardRef as l1 } from "react";
-import w, { DomEvent as c1, latLngBounds as a1, DivIcon as i1 } from "leaflet";
-import { OpenStreetMapProvider as u1 } from "leaflet-geosearch";
-import { ComboBox as b, Input as G, ListBox as _, EmptyState as h1, Card as A, TextField as d1, FieldError as m1, Button as p1, Spinner as g1 } from "@heroui/react";
-import j from "swr";
-const f1 = w.divIcon({
+import { Marker as V, Tooltip as Z, Circle as U, useMap as $, useMapEvents as Y, GeoJSON as B, MapContainer as s1, TileLayer as r1 } from "react-leaflet";
+import { useEffect as b, useRef as l1, memo as R, useState as q, useCallback as I, useMemo as j, forwardRef as c1 } from "react";
+import w, { DomEvent as a1, latLngBounds as i1, DivIcon as u1 } from "leaflet";
+import { OpenStreetMapProvider as h1 } from "leaflet-geosearch";
+import { ComboBox as M, Input as G, ListBox as A, EmptyState as d1, Card as S, TextField as m1, FieldError as p1, Button as g1, Spinner as f1 } from "@heroui/react";
+import L from "swr";
+const K = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 384 512"><path stroke="none" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), v1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-20 32v114H32v40h140v294h40V186h140v-40H212V32z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), w1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 382 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-30 32v130H32v60h130v258h60V222h130v-60H222V32z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), y1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m0 32q-10 1-18 7-6 8-7 18-10 1-17 7-8 8-8 18t8 17 17 8v60h-60q0-10-8-17-7-8-17-8t-18 8-7 17q-10 0-18 8-6 7-7 17 1 11 7 18 8 6 18 7 1 10 7 18 8 7 18 7 10-1 17-7 8-7 8-18h60v167q-10 0-17 8-8 7-8 17 0 11 8 18 7 6 17 7 1 10 7 18 8 7 18 7 11 0 18-7 6-7 7-18 10-1 17-7 8-8 8-18t-8-17-17-8V217h60q0 10 8 18 7 7 17 7 11-1 18-7 7-7 7-18 11-1 18-7 6-8 7-18 0-10-7-17-8-8-18-8 0-10-7-17-7-8-18-8-10 0-17 8-8 7-8 17h-60v-60q10 0 17-8 8-7 8-17t-8-18-17-7q0-10-7-18-8-6-18-7"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), q1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-19 32v68h-68v35h68v28H64v35h109v282h35V198h109v-35H208v-28h68v-35h-68V32z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), x1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m0 32s-10 9-19 12-53-4-62 19c-8 23 15 25 29 45 4 8-3 13-3 13s-7 5-12-2c-15-19-10-42-35-41-24 1-31 45-37 53-5 8-17 14-17 14 0 1 6 12 6 22-1 10-21 50-2 65 20 15 29-7 52-13 9-2 11 6 11 6s3 8-5 12c-22 8-43-4-50 20-6 23 34 43 39 51 6 8 8 21 8 21 1 0 14-2 23 1s41 35 61 22c20-14 3-30 4-54 0-9 9-9 9-9s9 0 9 9c1 24-16 40 4 54 20 13 52-19 61-22s23-1 23-1 2-13 8-21c5-8 45-28 39-51-7-24-28-12-50-20-8-4-5-12-5-12s2-8 11-6c23 6 32 28 52 13 19-15-1-55-2-65 0-10 6-22 6-22s-12-6-17-14c-6-8-13-52-37-53-25-1-20 22-35 41-5 7-12 2-12 2s-7-5-3-13c14-20 37-22 29-45-9-23-53-16-62-19s-19-12-19-12m-42 229-43 58-3-2-3-2 43-59zm133 54-3 2-3 2-43-58 6-5zm-60-194c24 0 44 26 44 55 0 61-75 104-75 104s-75-43-75-104c0-29 20-55 44-55 14 0 31 16 31 16s17-16 31-16m-41 23v26h-26v20h26v71h20v-71h26v-20h-26v-26zm-72 21-1 4-1 4-59-19 2-8zm225-11-59 19-1-4-1-4 59-19zM196 47v73h-8V47z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), C1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m64 33a11 11 0 0 0-9 16l-55 37-55-37a11 11 0 1 0-5 4l54 131-2 2-131-54a11 11 0 1 0-4 5l37 55-37 55a11 11 0 0 0-13 1 11 11 0 1 0 17 4l131-53 2 2-54 130a11 11 0 1 0 5 4l33-22q4 13 17 17v4q-5 2-6 8v2h-1c0 3 6 10 7 12 4 8 0 14-2 21l-3 8-11-7q-9-1-19 2-9 0-16-2c1 10 6 11 12 15 7 4 10 3 17 4 9 1 10 4 17 8l3 7q5 4 2 8-4 6 1 10 4 1 3 4l1 5 1-5 3-4q5-4 1-10-3-4 2-8l4-7c6-4 8-7 16-8q9 0 17-4c7-4 12-5 12-15q-7 2-15 2-10-3-20-2l-11 7-2-8c-3-7-7-13-3-21 2-2 7-9 7-12h-1v-2q0-6-6-8v-4q14-4 17-17l33 22a11 11 0 0 0 1 13 11 11 0 1 0 4-17l-32-79c12 9 17-2 21 0 5 5 7 18 3 23-2 2-6-7-7-8q-7 10-3 20c11 19 29 2 23-16l-9-18 7 10q4 10 9 19c7 11 18 13 31 14h1v-1q0-19-15-30-8-5-18-9l-10-8c4 0 12 7 17 9 18 6 35-12 17-22q-11-6-21 3c2 1 10 4 8 6-4 3-19 3-22-2-2-4 8-9 0-22-2 18-6 25-20 12 13 15 5 18-12 20l-21-51 2-2 130 53a11 11 0 1 0 4-5l-37-55 37-55a11 11 0 0 0 13-1 11 11 0 1 0-17-4l-130 54-2-2 21-53c18 2 25 6 11 21 15-14 19-6 21 12 9-13-2-18 0-22 4-4 18-6 22-3 2 2-6 6-8 7q10 8 21 3c18-11 1-28-16-22l-18 8 10-7q10-4 18-9 15-11 15-31h-1q-19-1-31 14-5 8-9 18-2 6-7 10c-1-4 6-12 8-17 6-17-11-34-22-17l18-43a11 11 0 1 0 4-20m-60 304q3 2 3 5 0 2-2 4l-5 1-5-1-2-4q0-3 3-5l1 2 1 3 2 1 2-1 2-3zm13-27q0 12-13 15v-2l-2-3-2-1-2 1-1 3-1 2q-12-3-13-15l17-12zm-77-90c-9 13 2 18 0 22-5 4-18 6-23 2-2-1 6-5 8-6q-10-8-21-3c-18 11-1 28 17 22l17-9q-4 6-9 8-10 4-19 9c-11 7-13 18-14 30v1h1q19 1 30-14 5-9 9-19 2-5 8-10c0 4-7 13-9 18-6 17 12 34 22 16q6-11-3-21c-1 2-4 11-6 9-3-4-3-19 2-23 4-2 9 8 22 0-19-2-25-5-12-20-15 13-18 6-20-12M88 88q0 20 14 31 9 5 19 9 5 3 9 7c-3 1-12-6-17-8-17-6-34 12-16 22q10 5 21-3c-2-1-11-5-9-6 4-3 19-3 23 2 2 4-8 9 0 22 2-19 5-26 20-12-13-15-6-18 12-20-13-9-18 1-22 0-4-5-6-19-2-23 1-2 5 6 6 8q8-10 3-21c-11-18-28-1-22 17l9 17q-6-3-8-10-4-10-9-18c-7-11-18-13-30-14zm144 13q-1 9 5 16c1-1 5-10 6-8 4 4 3 19-2 23-4 1-9-8-21-1z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), z1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-9 62-38 67H50l8 15 39 68-39 67-8 15h95l38 67 9 15 9-15 38-67h95l-8-15-39-67 39-68 8-15h-95l-38-67-9-15zm33 232-24 42-24-42zm-83-20H84l25-42zm95-125 36 63-36 62h-72l-36-62 36-63zm72 125h-49l24-42zM133 149l-24 42-25-42zm167 0-25 42-24-42zm-84-20h-48l24-42z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), I1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0M87 262zl-26 18a18 18 0 0 0 10 32h245a17 17 0 0 0 9-32l-26-18h-1V154h-35v105h-22V154h-35v105h-26V154h-35v105h-22V154H87zM199 33h-14L63 86q-12 6-11 19 4 14 18 14v5q1 12 13 13h218q13-1 14-13v-5a17 17 0 0 0 6-33zm-7 34a17 17 0 1 1 0 35 17 17 0 0 1 0-35"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
+  iconAnchor: [15, 35]
 }), S1 = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 383 512"><path fill="currentColor" d="M192 0c106 0 192 86 192 192 0 77-27 99-172 310a24 24 0 0 1-40 0C27 291 0 269 0 192 0 86 86 0 192 0m-90 52q-12 1-13 12v222H78q-5 1-6 6v10h240v-10q-1-5-6-6h-11V64q-1-11-13-12zm101 188q5 0 6 5v41h-34v-41q1-5 6-5zm-35-63q7 1 7 6v19q0 6-7 6h-21q-6 0-6-6v-19q0-5 6-6zm69 0q6 1 6 6v19q0 6-6 6h-21q-7 0-7-6v-19q0-5 7-6zm-69-47q7 1 7 6v20q0 5-7 5h-21q-6 0-6-5v-20q0-5 6-6zm69 0q6 1 6 6v20q0 5-6 5h-21q-7 0-7-5v-20q0-5 7-6zm-69-47q7 1 7 6v20q0 5-7 6h-21q-6-1-6-6V89q0-5 6-6zm69 0q6 1 6 6v20q0 5-6 6h-21q-7-1-7-6V89q0-5 7-6z"/></svg>',
   className: "io5-icon",
   iconSize: [30, 30],
-  iconAnchor: [10, 30]
-}), K = {
-  pinIcon: f1,
+  iconAnchor: [15, 35]
+}), b1 = {
+  pinIcon: K,
   latinCrossIcon: v1,
   christianCrossIcon: w1,
   orthodoxCrossIcon: y1,
@@ -66,13 +66,13 @@ const f1 = w.divIcon({
   huguenotCrossIcon: C1,
   courtBuildingIcon: I1,
   buildingIcon: S1
-}, k1 = ({
+}, X = (e) => b1[e || "pinIcon"] || K, k1 = ({
   value: e
 }) => {
   if (!e) return null;
-  const t = K[e[4] || "pinIcon"], o = [e[0], e[1]];
+  const t = X(e[4]), o = [e[0], e[1]];
   return /* @__PURE__ */ g(z, { children: [
-    /* @__PURE__ */ s(E, { position: o, icon: t, children: e[3] && /* @__PURE__ */ s(Z, { direction: "top", offset: [0, -30], children: e[3] }) }),
+    /* @__PURE__ */ s(V, { position: o, icon: t, children: e[3] && /* @__PURE__ */ s(Z, { direction: "top", offset: [0, -30], children: e[3] }) }),
     e[2] && e[2] > 0 && /* @__PURE__ */ s(
       U,
       {
@@ -87,21 +87,21 @@ const f1 = w.divIcon({
       }
     )
   ] });
-}, b1 = ({ value: e, onChange: t }) => {
-  const o = V();
+}, M1 = ({ value: e, onChange: t }) => {
+  const o = $();
   if (Y({
     click(r) {
       if (!r.latlng) return;
       const { lat: i, lng: n } = r.latlng;
-      t == null || t([i, n, e[2] || 0]);
+      t == null || t([i, n, e[2] || 0, e[3], e[4]]);
     }
-  }), S(() => {
+  }), b(() => {
     const r = (u) => {
       if (u.ctrlKey) {
         u.preventDefault(), u.stopPropagation(), u.stopImmediatePropagation();
         const p = u.deltaY, m = 100, f = 100, l = 1e4;
         let h = e[2] || 0;
-        p < 0 ? h = Math.min((e[2] || 0) + m, l) : h = Math.max((e[2] || 0) - m, f), h !== e[2] && (t == null || t([e[0], e[1], h]));
+        p < 0 ? h = Math.min((e[2] || 0) + m, l) : h = Math.max((e[2] || 0) - m, f), h !== e[2] && (t == null || t([e[0], e[1], h, e[3], e[4]]));
       }
     }, i = (u) => {
       u.key === "Control" && o.scrollWheelZoom.disable();
@@ -117,7 +117,7 @@ const f1 = w.divIcon({
   }, [o, e, t]), !e) return null;
   const c = [e[0], e[1]];
   return /* @__PURE__ */ g(z, { children: [
-    /* @__PURE__ */ s(E, { position: c, icon: K.pinIcon }),
+    /* @__PURE__ */ s(V, { position: c, icon: X(e[4]) }),
     e[2] && e[2] > 0 && /* @__PURE__ */ s(
       U,
       {
@@ -132,12 +132,12 @@ const f1 = w.divIcon({
       }
     )
   ] });
-}, L = ({ value: e, onChange: t }) => !t ? /* @__PURE__ */ s(k1, { value: e }) : /* @__PURE__ */ s(b1, { value: e, onChange: t }), X = () => {
-  const e = r1(null);
-  return S(() => {
-    e.current && c1.disableClickPropagation(e.current);
+}, E = ({ value: e, onChange: t }) => !t ? /* @__PURE__ */ s(k1, { value: e }) : /* @__PURE__ */ s(M1, { value: e, onChange: t }), J = () => {
+  const e = l1(null);
+  return b(() => {
+    e.current && a1.disableClickPropagation(e.current);
   }, [e.current]), e;
-}, M1 = () => /* @__PURE__ */ s(
+}, N1 = () => /* @__PURE__ */ s(
   "svg",
   {
     className: "w-4 h-4 text-gray-400",
@@ -154,7 +154,7 @@ const f1 = w.divIcon({
       }
     )
   }
-), N1 = () => /* @__PURE__ */ g(
+), j1 = () => /* @__PURE__ */ g(
   "svg",
   {
     className: "w-4 h-4 text-gray-400 flex-shrink-0",
@@ -182,8 +182,8 @@ const f1 = w.divIcon({
       )
     ]
   }
-), J = B(({ onSelect: e }) => {
-  const [t, o] = q(""), [c, r] = q([]), i = X(), n = V(), a = new u1({
+), Q = R(({ onSelect: e }) => {
+  const [t, o] = q(""), [c, r] = q([]), i = J(), n = $(), a = new h1({
     params: {
       "accept-language": "ua",
       countrycodes: "ua,pl,by,ru,ro,md,tr",
@@ -205,7 +205,7 @@ const f1 = w.divIcon({
     },
     [a]
   );
-  S(() => {
+  b(() => {
     const l = setTimeout(() => {
       u(t);
     }, 300);
@@ -223,7 +223,7 @@ const f1 = w.divIcon({
       ref: i,
       className: "absolute leaflet-top leaflet-left",
       children: /* @__PURE__ */ g(
-        b,
+        M,
         {
           "aria-label": "Пошук за сучасною назвою",
           className: "leaflet-control w-auto bg-background rounded-xl shadow text-foreground",
@@ -241,16 +241,16 @@ const f1 = w.divIcon({
             }
           },
           children: [
-            /* @__PURE__ */ g(b.InputGroup, { className: "flex items-center gap-2 px-2", children: [
-              /* @__PURE__ */ s(M1, {}),
-              /* @__PURE__ */ s(G, { placeholder: "Пошук за сучасною назвою" })
+            /* @__PURE__ */ g(M.InputGroup, { className: "flex items-center gap-2 px-2", children: [
+              /* @__PURE__ */ s(N1, {}),
+              /* @__PURE__ */ s(G, { className: "bg-transparent", placeholder: "Пошук за сучасною назвою" })
             ] }),
-            /* @__PURE__ */ s(b.Popover, { children: /* @__PURE__ */ s(
-              _,
+            /* @__PURE__ */ s(M.Popover, { children: /* @__PURE__ */ s(
+              A,
               {
-                renderEmptyState: () => /* @__PURE__ */ s(h1, { children: "Нічого не знайдено. Уточніть свій запит." }),
-                children: c.map((l, h) => /* @__PURE__ */ g(_.Item, { id: h, textValue: l.label, children: [
-                  /* @__PURE__ */ s(N1, {}),
+                renderEmptyState: () => /* @__PURE__ */ s(d1, { children: "Нічого не знайдено. Уточніть свій запит." }),
+                children: c.map((l, h) => /* @__PURE__ */ g(A.Item, { id: h, textValue: l.label, children: [
+                  /* @__PURE__ */ s(j1, {}),
                   l.label
                 ] }, h))
               }
@@ -261,22 +261,22 @@ const f1 = w.divIcon({
     }
   );
 });
-J.displayName = "MapLocationSearch";
-const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
+Q.displayName = "MapLocationSearch";
+const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   const t = e % 10, o = e % 100;
   return t === 1 && o !== 11 ? "позначка" : t >= 2 && t <= 4 && (o < 12 || o > 14) ? "позначки" : "позначок";
-}, Q = (e) => e < 10 ? 32 : e < 100 ? 40 : e < 1e3 ? 48 : 56, H = /* @__PURE__ */ new Map(), E1 = (e) => {
+}, e1 = (e) => e < 10 ? 32 : e < 100 ? 40 : e < 1e3 ? 48 : 56, H = /* @__PURE__ */ new Map(), V1 = (e) => {
   const t = H.get(e);
   if (t) return t;
-  const o = Q(e), c = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, r = new i1({
+  const o = e1(e), c = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, r = new u1({
     html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;font-size:${o / 3}px;font-weight:600;line-height:1">${c}</span></div>`,
     className: "geoduck-cluster-icon",
     iconSize: [o, o],
     iconAnchor: [o / 2, o / 2]
   });
   return H.set(e, r), r;
-}, V1 = (e, t, { zoom: o, bounds: c }) => {
-  const r = c.pad(j1), i = /* @__PURE__ */ new Map();
+}, $1 = (e, t, { zoom: o, bounds: c }) => {
+  const r = c.pad(L1), i = /* @__PURE__ */ new Map();
   for (const n of e) {
     const [a, u] = n;
     if (!Number.isFinite(a) || !Number.isFinite(u) || !r.contains([a, u])) continue;
@@ -291,30 +291,30 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
     );
     return { ...n, lat: a.lat, lng: a.lng };
   });
-}, $1 = ({ cluster: e, onExpand: t }) => {
+}, B1 = ({ cluster: e, onExpand: t }) => {
   const { items: o, lat: c, lng: r } = e, i = o.map((n) => n[3]).filter((n) => !!n);
   return /* @__PURE__ */ s(
-    E,
+    V,
     {
       eventHandlers: { click: () => t(e) },
-      icon: E1(o.length),
+      icon: V1(o.length),
       position: [c, r],
-      children: /* @__PURE__ */ g(Z, { direction: "top", offset: [0, -Q(o.length) / 2], children: [
+      children: /* @__PURE__ */ g(Z, { direction: "top", offset: [0, -e1(o.length) / 2], children: [
         /* @__PURE__ */ g("span", { className: "font-semibold", children: [
           o.length,
           " ",
-          L1(o.length)
+          E1(o.length)
         ] }),
-        i.slice(0, M).map((n, a) => /* @__PURE__ */ s("div", { children: n }, a)),
-        i.length > M && /* @__PURE__ */ g("div", { children: [
+        i.slice(0, N).map((n, a) => /* @__PURE__ */ s("div", { children: n }, a)),
+        i.length > N && /* @__PURE__ */ g("div", { children: [
           "…і ще ",
-          i.length - M
+          i.length - N
         ] })
       ] })
     }
   );
-}, B1 = ({ positions: e }) => {
-  const t = V(), [o, c] = q(() => ({
+}, R1 = ({ positions: e }) => {
+  const t = $(), [o, c] = q(() => ({
     zoom: t.getZoom(),
     bounds: t.getBounds()
   })), r = I(() => {
@@ -325,12 +325,12 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
     moveend: r,
     resize: r
   });
-  const i = N(
-    () => V1(e, t, o),
+  const i = j(
+    () => $1(e, t, o),
     [e, t, o]
   ), n = I(
     ({ items: a, lat: u, lng: p }) => {
-      const m = a1(
+      const m = i1(
         a.map((l) => [l[0], l[1]])
       );
       m.isValid() && !m.getNorthEast().equals(m.getSouthWest()) ? t.fitBounds(m, { padding: [48, 48] }) : t.setView([u, p], Math.min(t.getZoom() + 2, t.getMaxZoom()));
@@ -338,8 +338,8 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
     [t]
   );
   return /* @__PURE__ */ s(z, { children: i.map(
-    (a) => a.items.length === 1 ? /* @__PURE__ */ s(L, { value: a.items[0] }, a.key) : /* @__PURE__ */ s(
-      $1,
+    (a) => a.items.length === 1 ? /* @__PURE__ */ s(E, { value: a.items[0] }, a.key) : /* @__PURE__ */ s(
+      B1,
       {
         cluster: a,
         onExpand: n
@@ -347,7 +347,7 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
       a.key
     )
   ) });
-}, d = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", R1 = [
+}, d = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", W1 = [
   { year: 1500, url: `${d}/countries/1500.geojson` },
   { year: 1530, url: `${d}/countries/1530.geojson` },
   { year: 1600, url: `${d}/countries/1600.geojson` },
@@ -366,7 +366,7 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
   { year: 1945, url: `${d}/countries/1945.geojson` },
   { year: 1960, url: `${d}/countries/1960.geojson` },
   { year: 1991, url: `${d}/countries/1991.geojson` }
-], W1 = [
+], O1 = [
   { year: 1897, url: `${d}/states/1897.geojson` },
   { year: 1914, url: `${d}/states/1914.geojson` },
   { year: 1937, url: `${d}/states/1937.geojson` },
@@ -379,29 +379,29 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
   }
   const c = t.filter(({ year: r }) => r > 0 && r <= e).sort((r, i) => i.year - r.year);
   return c.length > 0 ? c[0].url : null;
-}, F = (e) => fetch(e).then((t) => t.json()), O1 = (e) => {
-  const [t, o] = q(e), c = T(t, R1), {
+}, F = (e) => fetch(e).then((t) => t.json()), _1 = (e) => {
+  const [t, o] = q(e), c = T(t, W1), {
     data: r,
     isLoading: i,
     isValidating: n
-  } = j(c, F, {
+  } = L(c, F, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), a = T(t, W1, !0), {
+  }), a = T(t, O1, !0), {
     data: u,
     isLoading: p,
     isValidating: m
-  } = j(a, F, {
+  } = L(a, F, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), f = N(
+  }), f = j(
     () => r || null,
     [r]
-  ), l = N(
+  ), l = j(
     () => u || null,
     [u]
   );
@@ -413,24 +413,26 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
     },
     isLoading: i || p || n || m
   };
-}, _1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ s("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ s(A, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ s(A.Content, { className: "py-2", children: /* @__PURE__ */ g("div", { className: "flex flex-col gap-0", children: [
-  o && /* @__PURE__ */ s("p", { className: "text-large", children: o }),
-  t && /* @__PURE__ */ s("p", { className: "text-small text-default-500", children: t }),
-  e && /* @__PURE__ */ s("p", { className: "text-small text-default-500", children: e })
-] }) }) }) }), A1 = [
+}, A1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ s("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ s(S, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ g(S.Header, { children: [
+  /* @__PURE__ */ s(S.Title, { className: "text-lg", children: o }),
+  /* @__PURE__ */ g(S.Description, { children: [
+    t && /* @__PURE__ */ s("p", { className: "text-foreground", children: t }),
+    e && /* @__PURE__ */ s("p", { className: "text-sm text-foreground", children: e })
+  ] })
+] }) }) }), D1 = [
   { value: 1897, label: "Російська Імперія" },
   { value: 1914, label: "WWI" },
   { value: 1937, label: "Перед WWII" },
   { value: 1945, label: "Після WWII" },
   { value: 1991, label: "Незалежність" }
-], D1 = (e) => {
+], H1 = (e) => {
   const t = parseInt(e, 10);
   return /^\d{4}$/.test(e) && t >= 1500 && t <= 1991;
-}, H1 = ({ value: e, onChange: t }) => {
-  const [o, c] = q(e.toString()), [r, i] = q(!1), [n, a] = q(!1), u = X(), p = (h) => {
+}, T1 = ({ value: e, onChange: t }) => {
+  const [o, c] = q(e.toString()), [r, i] = q(!1), [n, a] = q(!1), u = J(), p = (h) => {
     const y = h.replace(/\D/g, "").slice(0, 4);
     if (c(y), y.length === 4) {
-      const v = D1(y);
+      const v = H1(y);
       a(!v), v && t(parseInt(y, 10));
     } else
       a(!1);
@@ -439,7 +441,7 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
   };
   return /* @__PURE__ */ s("div", { ref: u, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ g("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
     /* @__PURE__ */ g(
-      d1,
+      m1,
       {
         "aria-label": "Рік",
         className: "bg-background relative",
@@ -461,12 +463,12 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
               }
             }
           ),
-          n && /* @__PURE__ */ s(m1, { children: "Введіть рік від 1600 до 2025" })
+          n && /* @__PURE__ */ s(p1, { children: "Введіть рік від 1600 до 2025" })
         ]
       }
     ),
-    r && /* @__PURE__ */ s("div", { className: "flex flex-col gap-1 p-2", children: A1.map((h) => /* @__PURE__ */ g(
-      p1,
+    r && /* @__PURE__ */ s("div", { className: "flex flex-col gap-1 p-2", children: D1.map((h) => /* @__PURE__ */ g(
+      g1,
       {
         className: "text-xs justify-start",
         size: "sm",
@@ -489,7 +491,7 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
   "blue",
   "red",
   "yellow"
-], T1 = (e) => {
+], F1 = (e) => {
   var c;
   const t = ((c = e.properties) == null ? void 0 : c.admin_level_1_ID) || e.id || 0;
   if (t === 22)
@@ -497,7 +499,7 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
   const o = t % P.length;
   return P[o];
 }, C = (e, t, o = 1) => {
-  const c = e ? T1(e) : "gray";
+  const c = e ? F1(e) : "gray";
   return {
     color: c,
     fillColor: c,
@@ -506,10 +508,10 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
     fillOpacity: t ? 0.1 : 0,
     interactive: !0
   };
-}, e1 = B(
-  l1(
+}, t1 = R(
+  c1(
     ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ s(
-      $,
+      B,
       {
         ref: o,
         data: e,
@@ -519,10 +521,10 @@ const D = 72, j1 = 0.25, M = 5, L1 = (e) => {
     ) : null
   )
 );
-e1.displayName = "CountriesLayer";
-const t1 = B(
+t1.displayName = "CountriesLayer";
+const o1 = R(
   ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ s(
-    $,
+    B,
     {
       data: e,
       style: (o) => C(o, !1, 2),
@@ -530,11 +532,11 @@ const t1 = B(
     }
   ) : null
 );
-t1.displayName = "StatesLayer";
-const F1 = ({ year: e, onYearChange: t }) => {
+o1.displayName = "StatesLayer";
+const P1 = ({ year: e, onYearChange: t }) => {
   var l, h, y;
-  const [o, c] = q(null), [r, i] = q(null), { countries: n, states: a, updateYear: u, isLoading: p } = O1(e);
-  S(() => {
+  const [o, c] = q(null), [r, i] = q(null), { countries: n, states: a, updateYear: u, isLoading: p } = _1(e);
+  b(() => {
     u(e), c(null), i(null);
   }, [e]);
   const m = I(
@@ -554,13 +556,13 @@ const F1 = ({ year: e, onYearChange: t }) => {
       k.on({
         mouseover: (x) => {
           i(v);
-          const R = n == null ? void 0 : n.features.find(
-            (o1) => {
-              var W, O;
-              return ((W = o1.id) == null ? void 0 : W.toString()) === ((O = v.properties) == null ? void 0 : O.admin_level_1_ID.toString());
+          const W = n == null ? void 0 : n.features.find(
+            (n1) => {
+              var O, _;
+              return ((O = n1.id) == null ? void 0 : O.toString()) === ((_ = v.properties) == null ? void 0 : _.admin_level_1_ID.toString());
             }
           );
-          R && c(R), x.target.setStyle(C(v, !0, 4));
+          W && c(W), x.target.setStyle(C(v, !0, 4));
         },
         mouseout: (x) => {
           i(null), x.target.setStyle(C(v, !1, 2));
@@ -570,25 +572,25 @@ const F1 = ({ year: e, onYearChange: t }) => {
     [n]
   );
   return /* @__PURE__ */ g(z, { children: [
-    p ? /* @__PURE__ */ s("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ s(g1, {}) }) : /* @__PURE__ */ g(z, { children: [
+    p ? /* @__PURE__ */ s("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ s(f1, {}) }) : /* @__PURE__ */ g(z, { children: [
       n && /* @__PURE__ */ s(
-        e1,
+        t1,
         {
           data: n,
           onEachFeature: m
         }
       ),
-      a && /* @__PURE__ */ s(t1, { data: a, onEachFeature: f })
+      a && /* @__PURE__ */ s(o1, { data: a, onEachFeature: f })
     ] }),
     t && /* @__PURE__ */ s(
-      H1,
+      T1,
       {
         value: e,
         onChange: t
       }
     ),
     (o || r) && /* @__PURE__ */ s(
-      _1,
+      A1,
       {
         level1: (l = o == null ? void 0 : o.properties) == null ? void 0 : l.admin_level_1,
         level2: (h = r == null ? void 0 : r.properties) == null ? void 0 : h.admin_level_2,
@@ -596,10 +598,10 @@ const F1 = ({ year: e, onYearChange: t }) => {
       }
     )
   ] });
-}, P1 = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", Z1 = (e) => fetch(e).then((t) => t.json()), U1 = () => {
-  const { data: e } = j(
-    P1,
+}, Z1 = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", U1 = (e) => fetch(e).then((t) => t.json()), Y1 = () => {
+  const { data: e } = L(
     Z1,
+    U1,
     {
       revalidateOnFocus: !1,
       revalidateOnReconnect: !1,
@@ -608,7 +610,7 @@ const F1 = ({ year: e, onYearChange: t }) => {
     }
   );
   return e && /* @__PURE__ */ s(
-    $,
+    B,
     {
       data: e,
       style: {
@@ -620,7 +622,7 @@ const F1 = ({ year: e, onYearChange: t }) => {
       }
     }
   );
-}, Y1 = {
+}, G1 = {
   zoomControl: !1,
   doubleClickZoom: !1,
   closePopupOnClick: !1,
@@ -630,32 +632,32 @@ const F1 = ({ year: e, onYearChange: t }) => {
   trackResize: !1,
   touchZoom: !1,
   scrollWheelZoom: !1
-}, G1 = {
+}, K1 = {
   zoomControl: !1,
   scrollWheelZoom: !0
-}, K1 = 20, se = ({
+}, X1 = 20, re = ({
   positions: e,
   onPositionChange: t,
   tileLayerProps: o,
   year: c = 1897,
   onYearChange: r,
-  clusterThreshold: i = K1,
+  clusterThreshold: i = X1,
   hideLayers: n,
   ...a
 }) => {
   const u = !t && e.length > i;
   return /* @__PURE__ */ g(
-    n1,
+    s1,
     {
       worldCopyJump: !0,
       center: [49.0139, 31.2858],
       style: { height: "100%", width: "100%" },
       zoom: 6,
-      ...t || u ? G1 : Y1,
+      ...t || u ? K1 : G1,
       ...a,
       children: [
         /* @__PURE__ */ s(
-          s1,
+          r1,
           {
             className: "grayscale",
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -663,15 +665,15 @@ const F1 = ({ year: e, onYearChange: t }) => {
             ...o
           }
         ),
-        !(n != null && n.ukraineLayer) && /* @__PURE__ */ s(U1, {}),
-        !(n != null && n.searchInput) && /* @__PURE__ */ s(J, { onSelect: t }),
-        !(n != null && n.historicalLayers) && /* @__PURE__ */ s(F1, { year: c, onYearChange: r }),
-        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ s(L, { value: e[0], onChange: t }) : u ? /* @__PURE__ */ s(B1, { positions: e }) : e.map((p, m) => /* @__PURE__ */ s(L, { value: p }, m)))
+        !(n != null && n.ukraineLayer) && /* @__PURE__ */ s(Y1, {}),
+        !(n != null && n.searchInput) && /* @__PURE__ */ s(Q, { onSelect: t }),
+        !(n != null && n.historicalLayers) && /* @__PURE__ */ s(P1, { year: c, onYearChange: r }),
+        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ s(E, { value: e[0], onChange: t }) : u ? /* @__PURE__ */ s(R1, { positions: e }) : e.map((p, m) => /* @__PURE__ */ s(E, { value: p }, m)))
       ]
     }
   );
 };
 export {
-  se as default
+  re as default
 };
 //# sourceMappingURL=index.js.map
