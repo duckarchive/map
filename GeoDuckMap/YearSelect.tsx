@@ -1,5 +1,4 @@
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/input";
+import { Button, FieldError, Input, TextField } from "@heroui/react";
 import React, { useState } from "react";
 import useStopPropagation from "./useStopPropagation";
 
@@ -68,21 +67,22 @@ const YearSelect: React.FC<YearSelectProps> = (
     return (
       <div ref={yearSelectRef} className="absolute leaflet-top leaflet-right">
         <div className="leaflet-control bg-background rounded-xl shadow">
-          <Input
-            classNames={{
-              inputWrapper: "bg-background relative",
-              input: "text-sm text-foreground",
-            }}
-            errorMessage={isInvalid ? "Введіть рік від 1600 до 2025" : ""}
+          <TextField
+            aria-label="Рік"
+            className="bg-background relative"
             isInvalid={isInvalid}
-            placeholder="1897"
             type="text"
             value={yearInput}
-            variant="bordered"
-            onBlur={handleInputBlur}
-            onFocus={handleInputFocus}
-            onValueChange={handleYearInputChange}
-          />
+            onChange={handleYearInputChange}
+          >
+            <Input
+              className="text-sm text-foreground"
+              placeholder="1897"
+              onBlur={handleInputBlur}
+              onFocus={handleInputFocus}
+            />
+            {isInvalid && <FieldError>Введіть рік від 1600 до 2025</FieldError>}
+          </TextField>
 
           {showPresets && (
             <div className="flex flex-col gap-1 p-2">
@@ -90,9 +90,8 @@ const YearSelect: React.FC<YearSelectProps> = (
                 <Button
                   key={preset.value}
                   className="text-xs justify-start"
-                  color="default"
                   size="sm"
-                  variant={value === preset.value ? "flat" : "bordered"}
+                  variant={value === preset.value ? "tertiary" : "outline"}
                   onPress={() => handlePresetSelect(preset.value)}
                 >
                   {preset.value} - {preset.label}

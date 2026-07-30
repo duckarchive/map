@@ -58,3 +58,5 @@ coverage/
 adminjs/
 
 /generated/
+*storybook.log
+storybook-static

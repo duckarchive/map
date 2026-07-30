@@ -1,7 +1,7 @@
 import { useState, useCallback, memo, useEffect } from "react";
 import { useMap } from "react-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
-import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import { ComboBox, EmptyState, Input, ListBox } from "@heroui/react";
 
 import useStopPropagation from "./useStopPropagation";
 
@@ -118,7 +118,7 @@ const MapLocationSearch = memo<MapLocationSearchProps>(({ onSelect }) => {
   };
 
   const handleSelect = (key: number | string | null) => {
-    if (key) {
+    if (key !== null) {
       const result = results[key as number];
 
       if (result) {
@@ -132,32 +132,35 @@ const MapLocationSearch = memo<MapLocationSearchProps>(({ onSelect }) => {
       ref={autocompleteRef} // Prevents click events from propagating to the map
       className="absolute leaflet-top leaflet-left"
     >
-      <Autocomplete
+      <ComboBox
         aria-label="Пошук за сучасною назвою"
         className="leaflet-control w-auto bg-background rounded-xl shadow text-foreground"
-        defaultItems={results}
         inputValue={query}
-        listboxProps={{
-          emptyContent: "Нічого не знайдено. Уточніть свій запит.",
-        }}
-        placeholder="Пошук за сучасною назвою"
-        startContent={<SearchSVG />}
-        variant="bordered"
+        variant="secondary"
         onClick={(e) => e.stopPropagation()}
         onInputChange={handleInputChange}
         onMouseDown={(e) => e.stopPropagation()}
         onSelectionChange={handleSelect}
       >
-        {(result) => (
-          <AutocompleteItem
-            key={results.indexOf(result)}
-            startContent={<PinSVG />}
-            textValue={result.label}
+        <ComboBox.InputGroup className="flex items-center gap-2 px-2">
+          <SearchSVG />
+          <Input placeholder="Пошук за сучасною назвою" />
+        </ComboBox.InputGroup>
+        <ComboBox.Popover>
+          <ListBox
+            renderEmptyState={() => (
+              <EmptyState>Нічого не знайдено. Уточніть свій запит.</EmptyState>
+            )}
           >
-            {result.label}
-          </AutocompleteItem>
-        )}
-      </Autocomplete>
+            {results.map((result, idx) => (
+              <ListBox.Item key={idx} id={idx} textValue={result.label}>
+                <PinSVG />
+                {result.label}
+              </ListBox.Item>
+            ))}
+          </ListBox>
+        </ComboBox.Popover>
+      </ComboBox>
     </div>
   );
 });

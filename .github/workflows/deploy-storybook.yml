@@ -1,4 +1,4 @@
-name: Deploy Demo
+name: Deploy Storybook
 
 on:
   push:
@@ -27,11 +27,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Demo
-        run: pnpm run build
+      - name: Build Storybook
+        run: pnpm run build-storybook
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./demo/dist
+          publish_dir: ./storybook-static

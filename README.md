@@ -111,10 +111,10 @@ To build the package locally:
 npm run build:lib
 ```
 
-To run the demo:
+To run Storybook:
 
 ```bash
-npm run dev
+npm run storybook
 ```
 
 ## License

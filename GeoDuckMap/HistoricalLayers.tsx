@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { GeoJSON, GeoJSONProps } from "react-leaflet";
-import { Spinner } from "@heroui/spinner";
+import { Spinner } from "@heroui/react";
 
 import useMapData from "./useMapData";
 import MapTooltip from "./Tooltip";
