@@ -21,7 +21,7 @@
     "noEmit": false
   },
   "include": ["GeoDuckMap/**/*"],
-  "exclude": ["node_modules", "dist", "demo", "scripts"],
+  "exclude": ["node_modules", "dist", "scripts"],
   "ts-node": {
     "esm": true,
     "experimentalSpecifiers": true

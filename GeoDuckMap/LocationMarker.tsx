@@ -1,6 +1,6 @@
 import { Marker, Circle, useMapEvents, useMap, Tooltip } from "react-leaflet";
 import React, { useEffect } from "react";
-import icons from "./Markers";
+import { getIcon } from "./Markers";
 
 export type MarkerValue = [number, number, number?, string?, string?];
 
@@ -14,7 +14,7 @@ const StaticLocationMarker: React.FC<Pick<LocationMarkerProps, "value">> = ({
 }) => {
   if (!value) return null;
 
-  const markerIcon = icons[value[4] || "pinIcon"];
+  const markerIcon = getIcon(value[4]);
   const latLng: [number, number] = [value[0], value[1]];
 
   return (
@@ -48,7 +48,8 @@ const DynamicLocationMarker: React.FC<
       if (!e.latlng) return;
       const { lat, lng } = e.latlng;
 
-      onChange?.([lat, lng, value[2] || 0]);
+      // Keep label + icon: only the coordinates are being edited here.
+      onChange?.([lat, lng, value[2] || 0, value[3], value[4]]);
     },
   });
 
@@ -75,7 +76,7 @@ const DynamicLocationMarker: React.FC<
         }
 
         if (newRadius !== value[2] || 0) {
-          onChange?.([value[0], value[1], newRadius]);
+          onChange?.([value[0], value[1], newRadius, value[3], value[4]]);
         }
       }
     };
@@ -119,7 +120,7 @@ const DynamicLocationMarker: React.FC<
 
   return (
     <>
-      <Marker position={latLng} icon={icons["pinIcon"]} />
+      <Marker position={latLng} icon={getIcon(value[4])} />
       {value[2] && value[2] > 0 && (
         <Circle
           center={latLng}

@@ -19,7 +19,8 @@ Two deliverables live side by side:
 | Path | Purpose |
 | --- | --- |
 | `GeoDuckMap/` | Library source. `index.tsx` is the package entry (`vite.config.ts` points its lib entry at the directory). |
-| `demo/` | Standalone Vite app used as the dev playground and deployed to GitHub Pages. |
+| `stories/` | Storybook stories, used as the dev playground and deployed to GitHub Pages. Import `GeoDuckMap` directly from source (`../GeoDuckMap`), not `dist/`. |
+| `.storybook/` | Storybook config (`main.ts`, `preview.tsx`, `global.css` — Tailwind + HeroUI styles + Leaflet CSS). |
 | `geojson/countries/<year>.geojson` | Country-level (admin level 1) borders per snapshot year. |
 | `geojson/states/<year>.geojson` | State/uyezd-level (admin levels 2–3) borders per snapshot year. |
 | `geojson/ukraine.geojson` | Modern Ukraine outline overlay. |
@@ -32,25 +33,19 @@ Two deliverables live side by side:
 Package manager is **pnpm** (see `pnpm-workspace.yaml`, `.npmrc`; CI uses pnpm 10 / Node 20).
 
 ```bash
-pnpm run build:lib   # build the library into dist/ + emit .d.ts (run this before dev!)
-pnpm run dev         # demo dev server (demo/)
-pnpm run build       # build the demo (what CI deploys)
-pnpm run preview     # preview the built demo
+pnpm run build:lib        # build the library into dist/ + emit .d.ts
+pnpm run storybook        # Storybook dev server (stories/), imports GeoDuckMap from source
+pnpm run build-storybook  # build the static Storybook site (what CI deploys) -> storybook-static/
 ```
 
 There are no tests, no linter, and no typecheck script. `build:lib` runs `tsc
 --emitDeclarationOnly`, so it is the de-facto typecheck for the library — run it after
-changing `GeoDuckMap/`.
+changing `GeoDuckMap/`. Storybook itself imports straight from `GeoDuckMap/` source (not
+`dist/`), so `pnpm run storybook` reflects source edits immediately with no rebuild step.
 
 Data scripts run individually, e.g. `pnpm run fetch-ohm-borders`, `pnpm run merge`,
 `pnpm run minify`. They read/write `geojson/` in place — inspect a script before running
 it and check `git diff` afterwards.
-
-### Gotcha: the demo consumes `dist/`, not source
-
-`demo/src/Demo.tsx` imports `../../` (resolved through `package.json` → `dist/index.js`)
-and `../../dist/LocationMarker` for types. **Editing `GeoDuckMap/*.tsx` has no effect on
-`pnpm run dev` until you re-run `pnpm run build:lib`.** There is no dev alias.
 
 ## Architecture
 
@@ -96,9 +91,10 @@ Overlay controls are plain absolutely-positioned React nodes using Leaflet's
 ## Conventions
 
 - **Ukrainian** for all user-facing strings; English for code, comments and commits.
-- Styling is Tailwind + HeroUI. HeroUI packages are *optional* peer deps — keep imports
-  granular (`@heroui/button`, not a barrel) and add anything new to the `external` list in
-  `vite.config.ts`, otherwise it gets bundled into `dist/`.
+- Styling is Tailwind v4 + HeroUI v3. `@heroui/react` (single package, compound components
+  like `Card.Content`, `ComboBox`) and `@heroui/styles` are *optional* peer deps — they're
+  already in the `external` list in `vite.config.ts`; add anything new imported from them
+  there too, otherwise it gets bundled into `dist/`.
 - Function components with `React.FC`, default export per file, `memo`/`useCallback` around
   anything Leaflet re-renders. Set `displayName` on `memo`/`forwardRef` components.
 - Keep new heavy runtime deps out: the only real `dependency` is `leaflet-geosearch`. Turf
@@ -113,8 +109,8 @@ Overlay controls are plain absolutely-positioned React nodes using Leaflet's
 - `dist/` **is committed on purpose** — don't gitignore it, and don't hand-edit it.
 - Cutting a release is `npm version <patch|minor|major>`; the build/commit happens
   automatically.
-- Pushing to `main` deploys the demo to GitHub Pages
-  (`.github/workflows/deploy-demo.yml`).
+- Pushing to `main` deploys Storybook to GitHub Pages
+  (`.github/workflows/deploy-storybook.yml`, publishes `storybook-static/` to `gh-pages`).
 - Because GeoJSON is fetched from `main` on `raw.githubusercontent.com`, **data edits only
   reach users after they are pushed to `main`** — a local `geojson/` change is invisible to
   the running app.

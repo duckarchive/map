@@ -29,10 +29,10 @@ This repository has been configured as an installable npm package for the GeoDuc
 - ✅ Included geojson data files in published package
 
 ### 5. Build Scripts
-- ✅ `npm run build:lib` - Builds the library for distribution
-- ✅ `npm run pack-test` - Tests the package locally
-- ✅ `npm run version:patch/minor/major` - Version management
-- ✅ `npm run release` - Complete build and pack for testing
+- ✅ `pnpm build:lib` - Builds the library for distribution
+- ✅ `pnpm pack-test` - Tests the package locally
+- ✅ `pnpm version:patch/minor/major` - Version management
+- ✅ `pnpm release` - Complete build and pack for testing
 
 ### 6. Publishing Setup
 - ✅ Created `.npmignore` to control published files
@@ -51,25 +51,25 @@ This repository has been configured as an installable npm package for the GeoDuc
 ### For Development
 ```bash
 # Build the library
-npm run build:lib
+pnpm build:lib
 
 # Test the package locally
-npm run pack-test
+pnpm pack-test
 
-# Run demo
-npm run dev
+# Run Storybook
+pnpm storybook
 ```
 
 ### For Publishing
 ```bash
 # Version bump (creates git tag)
-npm run version:patch  # or minor/major
+pnpm version:patch  # or minor/major
 
 # Push to trigger GitHub Actions (publishes to GitHub Packages)
 git push --follow-tags
 
 # Or manual publish to GitHub Packages
-npm run publish:github
+pnpm publish:github
 ```
 
 ### For Consumers
