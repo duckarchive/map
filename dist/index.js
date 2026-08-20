@@ -652,6 +652,7 @@ const P1 = ({ year: e, onYearChange: t }) => {
       worldCopyJump: !0,
       center: [49.0139, 31.2858],
       style: { height: "100%", width: "100%" },
+      className: "isolate",
       zoom: 6,
       ...t || u ? K1 : G1,
       ...a,
