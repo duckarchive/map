@@ -73,6 +73,7 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
       worldCopyJump
       center={[49.0139, 31.2858]}
       style={{ height: "100%", width: "100%" }}
+      className="isolate"
       zoom={6}
       {...(onPositionChange || isClustered ? DEFAULT : STATIC)}
       {...mapContainerProps}
