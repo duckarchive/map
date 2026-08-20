@@ -269,7 +269,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   const t = H.get(e);
   if (t) return t;
   const o = e1(e), c = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, r = new u1({
-    html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;font-size:${o / 3}px;font-weight:600;line-height:1">${c}</span></div>`,
+    html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;text-shadow:0 0 5px #000;font-size:${o / 3}px;font-weight:600;line-height:1">${c}</span></div>`,
     className: "geoduck-cluster-icon",
     iconSize: [o, o],
     iconAnchor: [o / 2, o / 2]
