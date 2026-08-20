@@ -52,7 +52,7 @@ const getClusterIcon = (count: number): DivIcon => {
   const size = getIconSize(count);
   const label = count > 999 ? `${Math.floor(count / 1000)}k+` : `${count}`;
   const icon = new DivIcon({
-    html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;font-size:${
+    html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;text-shadow:0 0 5px #000;font-size:${
       size / 3
     }px;font-weight:600;line-height:1">${label}</span></div>`,
     className: "geoduck-cluster-icon",
