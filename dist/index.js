@@ -643,19 +643,26 @@ const P1 = ({ year: e, onYearChange: t }) => {
   onYearChange: r,
   clusterThreshold: i = X1,
   hideLayers: n,
-  ...a
+  className: a,
+  style: u,
+  ...p
 }) => {
-  const u = !t && e.length > i;
+  const m = !t && e.length > i;
   return /* @__PURE__ */ g(
     s1,
     {
       worldCopyJump: !0,
       center: [49.0139, 31.2858],
-      style: { height: "100%", width: "100%" },
-      className: "isolate",
       zoom: 6,
-      ...t || u ? K1 : G1,
-      ...a,
+      ...t || m ? K1 : G1,
+      ...p,
+      style: {
+        height: "100%",
+        width: "100%",
+        isolation: "isolate",
+        ...u
+      },
+      className: ["isolate", a].filter(Boolean).join(" "),
       children: [
         /* @__PURE__ */ s(
           r1,
@@ -669,7 +676,7 @@ const P1 = ({ year: e, onYearChange: t }) => {
         !(n != null && n.ukraineLayer) && /* @__PURE__ */ s(Y1, {}),
         !(n != null && n.searchInput) && /* @__PURE__ */ s(Q, { onSelect: t }),
         !(n != null && n.historicalLayers) && /* @__PURE__ */ s(P1, { year: c, onYearChange: r }),
-        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ s(E, { value: e[0], onChange: t }) : u ? /* @__PURE__ */ s(R1, { positions: e }) : e.map((p, m) => /* @__PURE__ */ s(E, { value: p }, m)))
+        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ s(E, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ s(R1, { positions: e }) : e.map((f, l) => /* @__PURE__ */ s(E, { value: f }, l)))
       ]
     }
   );

@@ -62,6 +62,8 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
   onYearChange,
   clusterThreshold = DEFAULT_CLUSTER_THRESHOLD,
   hideLayers,
+  className,
+  style,
   ...mapContainerProps
 }) => {
   // Grouping only makes sense while the user can zoom in to break groups apart,
@@ -72,11 +74,16 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
     <MapContainer
       worldCopyJump
       center={[49.0139, 31.2858]}
-      style={{ height: "100%", width: "100%" }}
-      className="isolate"
       zoom={6}
       {...(onPositionChange || isClustered ? DEFAULT : STATIC)}
       {...mapContainerProps}
+      style={{
+        height: "100%",
+        width: "100%",
+        isolation: "isolate",
+        ...style,
+      }}
+      className={["isolate", className].filter(Boolean).join(" ")}
     >
       <TileLayer
         className="grayscale"
