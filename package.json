@@ -1,6 +1,6 @@
 {
   "name": "@duckarchive/map",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "description": "Interactive historical map component for visualizing geographical data over time",
   "keywords": [
     "react",
