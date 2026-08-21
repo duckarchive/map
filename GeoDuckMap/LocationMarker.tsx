@@ -2,16 +2,17 @@ import { Marker, Circle, useMapEvents, useMap, Tooltip } from "react-leaflet";
 import React, { useEffect } from "react";
 import { getIcon } from "./Markers";
 
-export type MarkerValue = [number, number, number?, string?, string?];
+export type MarkerValue = [number, number, number?, string?, string?, string?];
 
 interface LocationMarkerProps {
   value: MarkerValue;
   onChange?: (position: MarkerValue) => void;
+  onClick?: (position: MarkerValue) => void;
 }
 
-const StaticLocationMarker: React.FC<Pick<LocationMarkerProps, "value">> = ({
-  value,
-}) => {
+const StaticLocationMarker: React.FC<
+  Pick<LocationMarkerProps, "value" | "onClick">
+> = ({ value, onClick }) => {
   if (!value) return null;
 
   const markerIcon = getIcon(value[4]);
@@ -19,7 +20,11 @@ const StaticLocationMarker: React.FC<Pick<LocationMarkerProps, "value">> = ({
 
   return (
     <>
-      <Marker position={latLng} icon={markerIcon}>
+      <Marker
+        position={latLng}
+        icon={markerIcon}
+        eventHandlers={onClick ? { click: () => onClick(value) } : undefined}
+      >
         {value[3] && <Tooltip direction="top" offset={[0, -30]}>{value[3]}</Tooltip>}
       </Marker>
       {value[2] && value[2] > 0 && (
@@ -137,11 +142,15 @@ const DynamicLocationMarker: React.FC<
   );
 };
 
-const LocationMarker: React.FC<LocationMarkerProps> = ({ value, onChange }) => {
+const LocationMarker: React.FC<LocationMarkerProps> = ({
+  value,
+  onChange,
+  onClick,
+}) => {
   const isStatic = !onChange;
 
   return isStatic ? (
-    <StaticLocationMarker value={value} />
+    <StaticLocationMarker value={value} onClick={onClick} />
   ) : (
     <DynamicLocationMarker value={value} onChange={onChange} />
   );

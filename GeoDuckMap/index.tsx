@@ -13,6 +13,8 @@ import LocationMarker, { MarkerValue } from "./LocationMarker";
 import MapLocationSearch from "./MapLocationSearch";
 import MarkersCluster from "./MarkersCluster";
 
+export type { MarkerValue };
+
 import HistoricalLayers from "./HistoricalLayers";
 import UkraineLayer from "./UkraineLayer";
 
@@ -41,6 +43,7 @@ export interface GeoDuckMapProps
     React.RefAttributes<Map> {
   positions: MarkerValue[];
   onPositionChange?: (pos: MarkerValue) => void;
+  onMarkerClick?: (pos: MarkerValue) => void;
   tileLayerProps?: TileLayerProps;
   year?: number;
   onYearChange?: (year: number) => void;
@@ -57,6 +60,7 @@ export interface GeoDuckMapProps
 const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
   positions,
   onPositionChange,
+  onMarkerClick,
   tileLayerProps,
   year = 1897,
   onYearChange,
@@ -104,7 +108,9 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
         ) : isClustered ? (
           <MarkersCluster positions={positions} />
         ) : (
-          positions.map((pos, idx) => <LocationMarker key={idx} value={pos} />)
+          positions.map((pos, idx) => (
+            <LocationMarker key={idx} value={pos} onClick={onMarkerClick} />
+          ))
         ))}
     </MapContainer>
   );

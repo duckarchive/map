@@ -143,9 +143,13 @@ const ClusterMarker: React.FC<ClusterMarkerProps> = ({ cluster, onExpand }) => {
 
 interface MarkersClusterProps {
   positions: MarkerValue[];
+  onMarkerClick?: (position: MarkerValue) => void;
 }
 
-const MarkersCluster: React.FC<MarkersClusterProps> = ({ positions }) => {
+const MarkersCluster: React.FC<MarkersClusterProps> = ({
+  positions,
+  onMarkerClick,
+}) => {
   const map = useMap();
   const [view, setView] = useState<View>(() => ({
     zoom: map.getZoom(),
@@ -189,7 +193,11 @@ const MarkersCluster: React.FC<MarkersClusterProps> = ({ positions }) => {
     <>
       {clusters.map((cluster) =>
         cluster.items.length === 1 ? (
-          <LocationMarker key={cluster.key} value={cluster.items[0]} />
+          <LocationMarker
+            key={cluster.key}
+            value={cluster.items[0]}
+            onClick={onMarkerClick}
+          />
         ) : (
           <ClusterMarker
             key={cluster.key}
