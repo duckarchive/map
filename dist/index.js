@@ -1,6 +1,6 @@
-import { jsx as s, jsxs as g, Fragment as z } from "react/jsx-runtime";
+import { jsx as n, jsxs as f, Fragment as z } from "react/jsx-runtime";
 import { Marker as V, Tooltip as Z, Circle as U, useMap as $, useMapEvents as Y, GeoJSON as B, MapContainer as s1, TileLayer as r1 } from "react-leaflet";
-import { useEffect as b, useRef as l1, memo as R, useState as q, useCallback as I, useMemo as j, forwardRef as c1 } from "react";
+import { useEffect as k, useRef as l1, memo as R, useState as q, useCallback as I, useMemo as j, forwardRef as c1 } from "react";
 import w, { DomEvent as a1, latLngBounds as i1, DivIcon as u1 } from "leaflet";
 import { OpenStreetMapProvider as h1 } from "leaflet-geosearch";
 import { ComboBox as M, Input as G, ListBox as A, EmptyState as d1, Card as S, TextField as m1, FieldError as p1, Button as g1, Spinner as f1 } from "@heroui/react";
@@ -55,7 +55,7 @@ const K = w.divIcon({
   className: "io5-icon",
   iconSize: [30, 30],
   iconAnchor: [15, 35]
-}), b1 = {
+}), k1 = {
   pinIcon: K,
   latinCrossIcon: v1,
   christianCrossIcon: w1,
@@ -66,17 +66,23 @@ const K = w.divIcon({
   huguenotCrossIcon: C1,
   courtBuildingIcon: I1,
   buildingIcon: S1
-}, X = (e) => b1[e || "pinIcon"] || K, k1 = ({
-  value: e
-}) => {
+}, X = (e) => k1[e || "pinIcon"] || K, b1 = ({ value: e, onClick: t }) => {
   if (!e) return null;
-  const t = X(e[4]), o = [e[0], e[1]];
-  return /* @__PURE__ */ g(z, { children: [
-    /* @__PURE__ */ s(V, { position: o, icon: t, children: e[3] && /* @__PURE__ */ s(Z, { direction: "top", offset: [0, -30], children: e[3] }) }),
-    e[2] && e[2] > 0 && /* @__PURE__ */ s(
+  const o = X(e[4]), s = [e[0], e[1]];
+  return /* @__PURE__ */ f(z, { children: [
+    /* @__PURE__ */ n(
+      V,
+      {
+        position: s,
+        icon: o,
+        eventHandlers: t ? { click: () => t(e) } : void 0,
+        children: e[3] && /* @__PURE__ */ n(Z, { direction: "top", offset: [0, -30], children: e[3] })
+      }
+    ),
+    e[2] && e[2] > 0 && /* @__PURE__ */ n(
       U,
       {
-        center: o,
+        center: s,
         radius: e[2],
         pathOptions: {
           color: "currentColor",
@@ -92,36 +98,36 @@ const K = w.divIcon({
   if (Y({
     click(r) {
       if (!r.latlng) return;
-      const { lat: i, lng: n } = r.latlng;
-      t == null || t([i, n, e[2] || 0, e[3], e[4]]);
+      const { lat: i, lng: l } = r.latlng;
+      t == null || t([i, l, e[2] || 0, e[3], e[4]]);
     }
-  }), b(() => {
+  }), k(() => {
     const r = (u) => {
       if (u.ctrlKey) {
         u.preventDefault(), u.stopPropagation(), u.stopImmediatePropagation();
-        const p = u.deltaY, m = 100, f = 100, l = 1e4;
+        const p = u.deltaY, g = 100, m = 100, a = 1e4;
         let h = e[2] || 0;
-        p < 0 ? h = Math.min((e[2] || 0) + m, l) : h = Math.max((e[2] || 0) - m, f), h !== e[2] && (t == null || t([e[0], e[1], h, e[3], e[4]]));
+        p < 0 ? h = Math.min((e[2] || 0) + g, a) : h = Math.max((e[2] || 0) - g, m), h !== e[2] && (t == null || t([e[0], e[1], h, e[3], e[4]]));
       }
     }, i = (u) => {
       u.key === "Control" && o.scrollWheelZoom.disable();
-    }, n = (u) => {
+    }, l = (u) => {
       u.key === "Control" && o.scrollWheelZoom.enable();
-    }, a = o.getContainer();
-    return a.addEventListener("wheel", r, {
+    }, c = o.getContainer();
+    return c.addEventListener("wheel", r, {
       passive: !1,
       capture: !0
-    }), document.addEventListener("keydown", i), document.addEventListener("keyup", n), () => {
-      a.removeEventListener("wheel", r, { capture: !0 }), document.removeEventListener("keydown", i), document.removeEventListener("keyup", n), o.scrollWheelZoom.enable();
+    }), document.addEventListener("keydown", i), document.addEventListener("keyup", l), () => {
+      c.removeEventListener("wheel", r, { capture: !0 }), document.removeEventListener("keydown", i), document.removeEventListener("keyup", l), o.scrollWheelZoom.enable();
     };
   }, [o, e, t]), !e) return null;
-  const c = [e[0], e[1]];
-  return /* @__PURE__ */ g(z, { children: [
-    /* @__PURE__ */ s(V, { position: c, icon: X(e[4]) }),
-    e[2] && e[2] > 0 && /* @__PURE__ */ s(
+  const s = [e[0], e[1]];
+  return /* @__PURE__ */ f(z, { children: [
+    /* @__PURE__ */ n(V, { position: s, icon: X(e[4]) }),
+    e[2] && e[2] > 0 && /* @__PURE__ */ n(
       U,
       {
-        center: c,
+        center: s,
         radius: e[2],
         pathOptions: {
           color: "currentColor",
@@ -132,19 +138,23 @@ const K = w.divIcon({
       }
     )
   ] });
-}, E = ({ value: e, onChange: t }) => !t ? /* @__PURE__ */ s(k1, { value: e }) : /* @__PURE__ */ s(M1, { value: e, onChange: t }), J = () => {
+}, E = ({
+  value: e,
+  onChange: t,
+  onClick: o
+}) => !t ? /* @__PURE__ */ n(b1, { value: e, onClick: o }) : /* @__PURE__ */ n(M1, { value: e, onChange: t }), J = () => {
   const e = l1(null);
-  return b(() => {
+  return k(() => {
     e.current && a1.disableClickPropagation(e.current);
   }, [e.current]), e;
-}, N1 = () => /* @__PURE__ */ s(
+}, N1 = () => /* @__PURE__ */ n(
   "svg",
   {
     className: "w-4 h-4 text-gray-400",
     fill: "none",
     stroke: "currentColor",
     viewBox: "0 0 24 24",
-    children: /* @__PURE__ */ s(
+    children: /* @__PURE__ */ n(
       "path",
       {
         d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
@@ -154,7 +164,7 @@ const K = w.divIcon({
       }
     )
   }
-), j1 = () => /* @__PURE__ */ g(
+), j1 = () => /* @__PURE__ */ f(
   "svg",
   {
     className: "w-4 h-4 text-gray-400 flex-shrink-0",
@@ -162,7 +172,7 @@ const K = w.divIcon({
     stroke: "currentColor",
     viewBox: "0 0 24 24",
     children: [
-      /* @__PURE__ */ s(
+      /* @__PURE__ */ n(
         "path",
         {
           d: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z",
@@ -171,7 +181,7 @@ const K = w.divIcon({
           strokeWidth: 2
         }
       ),
-      /* @__PURE__ */ s(
+      /* @__PURE__ */ n(
         "path",
         {
           d: "M15 11a3 3 0 11-6 0 3 3 0 016 0z",
@@ -183,7 +193,7 @@ const K = w.divIcon({
     ]
   }
 ), Q = R(({ onSelect: e }) => {
-  const [t, o] = q(""), [c, r] = q([]), i = J(), n = $(), a = new h1({
+  const [t, o] = q(""), [s, r] = q([]), i = J(), l = $(), c = new h1({
     params: {
       "accept-language": "ua",
       countrycodes: "ua,pl,by,ru,ro,md,tr",
@@ -191,67 +201,67 @@ const K = w.divIcon({
       email: "admin@duckarchive.com"
     }
   }), u = I(
-    async (l) => {
-      if (!l.trim()) {
+    async (a) => {
+      if (!a.trim()) {
         r([]);
         return;
       }
       try {
-        const h = await a.search({ query: l });
+        const h = await c.search({ query: a });
         r(h);
       } catch {
         r([]);
       }
     },
-    [a]
+    [c]
   );
-  b(() => {
-    const l = setTimeout(() => {
+  k(() => {
+    const a = setTimeout(() => {
       u(t);
     }, 300);
-    return () => clearTimeout(l);
+    return () => clearTimeout(a);
   }, [t]);
-  const p = (l) => {
-    o(l.label), n.setView([l.y, l.x], 15), n.fire("geosearch/showlocation", {
-      location: l,
+  const p = (a) => {
+    o(a.label), l.setView([a.y, a.x], 15), l.fire("geosearch/showlocation", {
+      location: a,
       marker: null
-    }), e == null || e([l.y, l.x]);
+    }), e == null || e([a.y, a.x]);
   };
-  return /* @__PURE__ */ s(
+  return /* @__PURE__ */ n(
     "div",
     {
       ref: i,
       className: "absolute leaflet-top leaflet-left",
-      children: /* @__PURE__ */ g(
+      children: /* @__PURE__ */ f(
         M,
         {
           "aria-label": "Пошук за сучасною назвою",
           className: "leaflet-control w-auto bg-background rounded-xl shadow text-foreground",
           inputValue: t,
           variant: "secondary",
-          onClick: (l) => l.stopPropagation(),
-          onInputChange: (l) => {
-            o(l);
+          onClick: (a) => a.stopPropagation(),
+          onInputChange: (a) => {
+            o(a);
           },
-          onMouseDown: (l) => l.stopPropagation(),
-          onSelectionChange: (l) => {
-            if (l !== null) {
-              const h = c[l];
+          onMouseDown: (a) => a.stopPropagation(),
+          onSelectionChange: (a) => {
+            if (a !== null) {
+              const h = s[a];
               h && p(h);
             }
           },
           children: [
-            /* @__PURE__ */ g(M.InputGroup, { className: "flex items-center gap-2 px-2", children: [
-              /* @__PURE__ */ s(N1, {}),
-              /* @__PURE__ */ s(G, { className: "bg-transparent", placeholder: "Пошук за сучасною назвою" })
+            /* @__PURE__ */ f(M.InputGroup, { className: "flex items-center gap-2 px-2", children: [
+              /* @__PURE__ */ n(N1, {}),
+              /* @__PURE__ */ n(G, { className: "bg-transparent", placeholder: "Пошук за сучасною назвою" })
             ] }),
-            /* @__PURE__ */ s(M.Popover, { children: /* @__PURE__ */ s(
+            /* @__PURE__ */ n(M.Popover, { children: /* @__PURE__ */ n(
               A,
               {
-                renderEmptyState: () => /* @__PURE__ */ s(d1, { children: "Нічого не знайдено. Уточніть свій запит." }),
-                children: c.map((l, h) => /* @__PURE__ */ g(A.Item, { id: h, textValue: l.label, children: [
-                  /* @__PURE__ */ s(j1, {}),
-                  l.label
+                renderEmptyState: () => /* @__PURE__ */ n(d1, { children: "Нічого не знайдено. Уточніть свій запит." }),
+                children: s.map((a, h) => /* @__PURE__ */ f(A.Item, { id: h, textValue: a.label, children: [
+                  /* @__PURE__ */ n(j1, {}),
+                  a.label
                 ] }, h))
               }
             ) })
@@ -268,83 +278,93 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
 }, e1 = (e) => e < 10 ? 32 : e < 100 ? 40 : e < 1e3 ? 48 : 56, H = /* @__PURE__ */ new Map(), V1 = (e) => {
   const t = H.get(e);
   if (t) return t;
-  const o = e1(e), c = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, r = new u1({
-    html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;text-shadow:0 0 5px #000;font-size:${o / 3}px;font-weight:600;line-height:1">${c}</span></div>`,
+  const o = e1(e), s = e > 999 ? `${Math.floor(e / 1e3)}k+` : `${e}`, r = new u1({
+    html: `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:9999px;background-color:currentColor;box-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0.9"><span style="color:#fff;text-shadow:0 0 5px #000;font-size:${o / 3}px;font-weight:600;line-height:1">${s}</span></div>`,
     className: "geoduck-cluster-icon",
     iconSize: [o, o],
     iconAnchor: [o / 2, o / 2]
   });
   return H.set(e, r), r;
-}, $1 = (e, t, { zoom: o, bounds: c }) => {
-  const r = c.pad(L1), i = /* @__PURE__ */ new Map();
-  for (const n of e) {
-    const [a, u] = n;
-    if (!Number.isFinite(a) || !Number.isFinite(u) || !r.contains([a, u])) continue;
-    const { x: p, y: m } = t.project([a, u], o), f = `${Math.floor(p / D)}:${Math.floor(m / D)}`, l = i.get(f);
-    l ? (l.items.push(n), l.sumX += p, l.sumY += m) : i.set(f, { key: f, lat: a, lng: u, items: [n], sumX: p, sumY: m });
+}, $1 = (e, t, { zoom: o, bounds: s }) => {
+  const r = s.pad(L1), i = /* @__PURE__ */ new Map();
+  for (const l of e) {
+    const [c, u] = l;
+    if (!Number.isFinite(c) || !Number.isFinite(u) || !r.contains([c, u])) continue;
+    const { x: p, y: g } = t.project([c, u], o), m = `${Math.floor(p / D)}:${Math.floor(g / D)}`, a = i.get(m);
+    a ? (a.items.push(l), a.sumX += p, a.sumY += g) : i.set(m, { key: m, lat: c, lng: u, items: [l], sumX: p, sumY: g });
   }
-  return Array.from(i.values()).map((n) => {
-    if (n.items.length === 1) return n;
-    const a = t.unproject(
-      [n.sumX / n.items.length, n.sumY / n.items.length],
+  return Array.from(i.values()).map((l) => {
+    if (l.items.length === 1) return l;
+    const c = t.unproject(
+      [l.sumX / l.items.length, l.sumY / l.items.length],
       o
     );
-    return { ...n, lat: a.lat, lng: a.lng };
+    return { ...l, lat: c.lat, lng: c.lng };
   });
 }, B1 = ({ cluster: e, onExpand: t }) => {
-  const { items: o, lat: c, lng: r } = e, i = o.map((n) => n[3]).filter((n) => !!n);
-  return /* @__PURE__ */ s(
+  const { items: o, lat: s, lng: r } = e, i = o.map((l) => l[3]).filter((l) => !!l);
+  return /* @__PURE__ */ n(
     V,
     {
       eventHandlers: { click: () => t(e) },
       icon: V1(o.length),
-      position: [c, r],
-      children: /* @__PURE__ */ g(Z, { direction: "top", offset: [0, -e1(o.length) / 2], children: [
-        /* @__PURE__ */ g("span", { className: "font-semibold", children: [
+      position: [s, r],
+      children: /* @__PURE__ */ f(Z, { direction: "top", offset: [0, -e1(o.length) / 2], children: [
+        /* @__PURE__ */ f("span", { className: "font-semibold", children: [
           o.length,
           " ",
           E1(o.length)
         ] }),
-        i.slice(0, N).map((n, a) => /* @__PURE__ */ s("div", { children: n }, a)),
-        i.length > N && /* @__PURE__ */ g("div", { children: [
+        i.slice(0, N).map((l, c) => /* @__PURE__ */ n("div", { children: l }, c)),
+        i.length > N && /* @__PURE__ */ f("div", { children: [
           "…і ще ",
           i.length - N
         ] })
       ] })
     }
   );
-}, R1 = ({ positions: e }) => {
-  const t = $(), [o, c] = q(() => ({
-    zoom: t.getZoom(),
-    bounds: t.getBounds()
-  })), r = I(() => {
-    c({ zoom: t.getZoom(), bounds: t.getBounds() });
-  }, [t]);
+}, R1 = ({
+  positions: e,
+  onMarkerClick: t
+}) => {
+  const o = $(), [s, r] = q(() => ({
+    zoom: o.getZoom(),
+    bounds: o.getBounds()
+  })), i = I(() => {
+    r({ zoom: o.getZoom(), bounds: o.getBounds() });
+  }, [o]);
   Y({
-    zoomend: r,
-    moveend: r,
-    resize: r
+    zoomend: i,
+    moveend: i,
+    resize: i
   });
-  const i = j(
-    () => $1(e, t, o),
-    [e, t, o]
-  ), n = I(
-    ({ items: a, lat: u, lng: p }) => {
+  const l = j(
+    () => $1(e, o, s),
+    [e, o, s]
+  ), c = I(
+    ({ items: u, lat: p, lng: g }) => {
       const m = i1(
-        a.map((l) => [l[0], l[1]])
+        u.map((h) => [h[0], h[1]])
       );
-      m.isValid() && !m.getNorthEast().equals(m.getSouthWest()) ? t.fitBounds(m, { padding: [48, 48] }) : t.setView([u, p], Math.min(t.getZoom() + 2, t.getMaxZoom()));
+      m.isValid() && !m.getNorthEast().equals(m.getSouthWest()) ? o.fitBounds(m, { padding: [48, 48] }) : o.setView([p, g], Math.min(o.getZoom() + 2, o.getMaxZoom()));
     },
-    [t]
+    [o]
   );
-  return /* @__PURE__ */ s(z, { children: i.map(
-    (a) => a.items.length === 1 ? /* @__PURE__ */ s(E, { value: a.items[0] }, a.key) : /* @__PURE__ */ s(
+  return /* @__PURE__ */ n(z, { children: l.map(
+    (u) => u.items.length === 1 ? /* @__PURE__ */ n(
+      E,
+      {
+        value: u.items[0],
+        onClick: t
+      },
+      u.key
+    ) : /* @__PURE__ */ n(
       B1,
       {
-        cluster: a,
-        onExpand: n
+        cluster: u,
+        onExpand: c
       },
-      a.key
+      u.key
     )
   ) });
 }, d = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson", W1 = [
@@ -377,47 +397,47 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
     const r = t.find(({ year: i }) => i === e);
     return r ? r.url : null;
   }
-  const c = t.filter(({ year: r }) => r > 0 && r <= e).sort((r, i) => i.year - r.year);
-  return c.length > 0 ? c[0].url : null;
+  const s = t.filter(({ year: r }) => r > 0 && r <= e).sort((r, i) => i.year - r.year);
+  return s.length > 0 ? s[0].url : null;
 }, F = (e) => fetch(e).then((t) => t.json()), _1 = (e) => {
-  const [t, o] = q(e), c = T(t, W1), {
+  const [t, o] = q(e), s = T(t, W1), {
     data: r,
     isLoading: i,
-    isValidating: n
+    isValidating: l
+  } = L(s, F, {
+    revalidateOnFocus: !1,
+    revalidateOnReconnect: !1,
+    refreshWhenHidden: !1,
+    refreshWhenOffline: !1
+  }), c = T(t, O1, !0), {
+    data: u,
+    isLoading: p,
+    isValidating: g
   } = L(c, F, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
     refreshWhenOffline: !1
-  }), a = T(t, O1, !0), {
-    data: u,
-    isLoading: p,
-    isValidating: m
-  } = L(a, F, {
-    revalidateOnFocus: !1,
-    revalidateOnReconnect: !1,
-    refreshWhenHidden: !1,
-    refreshWhenOffline: !1
-  }), f = j(
+  }), m = j(
     () => r || null,
     [r]
-  ), l = j(
+  ), a = j(
     () => u || null,
     [u]
   );
   return {
-    countries: f,
-    states: l,
+    countries: m,
+    states: a,
     updateYear: (y) => {
       o(y);
     },
-    isLoading: i || p || n || m
+    isLoading: i || p || l || g
   };
-}, A1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ s("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ s(S, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ g(S.Header, { children: [
-  /* @__PURE__ */ s(S.Title, { className: "text-lg", children: o }),
-  /* @__PURE__ */ g(S.Description, { children: [
-    t && /* @__PURE__ */ s("p", { className: "text-foreground", children: t }),
-    e && /* @__PURE__ */ s("p", { className: "text-sm text-foreground", children: e })
+}, A1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ n("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ n(S, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ f(S.Header, { children: [
+  /* @__PURE__ */ n(S.Title, { className: "text-lg", children: o }),
+  /* @__PURE__ */ f(S.Description, { children: [
+    t && /* @__PURE__ */ n("p", { className: "text-foreground", children: t }),
+    e && /* @__PURE__ */ n("p", { className: "text-sm text-foreground", children: e })
   ] })
 ] }) }) }), D1 = [
   { value: 1897, label: "Російська Імперія" },
@@ -429,28 +449,28 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   const t = parseInt(e, 10);
   return /^\d{4}$/.test(e) && t >= 1500 && t <= 1991;
 }, T1 = ({ value: e, onChange: t }) => {
-  const [o, c] = q(e.toString()), [r, i] = q(!1), [n, a] = q(!1), u = J(), p = (h) => {
+  const [o, s] = q(e.toString()), [r, i] = q(!1), [l, c] = q(!1), u = J(), p = (h) => {
     const y = h.replace(/\D/g, "").slice(0, 4);
-    if (c(y), y.length === 4) {
+    if (s(y), y.length === 4) {
       const v = H1(y);
-      a(!v), v && t(parseInt(y, 10));
+      c(!v), v && t(parseInt(y, 10));
     } else
-      a(!1);
-  }, m = (h) => {
-    c(h.toString()), t(h), i(!1), a(!1);
+      c(!1);
+  }, g = (h) => {
+    s(h.toString()), t(h), i(!1), c(!1);
   };
-  return /* @__PURE__ */ s("div", { ref: u, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ g("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
-    /* @__PURE__ */ g(
+  return /* @__PURE__ */ n("div", { ref: u, className: "absolute leaflet-top leaflet-right", children: /* @__PURE__ */ f("div", { className: "leaflet-control bg-background rounded-xl shadow", children: [
+    /* @__PURE__ */ f(
       m1,
       {
         "aria-label": "Рік",
         className: "bg-background relative",
-        isInvalid: n,
+        isInvalid: l,
         type: "text",
         value: o,
         onChange: p,
         children: [
-          /* @__PURE__ */ s(
+          /* @__PURE__ */ n(
             G,
             {
               className: "text-sm text-foreground",
@@ -463,17 +483,17 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
               }
             }
           ),
-          n && /* @__PURE__ */ s(p1, { children: "Введіть рік від 1600 до 2025" })
+          l && /* @__PURE__ */ n(p1, { children: "Введіть рік від 1600 до 2025" })
         ]
       }
     ),
-    r && /* @__PURE__ */ s("div", { className: "flex flex-col gap-1 p-2", children: D1.map((h) => /* @__PURE__ */ g(
+    r && /* @__PURE__ */ n("div", { className: "flex flex-col gap-1 p-2", children: D1.map((h) => /* @__PURE__ */ f(
       g1,
       {
         className: "text-xs justify-start",
         size: "sm",
         variant: e === h.value ? "tertiary" : "outline",
-        onPress: () => m(h.value),
+        onPress: () => g(h.value),
         children: [
           h.value,
           " - ",
@@ -492,17 +512,17 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   "red",
   "yellow"
 ], F1 = (e) => {
-  var c;
-  const t = ((c = e.properties) == null ? void 0 : c.admin_level_1_ID) || e.id || 0;
+  var s;
+  const t = ((s = e.properties) == null ? void 0 : s.admin_level_1_ID) || e.id || 0;
   if (t === 22)
     return "gold";
   const o = t % P.length;
   return P[o];
 }, C = (e, t, o = 1) => {
-  const c = e ? F1(e) : "gray";
+  const s = e ? F1(e) : "gray";
   return {
-    color: c,
-    fillColor: c,
+    color: s,
+    fillColor: s,
     weight: o,
     opacity: t ? 1 : 0.5,
     fillOpacity: t ? 0.1 : 0,
@@ -510,12 +530,12 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   };
 }, t1 = R(
   c1(
-    ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ s(
+    ({ data: e, onEachFeature: t }, o) => e ? /* @__PURE__ */ n(
       B,
       {
         ref: o,
         data: e,
-        style: (c) => C(c, !1, 0),
+        style: (s) => C(s, !1, 0),
         onEachFeature: t
       }
     ) : null
@@ -523,7 +543,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
 );
 t1.displayName = "CountriesLayer";
 const o1 = R(
-  ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ s(
+  ({ data: e, onEachFeature: t }) => e ? /* @__PURE__ */ n(
     B,
     {
       data: e,
@@ -534,65 +554,65 @@ const o1 = R(
 );
 o1.displayName = "StatesLayer";
 const P1 = ({ year: e, onYearChange: t }) => {
-  var l, h, y;
-  const [o, c] = q(null), [r, i] = q(null), { countries: n, states: a, updateYear: u, isLoading: p } = _1(e);
-  b(() => {
-    u(e), c(null), i(null);
+  var a, h, y;
+  const [o, s] = q(null), [r, i] = q(null), { countries: l, states: c, updateYear: u, isLoading: p } = _1(e);
+  k(() => {
+    u(e), s(null), i(null);
   }, [e]);
-  const m = I(
-    (v, k) => {
-      k.on({
+  const g = I(
+    (v, b) => {
+      b.on({
         mouseover: (x) => {
-          c(v), x.target.setStyle(C(v, !1, 1));
+          s(v), x.target.setStyle(C(v, !1, 1));
         },
         mouseout: (x) => {
-          c(null), x.target.setStyle(C(v, !1, 0));
+          s(null), x.target.setStyle(C(v, !1, 0));
         }
       });
     },
     []
-  ), f = I(
-    (v, k) => {
-      k.on({
+  ), m = I(
+    (v, b) => {
+      b.on({
         mouseover: (x) => {
           i(v);
-          const W = n == null ? void 0 : n.features.find(
+          const W = l == null ? void 0 : l.features.find(
             (n1) => {
               var O, _;
               return ((O = n1.id) == null ? void 0 : O.toString()) === ((_ = v.properties) == null ? void 0 : _.admin_level_1_ID.toString());
             }
           );
-          W && c(W), x.target.setStyle(C(v, !0, 4));
+          W && s(W), x.target.setStyle(C(v, !0, 4));
         },
         mouseout: (x) => {
           i(null), x.target.setStyle(C(v, !1, 2));
         }
       });
     },
-    [n]
+    [l]
   );
-  return /* @__PURE__ */ g(z, { children: [
-    p ? /* @__PURE__ */ s("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ s(f1, {}) }) : /* @__PURE__ */ g(z, { children: [
-      n && /* @__PURE__ */ s(
+  return /* @__PURE__ */ f(z, { children: [
+    p ? /* @__PURE__ */ n("div", { className: "absolute z-[1001] top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-sm bg-white/50", children: /* @__PURE__ */ n(f1, {}) }) : /* @__PURE__ */ f(z, { children: [
+      l && /* @__PURE__ */ n(
         t1,
         {
-          data: n,
-          onEachFeature: m
+          data: l,
+          onEachFeature: g
         }
       ),
-      a && /* @__PURE__ */ s(o1, { data: a, onEachFeature: f })
+      c && /* @__PURE__ */ n(o1, { data: c, onEachFeature: m })
     ] }),
-    t && /* @__PURE__ */ s(
+    t && /* @__PURE__ */ n(
       T1,
       {
         value: e,
         onChange: t
       }
     ),
-    (o || r) && /* @__PURE__ */ s(
+    (o || r) && /* @__PURE__ */ n(
       A1,
       {
-        level1: (l = o == null ? void 0 : o.properties) == null ? void 0 : l.admin_level_1,
+        level1: (a = o == null ? void 0 : o.properties) == null ? void 0 : a.admin_level_1,
         level2: (h = r == null ? void 0 : r.properties) == null ? void 0 : h.admin_level_2,
         level3: (y = r == null ? void 0 : r.properties) == null ? void 0 : y.admin_level_3
       }
@@ -609,7 +629,7 @@ const P1 = ({ year: e, onYearChange: t }) => {
       refreshWhenOffline: !1
     }
   );
-  return e && /* @__PURE__ */ s(
+  return e && /* @__PURE__ */ n(
     B,
     {
       data: e,
@@ -638,45 +658,46 @@ const P1 = ({ year: e, onYearChange: t }) => {
 }, X1 = 20, re = ({
   positions: e,
   onPositionChange: t,
-  tileLayerProps: o,
-  year: c = 1897,
-  onYearChange: r,
-  clusterThreshold: i = X1,
-  hideLayers: n,
-  className: a,
-  style: u,
-  ...p
+  onMarkerClick: o,
+  tileLayerProps: s,
+  year: r = 1897,
+  onYearChange: i,
+  clusterThreshold: l = X1,
+  hideLayers: c,
+  className: u,
+  style: p,
+  ...g
 }) => {
-  const m = !t && e.length > i;
-  return /* @__PURE__ */ g(
+  const m = !t && e.length > l;
+  return /* @__PURE__ */ f(
     s1,
     {
       worldCopyJump: !0,
       center: [49.0139, 31.2858],
       zoom: 6,
       ...t || m ? K1 : G1,
-      ...p,
+      ...g,
       style: {
         height: "100%",
         width: "100%",
         isolation: "isolate",
-        ...u
+        ...p
       },
-      className: ["isolate", a].filter(Boolean).join(" "),
+      className: ["isolate", u].filter(Boolean).join(" "),
       children: [
-        /* @__PURE__ */ s(
+        /* @__PURE__ */ n(
           r1,
           {
             className: "grayscale",
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-            ...o
+            ...s
           }
         ),
-        !(n != null && n.ukraineLayer) && /* @__PURE__ */ s(Y1, {}),
-        !(n != null && n.searchInput) && /* @__PURE__ */ s(Q, { onSelect: t }),
-        !(n != null && n.historicalLayers) && /* @__PURE__ */ s(P1, { year: c, onYearChange: r }),
-        !(n != null && n.locationMarker) && (t ? /* @__PURE__ */ s(E, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ s(R1, { positions: e }) : e.map((f, l) => /* @__PURE__ */ s(E, { value: f }, l)))
+        !(c != null && c.ukraineLayer) && /* @__PURE__ */ n(Y1, {}),
+        !(c != null && c.searchInput) && /* @__PURE__ */ n(Q, { onSelect: t }),
+        !(c != null && c.historicalLayers) && /* @__PURE__ */ n(P1, { year: r, onYearChange: i }),
+        !(c != null && c.locationMarker) && (t ? /* @__PURE__ */ n(E, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ n(R1, { positions: e }) : e.map((a, h) => /* @__PURE__ */ n(E, { value: a, onClick: o }, h)))
       ]
     }
   );
