@@ -1,6 +1,6 @@
 import { jsx as n, jsxs as f, Fragment as z } from "react/jsx-runtime";
 import { Marker as V, Tooltip as Z, Circle as U, useMap as $, useMapEvents as Y, GeoJSON as B, MapContainer as s1, TileLayer as r1 } from "react-leaflet";
-import { useEffect as k, useRef as l1, memo as R, useState as q, useCallback as I, useMemo as j, forwardRef as c1 } from "react";
+import { useEffect as b, useRef as l1, memo as R, useState as q, useCallback as I, useMemo as j, forwardRef as c1 } from "react";
 import w, { DomEvent as a1, latLngBounds as i1, DivIcon as u1 } from "leaflet";
 import { OpenStreetMapProvider as h1 } from "leaflet-geosearch";
 import { ComboBox as M, Input as G, ListBox as A, EmptyState as d1, Card as S, TextField as m1, FieldError as p1, Button as g1, Spinner as f1 } from "@heroui/react";
@@ -55,7 +55,7 @@ const K = w.divIcon({
   className: "io5-icon",
   iconSize: [30, 30],
   iconAnchor: [15, 35]
-}), k1 = {
+}), b1 = {
   pinIcon: K,
   latinCrossIcon: v1,
   christianCrossIcon: w1,
@@ -66,7 +66,7 @@ const K = w.divIcon({
   huguenotCrossIcon: C1,
   courtBuildingIcon: I1,
   buildingIcon: S1
-}, X = (e) => k1[e || "pinIcon"] || K, b1 = ({ value: e, onClick: t }) => {
+}, X = (e) => b1[e || "pinIcon"] || K, k1 = ({ value: e, onClick: t }) => {
   if (!e) return null;
   const o = X(e[4]), s = [e[0], e[1]];
   return /* @__PURE__ */ f(z, { children: [
@@ -101,7 +101,7 @@ const K = w.divIcon({
       const { lat: i, lng: l } = r.latlng;
       t == null || t([i, l, e[2] || 0, e[3], e[4]]);
     }
-  }), k(() => {
+  }), b(() => {
     const r = (u) => {
       if (u.ctrlKey) {
         u.preventDefault(), u.stopPropagation(), u.stopImmediatePropagation();
@@ -142,9 +142,9 @@ const K = w.divIcon({
   value: e,
   onChange: t,
   onClick: o
-}) => !t ? /* @__PURE__ */ n(b1, { value: e, onClick: o }) : /* @__PURE__ */ n(M1, { value: e, onChange: t }), J = () => {
+}) => !t ? /* @__PURE__ */ n(k1, { value: e, onClick: o }) : /* @__PURE__ */ n(M1, { value: e, onChange: t }), J = () => {
   const e = l1(null);
-  return k(() => {
+  return b(() => {
     e.current && a1.disableClickPropagation(e.current);
   }, [e.current]), e;
 }, N1 = () => /* @__PURE__ */ n(
@@ -215,7 +215,7 @@ const K = w.divIcon({
     },
     [c]
   );
-  k(() => {
+  b(() => {
     const a = setTimeout(() => {
       u(t);
     }, 300);
@@ -556,12 +556,12 @@ o1.displayName = "StatesLayer";
 const P1 = ({ year: e, onYearChange: t }) => {
   var a, h, y;
   const [o, s] = q(null), [r, i] = q(null), { countries: l, states: c, updateYear: u, isLoading: p } = _1(e);
-  k(() => {
+  b(() => {
     u(e), s(null), i(null);
   }, [e]);
   const g = I(
-    (v, b) => {
-      b.on({
+    (v, k) => {
+      k.on({
         mouseover: (x) => {
           s(v), x.target.setStyle(C(v, !1, 1));
         },
@@ -572,8 +572,8 @@ const P1 = ({ year: e, onYearChange: t }) => {
     },
     []
   ), m = I(
-    (v, b) => {
-      b.on({
+    (v, k) => {
+      k.on({
         mouseover: (x) => {
           i(v);
           const W = l == null ? void 0 : l.features.find(
@@ -697,7 +697,7 @@ const P1 = ({ year: e, onYearChange: t }) => {
         !(c != null && c.ukraineLayer) && /* @__PURE__ */ n(Y1, {}),
         !(c != null && c.searchInput) && /* @__PURE__ */ n(Q, { onSelect: t }),
         !(c != null && c.historicalLayers) && /* @__PURE__ */ n(P1, { year: r, onYearChange: i }),
-        !(c != null && c.locationMarker) && (t ? /* @__PURE__ */ n(E, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ n(R1, { positions: e }) : e.map((a, h) => /* @__PURE__ */ n(E, { value: a, onClick: o }, h)))
+        !(c != null && c.locationMarker) && (t ? /* @__PURE__ */ n(E, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ n(R1, { positions: e, onMarkerClick: o }) : e.map((a, h) => /* @__PURE__ */ n(E, { value: a, onClick: o }, h)))
       ]
     }
   );

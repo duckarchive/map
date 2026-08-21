@@ -106,7 +106,7 @@ const GeoDuckMap: React.FC<GeoDuckMapProps> = ({
         (onPositionChange ? (
           <LocationMarker value={positions[0]} onChange={onPositionChange} />
         ) : isClustered ? (
-          <MarkersCluster positions={positions} />
+          <MarkersCluster positions={positions} onMarkerClick={onMarkerClick} />
         ) : (
           positions.map((pos, idx) => (
             <LocationMarker key={idx} value={pos} onClick={onMarkerClick} />
