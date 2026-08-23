@@ -9,7 +9,10 @@ interface MapTooltipProps {
 const MapTooltip: React.FC<MapTooltipProps> = ({ level1, level2, level3 }) => {
   return (
     <div className="absolute leaflet-bottom leaflet-left">
-      <Card className="leaflet-control max-w-sm pointer-events-none rounded-xl">
+      <Card
+        className="leaflet-control max-w-sm pointer-events-none rounded-xl"
+        style={{ pointerEvents: "none" }}
+      >
         <Card.Header>
           <Card.Title className="text-lg">{level3}</Card.Title>
           <Card.Description>

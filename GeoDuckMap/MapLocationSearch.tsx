@@ -137,6 +137,8 @@ const MapLocationSearch = memo<MapLocationSearchProps>(({ onSelect }) => {
         className="leaflet-control w-auto bg-background rounded-xl shadow text-foreground"
         inputValue={query}
         variant="secondary"
+        allowsEmptyCollection
+        items={results}
         onClick={(e) => e.stopPropagation()}
         onInputChange={handleInputChange}
         onMouseDown={(e) => e.stopPropagation()}
