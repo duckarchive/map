@@ -4,7 +4,7 @@ import { useEffect as b, useRef as l1, memo as R, useState as q, useCallback as 
 import w, { DomEvent as a1, latLngBounds as i1, DivIcon as u1 } from "leaflet";
 import { OpenStreetMapProvider as h1 } from "leaflet-geosearch";
 import { ComboBox as M, Input as G, ListBox as A, EmptyState as d1, Card as S, TextField as m1, FieldError as p1, Button as g1, Spinner as f1 } from "@heroui/react";
-import L from "swr";
+import E from "swr";
 const K = w.divIcon({
   html: '<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" stroke-width="0" viewBox="0 0 384 512"><path stroke="none" d="M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z"/></svg>',
   className: "io5-icon",
@@ -138,7 +138,7 @@ const K = w.divIcon({
       }
     )
   ] });
-}, E = ({
+}, L = ({
   value: e,
   onChange: t,
   onClick: o
@@ -239,6 +239,8 @@ const K = w.divIcon({
           className: "leaflet-control w-auto bg-background rounded-xl shadow text-foreground",
           inputValue: t,
           variant: "secondary",
+          allowsEmptyCollection: !0,
+          items: s,
           onClick: (a) => a.stopPropagation(),
           onInputChange: (a) => {
             o(a);
@@ -272,7 +274,7 @@ const K = w.divIcon({
   );
 });
 Q.displayName = "MapLocationSearch";
-const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
+const D = 72, E1 = 0.25, N = 5, L1 = (e) => {
   const t = e % 10, o = e % 100;
   return t === 1 && o !== 11 ? "позначка" : t >= 2 && t <= 4 && (o < 12 || o > 14) ? "позначки" : "позначок";
 }, e1 = (e) => e < 10 ? 32 : e < 100 ? 40 : e < 1e3 ? 48 : 56, H = /* @__PURE__ */ new Map(), V1 = (e) => {
@@ -286,7 +288,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   });
   return H.set(e, r), r;
 }, $1 = (e, t, { zoom: o, bounds: s }) => {
-  const r = s.pad(L1), i = /* @__PURE__ */ new Map();
+  const r = s.pad(E1), i = /* @__PURE__ */ new Map();
   for (const l of e) {
     const [c, u] = l;
     if (!Number.isFinite(c) || !Number.isFinite(u) || !r.contains([c, u])) continue;
@@ -313,7 +315,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
         /* @__PURE__ */ f("span", { className: "font-semibold", children: [
           o.length,
           " ",
-          E1(o.length)
+          L1(o.length)
         ] }),
         i.slice(0, N).map((l, c) => /* @__PURE__ */ n("div", { children: l }, c)),
         i.length > N && /* @__PURE__ */ f("div", { children: [
@@ -352,7 +354,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
   );
   return /* @__PURE__ */ n(z, { children: l.map(
     (u) => u.items.length === 1 ? /* @__PURE__ */ n(
-      E,
+      L,
       {
         value: u.items[0],
         onClick: t
@@ -404,7 +406,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
     data: r,
     isLoading: i,
     isValidating: l
-  } = L(s, F, {
+  } = E(s, F, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
@@ -413,7 +415,7 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
     data: u,
     isLoading: p,
     isValidating: g
-  } = L(c, F, {
+  } = E(c, F, {
     revalidateOnFocus: !1,
     revalidateOnReconnect: !1,
     refreshWhenHidden: !1,
@@ -433,13 +435,20 @@ const D = 72, L1 = 0.25, N = 5, E1 = (e) => {
     },
     isLoading: i || p || l || g
   };
-}, A1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ n("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ n(S, { className: "leaflet-control max-w-sm pointer-events-none rounded-xl", children: /* @__PURE__ */ f(S.Header, { children: [
-  /* @__PURE__ */ n(S.Title, { className: "text-lg", children: o }),
-  /* @__PURE__ */ f(S.Description, { children: [
-    t && /* @__PURE__ */ n("p", { className: "text-foreground", children: t }),
-    e && /* @__PURE__ */ n("p", { className: "text-sm text-foreground", children: e })
-  ] })
-] }) }) }), D1 = [
+}, A1 = ({ level1: e, level2: t, level3: o }) => /* @__PURE__ */ n("div", { className: "absolute leaflet-bottom leaflet-left", children: /* @__PURE__ */ n(
+  S,
+  {
+    className: "leaflet-control max-w-sm pointer-events-none rounded-xl",
+    style: { pointerEvents: "none" },
+    children: /* @__PURE__ */ f(S.Header, { children: [
+      /* @__PURE__ */ n(S.Title, { className: "text-lg", children: o }),
+      /* @__PURE__ */ f(S.Description, { children: [
+        t && /* @__PURE__ */ n("p", { className: "text-foreground", children: t }),
+        e && /* @__PURE__ */ n("p", { className: "text-sm text-foreground", children: e })
+      ] })
+    ] })
+  }
+) }), D1 = [
   { value: 1897, label: "Російська Імперія" },
   { value: 1914, label: "WWI" },
   { value: 1937, label: "Перед WWII" },
@@ -619,7 +628,7 @@ const P1 = ({ year: e, onYearChange: t }) => {
     )
   ] });
 }, Z1 = "https://raw.githubusercontent.com/duckarchive/map/refs/heads/main/geojson/ukraine.geojson", U1 = (e) => fetch(e).then((t) => t.json()), Y1 = () => {
-  const { data: e } = L(
+  const { data: e } = E(
     Z1,
     U1,
     {
@@ -697,7 +706,7 @@ const P1 = ({ year: e, onYearChange: t }) => {
         !(c != null && c.ukraineLayer) && /* @__PURE__ */ n(Y1, {}),
         !(c != null && c.searchInput) && /* @__PURE__ */ n(Q, { onSelect: t }),
         !(c != null && c.historicalLayers) && /* @__PURE__ */ n(P1, { year: r, onYearChange: i }),
-        !(c != null && c.locationMarker) && (t ? /* @__PURE__ */ n(E, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ n(R1, { positions: e, onMarkerClick: o }) : e.map((a, h) => /* @__PURE__ */ n(E, { value: a, onClick: o }, h)))
+        !(c != null && c.locationMarker) && (t ? /* @__PURE__ */ n(L, { value: e[0], onChange: t }) : m ? /* @__PURE__ */ n(R1, { positions: e, onMarkerClick: o }) : e.map((a, h) => /* @__PURE__ */ n(L, { value: a, onClick: o }, h)))
       ]
     }
   );
